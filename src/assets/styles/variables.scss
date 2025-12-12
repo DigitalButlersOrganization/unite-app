@@ -1,24 +1,30 @@
 :root {
   --font-family--base: "Geist", "Roboto", "Arial", "Helvetica", sans-serif;
 
-  --transition-duration: 0.5s;
+  --transition-duration: 0.3s;
   --transition-timing-function: ease;
   --transition-default: all var(--transition-duration) var(--transition-timing-function);
 
-  --palette-1--tone-1000: #000000;
-  --palette-1--tone-900: #131415;
-  --palette-1--tone-800: #27292A;
-  --palette-1--tone-700: #3A3D3E;
-  --palette-1--tone-600: #45484A;
-  --palette-1--tone-500: #595C5D;
-  --palette-1--tone-400: #969A9C;
-  --palette-1--tone-300: #aaa;
-  --palette-1--tone-200: #eee;
-  --palette-1--tone-100: #fff;
+  --border-radius--1: 0.5rem;
+  --border-radius--2: 0.75rem;
 
-  --palette-2--tone-200: #ac0000;
-  --palette-2--tone-100: #ffa5a5;
+  --palette--1: #2F2E2E;
+  --palette--2: #FFFFFF;
+  --palette--3: #E9E9E9;
+  --palette--4: #E8EFFF;
+  --palette--5: #1657FF;
+  --palette--6: #27AE60;
+  --palette--7: #FFAB36;
+  --palette--8: #999999;
+  --palette--9: #FAE7E7;
+  --palette--10: #FA4040;
+  --palette--11: #94B2E4;
+  --palette--12: #F2EFF6;
 
-  --primary-background-color: var(--palette-1--tone-200);
-  --primary-text-color: var(--palette-1--tone-900);
+  --color-text--1: var(--palette--1);
+  --color-background--1: var(--palette--2);
+  --color-background-gradient-1: linear-gradient(90deg, var(--palette--11), var(--palette--12));
+
+  --color-text--2: var(--palette--2);
+  --color-background--2: var(--palette--1);
 }

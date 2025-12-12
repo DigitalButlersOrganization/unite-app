@@ -1,7 +1,7 @@
-@import 'node_modules/modern-normalize/modern-normalize.css';
-
-@import './fonts.scss';
-@import './layouts.scss';
-@import './variables.scss';
-@import './common.scss';
-@import './text-elements.scss';
+@use './modern-normalize.scss';
+@use './variables.scss';
+@use './fonts.scss';
+@use './selection.scss';
+@use './layouts.scss';
+@use './common.scss';
+@use './text-elements.scss';
