@@ -11,27 +11,14 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    Container: typeof import('./components/ui/Container.vue')['default']
-    CustomContainer: typeof import('./components/shared/CustomContainer.vue')['default']
-    DBContainer: typeof import('./components/shared/DBContainer.vue')['default']
-    Header: typeof import('./components/Header/Index.vue')['default']
-    IconCommunity: typeof import('./components/icons/IconCommunity.vue')['default']
-    IconDocumentation: typeof import('./components/icons/IconDocumentation.vue')['default']
-    IconEcosystem: typeof import('./components/icons/IconEcosystem.vue')['default']
-    IconsIconCommunity: typeof import('./components/icons/IconCommunity.vue')['default']
-    IconsIconDocumentation: typeof import('./components/icons/IconDocumentation.vue')['default']
-    IconsIconEcosystem: typeof import('./components/icons/IconEcosystem.vue')['default']
-    IconsIconSupport: typeof import('./components/icons/IconSupport.vue')['default']
-    IconsIconTooling: typeof import('./components/icons/IconTooling.vue')['default']
-    IconSupport: typeof import('./components/icons/IconSupport.vue')['default']
-    IconTooling: typeof import('./components/icons/IconTooling.vue')['default']
-    Index: typeof import('./components/Header/Index.vue')['default']
+    LayoutAside: typeof import('./components/Layout/Aside/Index.vue')['default']
+    LayoutEventCard: typeof import('./components/Layout/EventCard/Index.vue')['default']
     LayoutHeader: typeof import('./components/Layout/Header/Index.vue')['default']
-    LayoutsHeader: typeof import('./components/Layouts/Header/Index.vue')['default']
+    LayoutMain: typeof import('./components/Layout/Main/Index.vue')['default']
+    LayoutMainGrid: typeof import('./components/Layout/MainGrid/Index.vue')['default']
+    LayoutMainListOfPages: typeof import('./components/Layout/Main/ListOfPages/Index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SharedCustomContainer: typeof import('./components/shared/CustomContainer.vue')['default']
     UIContainer: typeof import('./components/UI/Container.vue')['default']
-    UICustomContainer: typeof import('./components/UI/Container.vue')['default']
   }
 }

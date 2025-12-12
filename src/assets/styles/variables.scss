@@ -20,11 +20,16 @@
   --palette--10: #FA4040;
   --palette--11: #94B2E4;
   --palette--12: #F2EFF6;
+  --palette--13: #F9F9F9;
 
   --color-text--1: var(--palette--1);
   --color-background--1: var(--palette--2);
-  --color-background-gradient-1: linear-gradient(90deg, var(--palette--11), var(--palette--12));
+  --color-background-gradient-1: linear-gradient(180deg, var(--palette--11), var(--palette--12));
 
   --color-text--2: var(--palette--2);
   --color-background--2: var(--palette--1);
+
+  --color-text--3: var(--palette--8);
+  --color-background--3: var(--palette--13);
+
 }

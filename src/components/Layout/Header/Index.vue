@@ -5,37 +5,34 @@ import IconLogOut from '@/assets/icons/log-out.svg'
 
 <template>
   <header class="header">
-    <UIContainer>
-      <div class="header__layout">
-        <RouterLink class="header__logo-link" to="/">
-          <img alt="Vue logo" class="header__logo-image" src="@/assets/icons/logo.png" />
-        </RouterLink>
+    <div class="header__layout">
+      <RouterLink class="header__logo-link" to="/">
+        <img alt="Vue logo" class="header__logo-image" src="@/assets/icons/logo.png" />
+      </RouterLink>
 
-        <div class="header__navigation-wrapper">
-          <nav class="header__navigation">
-            <RouterLink to="/">
-              <div>Home</div>
-            </RouterLink>
-            <RouterLink to="/about">
-              <div>About</div>
-            </RouterLink>
-            <button class="button button--transparent button--logout">
-              <IconLogOut />
-              <div>Log out</div>
-            </button>
-          </nav>
-        </div>
+      <div class="header__navigation-wrapper">
+        <nav class="header__navigation">
+          <RouterLink to="/about">
+            <div>About</div>
+          </RouterLink>
+          <button class="button button--transparent button--logout">
+            <IconLogOut />
+            <div>Log out</div>
+          </button>
+        </nav>
       </div>
-    </UIContainer>
+    </div>
   </header>
 </template>
 
 <style lang="scss" scoped>
 .header {
   width: 100%;
-  padding-block: 6px;
+  grid-column-start: 1;
+  grid-column-end: 3;
 
   &__layout {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
