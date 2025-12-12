@@ -1,0 +1,50 @@
+.heading{
+  font-weight: 500;
+  font-family: var(--font-family--base);
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  margin: 0;
+
+  &--l{
+    font-size: 2.875rem;
+
+    @media screen and (max-width: 479px) {
+      font-size: 2rem;
+    }
+    @media screen and (max-width: 370px) {
+      font-size: 1.5rem;
+    }
+  }
+  &--m{
+    font-size: 1.75rem;
+    text-transform: capitalize;
+    font-weight: 400;
+    @media screen and (max-width: 479px) {
+      font-size: 1.5rem;
+    }
+    @media screen and (max-width: 370px) {
+      font-size: 1.25rem;
+    }
+  }
+}
+.paragraph{
+  font-family: var(--font-family--base);
+  letter-spacing: normal;
+  line-height: 1.25;
+  margin: 0;
+  font-weight: 300;
+
+  &--xl{
+    font-size: 1.375rem;
+  }
+  &--l{
+    font-size: 1.25rem;
+  }
+  &--m{
+    font-size: 1rem;
+  }
+  &--s{
+    font-size: 0.75rem;
+  }
+}
