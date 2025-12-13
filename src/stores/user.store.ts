@@ -5,6 +5,9 @@ export const useUserStore = defineStore('UserStore', {
   state: (): IUserState => {
     return {
       email: 'test@gmail.com',
+
+      isFetchingUser: false,
+      isAuthenticated: false,
     }
   },
   getters: {
@@ -13,8 +16,11 @@ export const useUserStore = defineStore('UserStore', {
     },
   },
   actions: {
-    setUserData(data: { email: string }) {
-      this.email = data.email
+    setFetchingUser(data: boolean) {
+      this.$patch({ isFetchingUser: data })
+    },
+    setUserData(data: { email: string; isAuthenticated: boolean }) {
+      this.$patch({ email: data.email, isAuthenticated: data.isAuthenticated })
     },
   },
 })

@@ -5,7 +5,11 @@ const userStore = useUserStore()
 console.log(userStore.getUserData)
 
 const toggleUserData = () => {
-  userStore.setUserData({ email: Math.random().toString(36).substring(7) + '@gmail.com' })
+  userStore.setUserData({
+    ...userStore.getUserData,
+    email: Math.random().toString(36).substring(7) + '@gmail.com',
+  })
+  console.log(userStore.getUserData)
 }
 </script>
 
