@@ -1,21 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { ROUTES } from '@/router/routes'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: HomeView,
+      path: ROUTES.HOME.PATH,
+      name: ROUTES.HOME.NAME,
+      component: () => import(`@/views/${ROUTES.HOME.NAME}.vue`),
+      meta: { keepAlive: true },
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      path: ROUTES.ABOUT.PATH,
+      name: ROUTES.ABOUT.NAME,
+      component: () => import(`@/views/${ROUTES.ABOUT.NAME}.vue`),
+      meta: { keepAlive: false },
+    },
+    {
+      path: ROUTES.LOGIN.PATH,
+      name: ROUTES.LOGIN.NAME,
+      component: () => import(`@/views/auth/${ROUTES.LOGIN.NAME}.vue`),
+      meta: { keepAlive: true, isAuthPage: true },
     },
   ],
 })

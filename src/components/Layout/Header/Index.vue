@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import IconLogOut from '@/assets/icons/log-out.svg'
+import { ROUTES } from '@/router/routes'
 </script>
 
 <template>
   <header class="header">
     <div class="header__layout">
-      <RouterLink class="header__logo-link" to="/">
+      <RouterLink class="header__logo-link" :to="ROUTES.HOME.PATH">
         <img alt="Vue logo" class="header__logo-image" src="@/assets/icons/logo.png" />
       </RouterLink>
 
       <div class="header__navigation-wrapper">
         <nav class="header__navigation">
-          <RouterLink to="/about">
-            <div>About</div>
+          <RouterLink :to="ROUTES.ABOUT.PATH">
+            <div>{{ ROUTES.ABOUT.NAME }}</div>
           </RouterLink>
           <button class="button button--transparent button--logout">
             <IconLogOut />

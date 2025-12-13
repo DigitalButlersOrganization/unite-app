@@ -1,12 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ROUTES } from '@/router/routes'
+</script>
 
 <template>
   <div class="list-of-pages">
-    <RouterLink to="/">
-      <div>Home</div>
+    <RouterLink class="link" :to="ROUTES.HOME.PATH">
+      {{ ROUTES.HOME.NAME }}
     </RouterLink>
-    <RouterLink to="/about">
-      <div>About</div>
+    <RouterLink :to="ROUTES.ABOUT.PATH">
+      <div>{{ ROUTES.ABOUT.NAME }}</div>
     </RouterLink>
   </div>
 </template>

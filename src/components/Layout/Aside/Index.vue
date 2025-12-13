@@ -16,6 +16,8 @@
 .aside {
   width: 100%;
   overflow: auto;
+  border-top-left-radius: var(--border-radius--2);
+  border-top-right-radius: var(--border-radius--2);
 
   &__scroll-box {
     display: flex;
