@@ -9,20 +9,19 @@ const toggleUserData = () => {
     ...userStore.getUserData,
     email: Math.random().toString(36).substring(7) + '@gmail.com',
   })
-  console.log(userStore.getUserData)
 }
 </script>
 
 <template>
-  <LayoutMainGrid>
-    <LayoutHeader />
-    <LayoutAside />
-    <LayoutMain>
+  <MainGrid>
+    <CustomHeader />
+    <CustomAside />
+    <CustomMain>
       <RouterView />
       {{ userStore.getUserData.email }}
       <button @click="toggleUserData">Toggle Email</button>
-    </LayoutMain>
-  </LayoutMainGrid>
+    </CustomMain>
+  </MainGrid>
 </template>
 
 <style lang="scss" scoped></style>
