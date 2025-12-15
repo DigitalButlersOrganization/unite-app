@@ -21,15 +21,33 @@
   --palette--11: #94B2E4;
   --palette--12: #F2EFF6;
   --palette--13: #F9F9F9;
+  --palette--14: #EFEFEF;
+  --palette--15: #E4F1E9;
+  --palette--16: #4E80FD;
+  --palette--17: #FDC270;
+  --palette--18: #F9E7E7;
+  --palette--19: #f9e7e780;
+  --palette--20: #E2E9FA;
+  --palette--21: #e3eafa80;
 
+  // main theme for the whole project
   --color-text--1: var(--palette--1);
   --color-background--1: var(--palette--2);
   --color-background-gradient-1: linear-gradient(180deg, var(--palette--11), var(--palette--12));
 
+  // dark theme
   --color-text--2: var(--palette--2);
   --color-background--2: var(--palette--1);
 
+  // theme for the list of pages
   --color-text--3: var(--palette--8);
   --color-background--3: var(--palette--13);
 
+  // Base button
+  --color-text--button: var(--palette--8);
+  --color-background--button: var(--palette--13);
+  --color-border--button: var(--palette--13);
+  --color-text-hover--button: var(--palette--8);
+  --color-background-hover--button: var(--palette--14);
+  --color-border-hover--button: var(--palette--14);
 }

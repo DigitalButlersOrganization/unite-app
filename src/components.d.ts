@@ -19,6 +19,8 @@ declare module 'vue' {
     LayoutMainListOfPages: typeof import('./components/Layout/Main/ListOfPages/Index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    UIButton: typeof import('./components/UI/Button.vue')['default']
     UIContainer: typeof import('./components/UI/Container.vue')['default']
+    UIProgressCircular: typeof import('./components/UI/ProgressCircular.vue')['default']
   }
 }
