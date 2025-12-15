@@ -11,12 +11,21 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Aside: typeof import('./components/Aside/Index.vue')['default']
+    CustomAside: typeof import('./components/CustomAside/Index.vue')['default']
+    CustomHeader: typeof import('./components/CustomHeader/Index.vue')['default']
+    CustomMain: typeof import('./components/CustomMain/Index.vue')['default']
+    CustomMainListOfPages: typeof import('./components/CustomMain/ListOfPages/Index.vue')['default']
+    EventCard: typeof import('./components/EventCard/Index.vue')['default']
+    Header: typeof import('./components/Header/Index.vue')['default']
     LayoutAside: typeof import('./components/Layout/Aside/Index.vue')['default']
     LayoutEventCard: typeof import('./components/Layout/EventCard/Index.vue')['default']
     LayoutHeader: typeof import('./components/Layout/Header/Index.vue')['default']
     LayoutMain: typeof import('./components/Layout/Main/Index.vue')['default']
     LayoutMainGrid: typeof import('./components/Layout/MainGrid/Index.vue')['default']
     LayoutMainListOfPages: typeof import('./components/Layout/Main/ListOfPages/Index.vue')['default']
+    Login: typeof import('./components/Login/Index.vue')['default']
+    MainGrid: typeof import('./components/MainGrid/Index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     UIButton: typeof import('./components/UI/Button.vue')['default']

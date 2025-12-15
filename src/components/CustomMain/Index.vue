@@ -6,7 +6,7 @@ import { ROUTES } from '@/router/routes'
 <template>
   <main class="main">
     <div class="main__list">
-      <LayoutMainListOfPages />
+      <CustomMainListOfPages />
     </div>
     <div class="main__content">
       <UIButton

@@ -162,41 +162,48 @@ const isDisabled = computed(() => props.isDisabled || props.isLoading)
     border-radius: 100vmax;
   }
 
-  @mixin button-status($text, $text-hover, $bg, $bg-hover, $border, $border-hover) {
+  @mixin button-status(
+    $text,
+    $bg,
+    $bg-hover,
+    $text-hover: $text,
+    $border: $bg,
+    $border-hover: $bg-hover
+  ) {
     --color-text--button: var(--palette--#{$text});
-    --color-background--button: var(--palette--#{$bg});
-    --color-border--button: var(--palette--#{$border});
     --color-text-hover--button: var(--palette--#{$text-hover});
+    --color-background--button: var(--palette--#{$bg});
     --color-background-hover--button: var(--palette--#{$bg-hover});
+    --color-border--button: var(--palette--#{$border});
     --color-border-hover--button: var(--palette--#{$border-hover});
   }
 
   &--status-base {
-    @include button-status(8, 8, 13, 14, 13, 14);
+    @include button-status(8, 13, 14);
   }
   &--status-success {
-    @include button-status(6, 6, 13, 15, 13, 15);
+    @include button-status(6, 13, 15);
   }
   &--status-active {
-    @include button-status(2, 2, 5, 16, 5, 16);
+    @include button-status(2, 5, 16);
   }
   &--status-paused {
-    @include button-status(2, 2, 7, 17, 7, 17);
+    @include button-status(2, 7, 17);
   }
   &--status-not-approved {
-    @include button-status(10, 10, 18, 19, 18, 19);
+    @include button-status(10, 18, 19);
   }
   &--status-available {
-    @include button-status(5, 5, 20, 21, 20, 21);
+    @include button-status(5, 20, 21);
   }
   &--status-cta-1 {
-    @include button-status(5, 2, 2, 5, 2, 2);
+    @include button-status(5, 2, 5, $text-hover: 2, $border-hover: 2);
   }
   &--status-cta-2 {
-    @include button-status(2, 2, 5, 22, 5, 22);
+    @include button-status(2, 5, 22);
   }
   &--status-cta-3 {
-    @include button-status(5, 2, 2, 22, 22, 22);
+    @include button-status(5, 2, 22, $text-hover: 2);
   }
 }
 </style>

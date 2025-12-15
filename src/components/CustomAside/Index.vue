@@ -3,11 +3,11 @@
 <template>
   <aside class="aside">
     <div class="aside__scroll-box">
-      <LayoutEventCard />
-      <LayoutEventCard />
-      <LayoutEventCard />
-      <LayoutEventCard />
-      <LayoutEventCard />
+      <EventCard />
+      <EventCard />
+      <EventCard />
+      <EventCard />
+      <EventCard />
     </div>
   </aside>
 </template>
