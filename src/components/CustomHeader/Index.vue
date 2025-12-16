@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
-import IconLogOut from '@/assets/icons/log-out.svg'
-import { ROUTES } from '@/router/routes'
+import { RouterLink } from 'vue-router';
+import IconLogOut from '@/assets/icons/log-out.svg';
+import { ROUTES } from '@/router/routes';
 </script>
 
 <template>

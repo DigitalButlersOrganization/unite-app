@@ -1,4 +1,4 @@
-@use "functions" as *;
+@use 'functions' as *;
 
 .heading {
   font-weight: 600;
@@ -11,14 +11,12 @@
     font-weight: 500;
     font-size: linearClump(2, 1.5);
     letter-spacing: -0.03em;
-
   }
 
   &--xl {
     font-weight: 700;
     font-size: linearClump(3, 2);
     letter-spacing: -0.06em;
-
   }
 }
 

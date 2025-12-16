@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia'
-import type { IUserState } from '@/types/user'
+import { defineStore } from 'pinia';
+import type { IUserState } from '@/types/user';
 
 export const useUserStore = defineStore('UserStore', {
   state: (): IUserState => {
@@ -8,21 +8,21 @@ export const useUserStore = defineStore('UserStore', {
 
       isFetchingUser: false,
       isAuthenticated: false,
-    }
+    };
   },
   getters: {
     getUserData(state): IUserState {
-      return state
+      return state;
     },
   },
   actions: {
     setFetchingUser(data: boolean) {
-      this.$patch({ isFetchingUser: data })
+      this.$patch({ isFetchingUser: data });
     },
     setUserData(data: { email: string; isAuthenticated: boolean }) {
-      this.$patch({ email: data.email, isAuthenticated: data.isAuthenticated })
+      this.$patch({ email: data.email, isAuthenticated: data.isAuthenticated });
     },
   },
-})
+});
 
-export type IUserStore = ReturnType<typeof useUserStore>
+export type IUserStore = ReturnType<typeof useUserStore>;

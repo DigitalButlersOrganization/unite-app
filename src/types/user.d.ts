@@ -1,6 +1,6 @@
 export interface IUserState {
-  email: string
+  email: string;
 
-  isFetchingUser: boolean
-  isAuthenticated: boolean
+  isFetchingUser: boolean;
+  isAuthenticated: boolean;
 }

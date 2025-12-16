@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import { ROUTES } from '@/router/routes'
+import { createRouter, createWebHistory } from 'vue-router';
+import { ROUTES } from '@/router/routes';
 // import { useUserStore } from '@/stores'
 // import { watch } from 'vue'
 
@@ -31,7 +31,7 @@ const router = createRouter({
       meta: { keepAlive: true, isAuthPage: true },
     },
   ],
-})
+});
 
 // router.beforeEach((to, from, next) => {
 //   const userStore = useUserStore()
@@ -58,4 +58,4 @@ const router = createRouter({
 //   )
 // })
 
-export default router
+export default router;

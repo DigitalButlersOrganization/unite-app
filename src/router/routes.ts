@@ -15,4 +15,4 @@ export const ROUTES = {
     PATH: '/ui-guide',
     NAME: 'UIGuide',
   },
-}
+};

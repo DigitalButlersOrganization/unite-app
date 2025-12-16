@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { BUTTON_BORDERS, BUTTON_SIZES, BUTTON_STATUSES } from '@/enums'
-import { ROUTES } from '@/router/routes'
+import { BUTTON_BORDERS, BUTTON_SIZES, BUTTON_STATUSES } from '@/enums';
+import { ROUTES } from '@/router/routes';
 </script>
 
 <template>

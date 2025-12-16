@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed } from 'vue';
 
-const SVG_SIZE = 100
-const SVG_CIRCLE_PERIMETER = Math.PI * SVG_SIZE
-const MIN_LOADER_DASHARRAY = `${SVG_CIRCLE_PERIMETER * 0.3} ${SVG_CIRCLE_PERIMETER}`
-const MAX_LOADER_DASHARRAY = `${SVG_CIRCLE_PERIMETER * 0.9} ${SVG_CIRCLE_PERIMETER}`
+const SVG_SIZE = 100;
+const SVG_CIRCLE_PERIMETER = Math.PI * SVG_SIZE;
+const MIN_LOADER_DASHARRAY = `${SVG_CIRCLE_PERIMETER * 0.3} ${SVG_CIRCLE_PERIMETER}`;
+const MAX_LOADER_DASHARRAY = `${SVG_CIRCLE_PERIMETER * 0.9} ${SVG_CIRCLE_PERIMETER}`;
 
 const props = defineProps({
   size: {
@@ -23,15 +23,15 @@ const props = defineProps({
     default: false,
     required: false,
   },
-})
+});
 
 const classes = computed(() => ({
   'progress-circular--loader': props.isLoader,
-}))
+}));
 
 const progressDasharray = computed(
   () => `${SVG_CIRCLE_PERIMETER * props.value} ${SVG_CIRCLE_PERIMETER}`,
-)
+);
 </script>
 
 <template>
