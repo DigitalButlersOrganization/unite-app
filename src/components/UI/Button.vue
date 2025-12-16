@@ -6,22 +6,23 @@ import {
   BUTTON_TYPES,
   BUTTON_BORDERS,
   BUTTON_STATUSES,
-} from '@/enums'
-import { computed } from 'vue'
-import { RouterLink } from 'vue-router'
+} from '@/enums';
+import { computed } from 'vue';
+import { RouterLink } from 'vue-router';
 
-const MAIN_CLASS = 'button'
+const MAIN_CLASS = 'button';
+
 interface Props {
-  tag?: BUTTON_TAGS
-  size?: BUTTON_SIZES
-  style?: BUTTON_STYLES
-  type?: BUTTON_TYPES
-  border?: BUTTON_BORDERS
-  status?: BUTTON_STATUSES
-  to?: string
-  isDisabled?: boolean
-  isFullWidth?: boolean
-  isLoading?: boolean
+  tag?: BUTTON_TAGS;
+  size?: BUTTON_SIZES;
+  style?: BUTTON_STYLES;
+  type?: BUTTON_TYPES;
+  border?: BUTTON_BORDERS;
+  status?: BUTTON_STATUSES;
+  to?: string;
+  isDisabled?: boolean;
+  isFullWidth?: boolean;
+  isLoading?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -30,14 +31,14 @@ const props = withDefaults(defineProps<Props>(), {
   size: BUTTON_SIZES.MEDIUM,
   isFullWidth: false,
   isLoading: false,
-})
+});
 
 const tag = computed(() => {
-  if (props.to || props.tag === 'a') return RouterLink
-  return props.tag
-})
+  if (props.to || props.tag === 'a') return RouterLink;
+  return props.tag;
+});
 
-const isDisabled = computed(() => props.isDisabled || props.isLoading)
+const isDisabled = computed(() => props.isDisabled || props.isLoading);
 </script>
 
 <template>
@@ -156,10 +157,10 @@ const isDisabled = computed(() => props.isDisabled || props.isLoading)
     gap: 1.5rem;
   }
   &--border-medium {
-    border-radius: 0.5rem;
+    border-radius: var(--border-radius--1);
   }
   &--border-large {
-    border-radius: 100vmax;
+    border-radius: var(--border-radius--3);
   }
 
   @mixin button-status(

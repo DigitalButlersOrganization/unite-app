@@ -1,7 +1,4 @@
-<script setup lang="ts">
-import { BUTTON_BORDERS, BUTTON_SIZES, BUTTON_STATUSES } from '@/enums'
-import { ROUTES } from '@/router/routes'
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <main class="main">
@@ -9,39 +6,6 @@ import { ROUTES } from '@/router/routes'
       <CustomMainListOfPages />
     </div>
     <div class="main__content">
-      <UIButton
-        :border="BUTTON_BORDERS.LARGE"
-        :size="BUTTON_SIZES.MEDIUM"
-        :status="BUTTON_STATUSES.CTA_1"
-        :to="ROUTES.HOME.PATH"
-        class=""
-      >
-        <p class="paragraph paragraph--l">
-          {{ ROUTES.HOME.NAME }}
-        </p>
-      </UIButton>
-      <UIButton
-        :border="BUTTON_BORDERS.LARGE"
-        :size="BUTTON_SIZES.MEDIUM"
-        :status="BUTTON_STATUSES.CTA_2"
-        :to="ROUTES.HOME.PATH"
-        class=""
-      >
-        <p class="paragraph paragraph--l">
-          {{ ROUTES.HOME.NAME }}
-        </p>
-      </UIButton>
-      <UIButton
-        :border="BUTTON_BORDERS.LARGE"
-        :size="BUTTON_SIZES.MEDIUM"
-        :status="BUTTON_STATUSES.CTA_3"
-        :to="ROUTES.HOME.PATH"
-        class=""
-      >
-        <p class="paragraph paragraph--l">
-          {{ ROUTES.HOME.NAME }}
-        </p>
-      </UIButton>
       <slot />
     </div>
   </main>
@@ -60,8 +24,7 @@ import { ROUTES } from '@/router/routes'
     flex-shrink: 0;
   }
   &__content {
-    background: #ccc;
-    // background: var(--color-background--1);
+    background: var(--color-background--1);
     flex-grow: 1;
     overflow: auto;
     padding: 3rem;

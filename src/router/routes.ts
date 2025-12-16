@@ -11,4 +11,8 @@ export const ROUTES = {
     PATH: '/login',
     NAME: 'Login',
   },
+  UI_GUIDE: {
+    PATH: '/ui-guide',
+    NAME: 'UIGuide',
+  },
 }

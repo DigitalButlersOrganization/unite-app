@@ -1,5 +1,8 @@
 <script setup lang="ts"></script>
 
 <template>
-  <main>Hello! This is Home View.</main>
+  <main>
+    <p>!!!LOGIN PAGE!!! !!!LOGIN PAGE!!! !!!LOGIN PAGE!!!</p>
+    <LoginForm />
+  </main>
 </template>

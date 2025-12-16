@@ -2,8 +2,6 @@
 import { useUserStore } from './stores/user.store'
 
 const userStore = useUserStore()
-console.log(userStore.getUserData)
-
 const toggleUserData = () => {
   userStore.setUserData({
     ...userStore.getUserData,

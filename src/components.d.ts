@@ -25,11 +25,13 @@ declare module 'vue' {
     LayoutMainGrid: typeof import('./components/Layout/MainGrid/Index.vue')['default']
     LayoutMainListOfPages: typeof import('./components/Layout/Main/ListOfPages/Index.vue')['default']
     Login: typeof import('./components/Login/Index.vue')['default']
+    LoginForm: typeof import('./components/LoginForm/Index.vue')['default']
     MainGrid: typeof import('./components/MainGrid/Index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     UIButton: typeof import('./components/UI/Button.vue')['default']
     UIContainer: typeof import('./components/UI/Container.vue')['default']
     UIProgressCircular: typeof import('./components/UI/ProgressCircular.vue')['default']
+    UITextInputField: typeof import('./components/UI/TextInputField.vue')['default']
   }
 }
