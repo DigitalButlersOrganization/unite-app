@@ -204,7 +204,7 @@ const isDisabled = computed(() => props.isDisabled || props.isLoading);
     @include button-status(2, 5, 22);
   }
   &--status-cta-3 {
-    @include button-status(5, 2, 22, $text-hover: 2);
+    @include button-status(5, 2, 22, $text-hover: 2, $border: 5, $border-hover: 22);
   }
 }
 </style>

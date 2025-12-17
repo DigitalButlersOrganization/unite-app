@@ -13,7 +13,7 @@ const router = useRouter();
 
 // refs
 
-const email = ref<string>(userStore.email || '');
+const email = ref<string>('');
 const password = ref<string>('');
 const emailTextError = ref<string>('');
 const passwordTextError = ref<string>('');
@@ -45,16 +45,32 @@ const handleSubmit = async () => {
 
 <template>
   <form class="form" @submit.prevent="handleSubmit">
-    <UITextInputField
-      ref="emailHTMLElement"
-      id="login-email"
-      v-model="email"
-      :label="'emailLabel'"
-      :placeholder="'Enter your email'"
-      type="email"
-      :textError="emailTextError"
-      @input="emailTextError = ''"
-    />
+    <div class="form__row">
+      <UITextInputField
+        ref="emailHTMLElement"
+        id="login-email"
+        v-model="email"
+        :label="'Email'"
+        :placeholder="'Enter your email'"
+        type="email"
+        :textError="emailTextError"
+        @input="emailTextError = ''"
+      />
+    </div>
+
+    <div class="form__row">
+      <UITextInputField
+        ref="passwordHTMLElement"
+        id="login-password"
+        v-model="password"
+        :label="'Code'"
+        :placeholder="'Enter your password'"
+        type="password"
+        :textError="passwordTextError"
+        @input="passwordTextError = ''"
+      />
+    </div>
+
     <UIButton
       :border="BUTTON_BORDERS.LARGE"
       :size="BUTTON_SIZES.LARGE"
@@ -67,12 +83,9 @@ const handleSubmit = async () => {
 </template>
 
 <style lang="scss" scoped>
-.event-card {
-  width: 100%;
-  border-radius: var(--border-radius--2);
-  overflow: hidden;
+.form {
   display: flex;
   flex-direction: column;
-  background: var(--color-background--1);
+  gap: 1.25rem;
 }
 </style>

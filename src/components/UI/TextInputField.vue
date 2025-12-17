@@ -5,7 +5,8 @@ import IconEye from '@/assets/icons/eye.svg';
 
 interface IProps {
   modelValue: string | number | undefined;
-  label?: string;
+  label: string;
+  isHiddenLabel?: boolean;
   placeholder?: string;
   type?: 'text' | 'number' | 'password' | 'email';
   id?: string;
@@ -89,54 +90,61 @@ const onBlockArrow = (event: KeyboardEvent) => {
 </script>
 
 <template>
-  <div class="flex flex-column text-field">
-    <label v-if="props.label" :for="props.id" class="paragraph paragraph--m">
+  <div class="text-field">
+    <label
+      v-if="props.label"
+      :for="props.id"
+      :class="isHiddenLabel ? 'visually-hidden' : ''"
+      class="paragraph paragraph--l"
+    >
       {{ props.label }}
     </label>
-    <div v-if="!props.textarea" class="relative" style="inline-size: 100%">
-      <input
+    <div class="text-field__inner">
+      <div v-if="!props.textarea" class="relative" style="inline-size: 100%">
+        <input
+          ref="inputRef"
+          :id="props.id"
+          :value="props.modelValue"
+          :aria-describedby="`${props.label}-help`"
+          :type="type"
+          class="text-field__input paragraph paragraph--l"
+          :class="classes"
+          autocomplete="off"
+          :placeholder="props.placeholder"
+          :disabled="props.disabled"
+          :min="props.min"
+          :max="props.max"
+          @input="validateInput($event.target as HTMLInputElement)"
+          @keydown="onBlockArrow"
+        />
+        <div v-if="isPassword" class="text-field__input-icon-box">
+          <button
+            @click.prevent.stop="watchPassword = !watchPassword"
+            type="button"
+            class="text-field__input-icon-button"
+          >
+            <div class="input-icon">
+              <IconEye v-if="watchPassword" />
+              <IconEyeOff v-else />
+            </div>
+          </button>
+        </div>
+      </div>
+      <textarea
+        v-else
         ref="inputRef"
         :id="props.id"
         :value="props.modelValue"
         :aria-describedby="`${props.label}-help`"
-        :type="type"
         class="text-field__input paragraph paragraph--m"
         :class="classes"
-        autocomplete="off"
         :placeholder="props.placeholder"
         :disabled="props.disabled"
-        :min="props.min"
-        :max="props.max"
-        @input="validateInput($event.target as HTMLInputElement)"
-        @keydown="onBlockArrow"
+        auto-resize
+        :rows="props.rows"
+        @input="(event: any) => emits('update:modelValue', event.target?.value)"
       />
-      <div v-if="isPassword" class="text-field__input-icon">
-        <shared-button v-if="watchPassword" isIcon @click.prevent.stop="watchPassword = false">
-          <template v-slot:icon>
-            <IconEye />
-          </template>
-        </shared-button>
-        <shared-button v-else isIcon @click.prevent.stop="watchPassword = true">
-          <template v-slot:icon>
-            <IconEyeOff />
-          </template>
-        </shared-button>
-      </div>
     </div>
-    <textarea
-      v-else
-      ref="inputRef"
-      :id="props.id"
-      :value="props.modelValue"
-      :aria-describedby="`${props.label}-help`"
-      class="text-field__input paragraph paragraph--m"
-      :class="classes"
-      :placeholder="props.placeholder"
-      :disabled="props.disabled"
-      auto-resize
-      :rows="props.rows"
-      @input="(event: any) => emits('update:modelValue', event.target?.value)"
-    />
     <transition transition name="fade" mode="out-in">
       <span v-if="textError" class="text-field__error">{{ props.textError }}</span>
     </transition>
@@ -145,21 +153,23 @@ const onBlockArrow = (event: KeyboardEvent) => {
 
 <style scoped lang="scss">
 .text-field {
-  row-gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.75rem;
 
+  &__inner {
+    width: 100%;
+    border-radius: var(--border-radius--3);
+  }
   &__input {
-    padding-inline: 1rem;
-    padding-block: 0.75rem;
+    padding-inline: 1.25rem;
+    padding-block: 1.125rem;
     border: 1px solid var(--palette--23);
     border-radius: var(--border-radius--3);
     color: var(--color-text--1);
     transition: all 0.2s linear;
     inline-size: 100%;
     resize: none;
-
-    &:hover {
-      // box-shadow: var(--shadow-sm);
-    }
 
     &::placeholder {
       color: var(--palette--8);
@@ -173,7 +183,6 @@ const onBlockArrow = (event: KeyboardEvent) => {
       background-color: var(--palette--4);
       border: unset;
       box-shadow: unset;
-      // color: var(--color-text-tertiary);
     }
 
     &--password {
@@ -184,12 +193,36 @@ const onBlockArrow = (event: KeyboardEvent) => {
       border: 1px solid var(--color-text-error);
     }
 
-    &-icon {
+    &-icon-box {
       position: absolute;
-      inset-inline-end: 1rem;
-      inset-block-start: 50%;
-      transform: translateY(-50%);
-      color: var(--color-text--1);
+      width: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      inset: 0 1em auto auto;
+    }
+    &-icon-button {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      background-color: transparent;
+      border: none;
+      border-radius: none;
+      outline: none;
+      padding: 0;
+      transition: var(--transition-default);
+
+      &:hover {
+        opacity: 0.6;
+      }
+
+      .input-icon {
+        width: 1rem;
+        height: 1rem;
+      }
     }
   }
 
