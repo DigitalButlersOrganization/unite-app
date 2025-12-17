@@ -19,6 +19,34 @@ export const auth = {
         console.log(1);
       });
   },
+  getOTPCode: async (payload: {
+    email: string;
+    userStore: IUserStore;
+    loadingStore: ILoadingStore;
+  }) => {
+    const { email, userStore, loadingStore } = payload;
+    instance
+      .post('/auth/sign-in', { email, requestOtp: true })
+      .then((response) => {
+        if (response.data.message) {
+          toast(response.data.message, { type: 'success' });
+        }
+
+        userStore.setUserData({ isOTPCodeSended: true });
+      })
+      .catch(({ response }) => {
+        console.log(response);
+
+        if (response && response.data && response.data.message) {
+          toast(response.data.message, { type: 'error' });
+        } else {
+          toast('An unexpected error occurred (getOTPCode)', { type: 'error' });
+        }
+      })
+      .finally(() => {
+        loadingStore.set(false);
+      });
+  },
   login: async (payload: {
     email: string;
     OTPCode: string;
@@ -30,8 +58,9 @@ export const auth = {
     instance
       .post('/auth/sign-in', { email, requestOtp: false, password: OTPCode })
       .then((response) => {
+        console.log(response);
         router.push({ path: ROUTES.HOME.PATH });
-        userStore.setUserData({ ...response.data.userData, isAuthenticated: true });
+        userStore.setUserData({ isAuthenticated: true });
       })
       .catch(({ response }) => {
         if (response && response.data && response.data.error) {
@@ -39,32 +68,7 @@ export const auth = {
         } else {
           toast('An unexpected error occurred (login)', { type: 'error' });
         }
-      })
-      .finally(() => {
-        loadingStore.set(false);
-      });
-  },
-  getOTPCode: async (payload: {
-    email: string;
-    userStore: IUserStore;
-    loadingStore: ILoadingStore;
-  }) => {
-    const { email, userStore, loadingStore } = payload;
-    instance
-      .post('/auth/sign-in', { email, requestOtp: true })
-      .then((response) => {
-        console.log(response, 'OTP code sent');
-        userStore.setUserData({ ...response.data.userData, isOTPCodeSended: true });
-        // router.push({ path: ROUTES.HOME.PATH });
-      })
-      .catch(({ response }) => {
-        console.log(response);
-
-        if (response && response.data && response.data.error) {
-          toast(response.data.error, { type: 'error' });
-        } else {
-          toast('An unexpected error occurred (getOTPCode)', { type: 'error' });
-        }
+        userStore.setUserData({ isOTPCodeSended: false });
       })
       .finally(() => {
         loadingStore.set(false);

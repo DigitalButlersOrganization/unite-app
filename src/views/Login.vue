@@ -4,8 +4,6 @@
   <main>
     <SmallSectionLayout>
       <div class="card">
-        <p>!!!LOGIN PAGE!!! !!!LOGIN PAGE!!! !!!LOGIN PAGE!!!</p>
-
         <LoginForm />
       </div>
     </SmallSectionLayout>

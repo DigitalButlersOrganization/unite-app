@@ -43,7 +43,6 @@
     align-items: center;
     min-height: 100%;
     width: 100%;
-    background: linear-gradient(45deg, black, transparent);
     padding-block: 3rem;
   }
   &__content {

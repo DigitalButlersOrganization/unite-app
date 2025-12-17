@@ -8,19 +8,12 @@ import { useRouter } from 'vue-router';
 
 const userStore = useUserStore();
 const loadingStore = useLoadingStore();
-
 const router = useRouter();
-
-// refs
 
 const email = ref<string>('');
 const OTPCode = ref<string>('');
 const emailTextError = ref<string>('');
 const OTPCodeTextError = ref<string>('');
-
-const getData = async () => {
-  await api.auth.getUser();
-};
 
 const handleSubmit = async () => {
   let hasError = false;
@@ -70,8 +63,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  userStore.isOtpCodeSended: {{ userStore.isOTPCodeSended }}
-  <button @click="getData">getData</button>
+  <!-- <button @click="async () => await api.auth.getUser()">getData</button> -->
   <form novalidate class="form" @submit.prevent="handleSubmit">
     <div class="form__row">
       <UITextInputField
@@ -86,7 +78,7 @@ const handleSubmit = async () => {
       />
     </div>
 
-    <div class="form__row">
+    <div v-if="userStore.isOTPCodeSended" class="form__row">
       <UITextInputField
         ref="passwordHTMLElement"
         id="login-password"
@@ -105,6 +97,7 @@ const handleSubmit = async () => {
       :status="BUTTON_STATUSES.CTA_2"
       :type="BUTTON_TYPES.SUBMIT"
       :isLoading="loadingStore.isLoading"
+      :isDisabled="email.trim().length === 0"
     >
       <p class="paragraph paragraph--l">Get OTP code</p>
     </UIButton>
