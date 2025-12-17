@@ -4,35 +4,31 @@ import type { IUserStore } from '@/stores/user.store';
 import type { ILoadingStore } from '@/stores/loading.store';
 import type { Router } from 'vue-router';
 import { ROUTES } from '@/router/routes';
-import type { IStore } from '@/stores';
+// import type { IStore } from '@/stores';
 
 export const auth = {
-  getUser: async ({ store }: { store: IStore }) => {
+  getUser: async () => {
     instance
-      .get('/api/user/current')
+      .get('/user/all')
       .then((response) => {
         if (response.status === 200) {
-          const userStore = store.useUserStore();
-
-          userStore.setUserData({ email: response.data.user.email, isAuthenticated: true });
+          console.log(response);
         }
       })
       .finally(() => {
-        const userStore = store.useUserStore();
-        userStore.setFetchingUser(false);
+        console.log(1);
       });
   },
   login: async (payload: {
     email: string;
-    password: string;
-    // rememberMe: boolean
+    OTPCode: string;
     userStore: IUserStore;
     loadingStore: ILoadingStore;
     router: Router;
   }) => {
-    const { email, password, userStore, loadingStore, router } = payload;
+    const { email, OTPCode, userStore, loadingStore, router } = payload;
     instance
-      .post('/auth/login', { email, password })
+      .post('/auth/sign-in', { email, requestOtp: false, password: OTPCode })
       .then((response) => {
         router.push({ path: ROUTES.HOME.PATH });
         userStore.setUserData({ ...response.data.userData, isAuthenticated: true });
@@ -41,7 +37,33 @@ export const auth = {
         if (response && response.data && response.data.error) {
           toast(response.data.error, { type: 'error' });
         } else {
-          toast('An unexpected error occurred', { type: 'error' });
+          toast('An unexpected error occurred (login)', { type: 'error' });
+        }
+      })
+      .finally(() => {
+        loadingStore.set(false);
+      });
+  },
+  getOTPCode: async (payload: {
+    email: string;
+    userStore: IUserStore;
+    loadingStore: ILoadingStore;
+  }) => {
+    const { email, userStore, loadingStore } = payload;
+    instance
+      .post('/auth/sign-in', { email, requestOtp: true })
+      .then((response) => {
+        console.log(response, 'OTP code sent');
+        userStore.setUserData({ ...response.data.userData, isOTPCodeSended: true });
+        // router.push({ path: ROUTES.HOME.PATH });
+      })
+      .catch(({ response }) => {
+        console.log(response);
+
+        if (response && response.data && response.data.error) {
+          toast(response.data.error, { type: 'error' });
+        } else {
+          toast('An unexpected error occurred (getOTPCode)', { type: 'error' });
         }
       })
       .finally(() => {

@@ -2,7 +2,7 @@
 import { BUTTON_BORDERS, BUTTON_SIZES, BUTTON_STATUSES, BUTTON_TYPES } from '@/enums';
 import { api } from '@/services/api';
 import { useLoadingStore, useUserStore } from '@/stores';
-import { emailRegex, passwordRegex } from '@/utils';
+import { emailRegex, otpCodeRegex } from '@/utils';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -14,37 +14,65 @@ const router = useRouter();
 // refs
 
 const email = ref<string>('');
-const password = ref<string>('');
+const OTPCode = ref<string>('');
 const emailTextError = ref<string>('');
-const passwordTextError = ref<string>('');
+const OTPCodeTextError = ref<string>('');
+
+const getData = async () => {
+  await api.auth.getUser();
+};
 
 const handleSubmit = async () => {
-  console.log(111);
   let hasError = false;
-  if (!emailRegex.test(email.value.trim())) {
-    emailTextError.value = 'invalidEmail';
-    hasError = true;
+
+  const handleEmailInput = () => {
+    if (!emailRegex.test(email.value.trim())) {
+      emailTextError.value = 'The data in the email field is not valid.';
+      hasError = true;
+    }
+  };
+  const handleOTPCodeInput = () => {
+    if (!otpCodeRegex.test(OTPCode.value.trim())) {
+      OTPCodeTextError.value = 'The data in the OTP code field is not valid.';
+      hasError = true;
+    }
+  };
+
+  if (!userStore.isOTPCodeSended) {
+    console.log('!userStore.isOTPCodeSended', !userStore.isOTPCodeSended);
+
+    handleEmailInput();
+    if (hasError) return;
+
+    await api.auth.getOTPCode({
+      email: email.value,
+      userStore,
+      loadingStore,
+    });
+  } else {
+    console.log('userStore.isOTPCodeSended', userStore.isOTPCodeSended);
+
+    handleEmailInput();
+    handleOTPCodeInput();
+    if (hasError) return;
+
+    await api.auth.login({
+      email: email.value,
+      OTPCode: OTPCode.value,
+      userStore,
+      loadingStore,
+      router,
+    });
   }
-  if (!passwordRegex.test(password.value.trim())) {
-    passwordTextError.value = 'invalidPassword';
-    hasError = true;
-  }
-  if (hasError) return;
 
   loadingStore.set(true);
-
-  await api.auth.login({
-    email: email.value,
-    password: password.value,
-    userStore,
-    loadingStore,
-    router,
-  });
 };
 </script>
 
 <template>
-  <form class="form" @submit.prevent="handleSubmit">
+  userStore.isOtpCodeSended: {{ userStore.isOTPCodeSended }}
+  <button @click="getData">getData</button>
+  <form novalidate class="form" @submit.prevent="handleSubmit">
     <div class="form__row">
       <UITextInputField
         ref="emailHTMLElement"
@@ -62,12 +90,12 @@ const handleSubmit = async () => {
       <UITextInputField
         ref="passwordHTMLElement"
         id="login-password"
-        v-model="password"
+        v-model="OTPCode"
         :label="'Code'"
         :placeholder="'Enter your password'"
         type="password"
-        :textError="passwordTextError"
-        @input="passwordTextError = ''"
+        :textError="OTPCodeTextError"
+        @input="OTPCodeTextError = ''"
       />
     </div>
 
@@ -76,6 +104,7 @@ const handleSubmit = async () => {
       :size="BUTTON_SIZES.LARGE"
       :status="BUTTON_STATUSES.CTA_2"
       :type="BUTTON_TYPES.SUBMIT"
+      :isLoading="loadingStore.isLoading"
     >
       <p class="paragraph paragraph--l">Get OTP code</p>
     </UIButton>

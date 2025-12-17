@@ -146,7 +146,9 @@ const onBlockArrow = (event: KeyboardEvent) => {
       />
     </div>
     <transition transition name="fade" mode="out-in">
-      <span v-if="textError" class="text-field__error">{{ props.textError }}</span>
+      <span v-if="props.textError" class="text-field__error paragraph paragraph--l">
+        {{ props.textError }}
+      </span>
     </transition>
   </div>
 </template>

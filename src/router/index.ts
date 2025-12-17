@@ -16,7 +16,7 @@ const router = createRouter({
       path: ROUTES.ABOUT.PATH,
       name: ROUTES.ABOUT.NAME,
       component: () => import(`@/views/${ROUTES.ABOUT.NAME}.vue`),
-      meta: { keepAlive: false },
+      meta: { keepAlive: true },
     },
     {
       path: ROUTES.LOGIN.PATH,
@@ -28,7 +28,7 @@ const router = createRouter({
       path: ROUTES.UI_GUIDE.PATH,
       name: ROUTES.UI_GUIDE.NAME,
       component: () => import(`@/views/${ROUTES.UI_GUIDE.NAME}.vue`),
-      meta: { keepAlive: true, isAuthPage: true },
+      meta: { keepAlive: true },
     },
   ],
 });

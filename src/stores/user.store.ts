@@ -8,6 +8,8 @@ export const useUserStore = defineStore('UserStore', {
 
       isFetchingUser: false,
       isAuthenticated: false,
+
+      isOTPCodeSended: false,
     };
   },
   getters: {
@@ -19,8 +21,8 @@ export const useUserStore = defineStore('UserStore', {
     setFetchingUser(data: boolean) {
       this.$patch({ isFetchingUser: data });
     },
-    setUserData(data: { email: string; isAuthenticated: boolean }) {
-      this.$patch({ email: data.email, isAuthenticated: data.isAuthenticated });
+    setUserData(data: Partial<IUserState>) {
+      this.$patch(data);
     },
   },
 });

@@ -3,4 +3,6 @@ export interface IUserState {
 
   isFetchingUser: boolean;
   isAuthenticated: boolean;
+
+  isOTPCodeSended: boolean;
 }
