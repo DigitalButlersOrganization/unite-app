@@ -4,7 +4,7 @@ import type { IUserState } from '@/types/user';
 export const useUserStore = defineStore('UserStore', {
   state: (): IUserState => {
     return {
-      email: 'test@gmail.com',
+      email: '',
 
       isFetchingUser: false,
       isAuthenticated: false,

@@ -60,7 +60,7 @@ export const auth = {
       .then((response) => {
         console.log(response);
         router.push({ path: ROUTES.HOME.PATH });
-        userStore.setUserData({ isAuthenticated: true });
+        userStore.setUserData({ isAuthenticated: true, email });
       })
       .catch(({ response }) => {
         if (response && response.data && response.data.error) {
@@ -72,6 +72,28 @@ export const auth = {
       })
       .finally(() => {
         loadingStore.set(false);
+      });
+  },
+  logout: async (payload: { userStore: IUserStore; router: Router }) => {
+    const { userStore, router } = payload;
+    instance
+      .post('/auth/sign-out', {})
+      .then((response) => {
+        console.log(response);
+        router.push({ path: ROUTES.LOGIN.PATH });
+        userStore.setUserData({ isAuthenticated: false, email: '' });
+      })
+      .catch(({ response }) => {
+        console.log(response);
+        if (response && response.data && response.data.error) {
+          toast(response.data.error, { type: 'error' });
+        } else {
+          toast('An unexpected error occurred (login)', { type: 'error' });
+        }
+        userStore.setUserData({ isOTPCodeSended: false });
+      })
+      .finally(() => {
+        console.log('logout');
       });
   },
 };

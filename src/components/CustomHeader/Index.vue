@@ -1,12 +1,25 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 import IconLogOut from '@/assets/icons/log-out.svg';
 import { ROUTES } from '@/router/routes';
+import { api } from '@/services/api';
+import { useUserStore } from '@/stores';
+
+const userStore = useUserStore();
+const router = useRouter();
+
+const logout = async () => {
+  await api.auth.logout({
+    userStore,
+    router,
+  });
+};
 </script>
 
 <template>
   <header class="header">
     <div class="header__layout">
+      {{ userStore.email }}
       <RouterLink class="header__logo-link" :to="ROUTES.HOME.PATH">
         <img alt="Vue logo" class="header__logo-image" src="@/assets/images/logo.png" />
       </RouterLink>
@@ -19,7 +32,7 @@ import { ROUTES } from '@/router/routes';
           <a href="mailto:test@example.com">
             <p class="paragraph paragraph--l">Contact us</p>
           </a>
-          <button class="button button--transparent button--logout">
+          <button @click="logout" class="button button--transparent button--logout">
             <IconLogOut />
             <p class="paragraph paragraph--l">Log out</p>
           </button>
