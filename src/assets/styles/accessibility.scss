@@ -1,0 +1,21 @@
+*:focus-visible {
+  box-shadow:
+    0 0 0 1px var(--palette--1),
+    0 0 0 2px var(--palette--2),
+    0 0 2px 3px var(--palette--1) !important;
+  outline: 2px transparent solid !important;
+  outline-offset: 4px;
+  z-index: 1;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  white-space: nowrap !important;
+  block-size: 1px !important;
+  clip: rect(0, 0, 0, 0) !important;
+  inline-size: 1px !important;
+  overflow: hidden !important;
+}

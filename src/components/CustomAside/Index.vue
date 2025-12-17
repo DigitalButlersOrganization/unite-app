@@ -18,6 +18,8 @@
   overflow: auto;
   border-top-left-radius: var(--border-radius--2);
   border-top-right-radius: var(--border-radius--2);
+  --scrollbar-background-color: #fff;
+  --scrollbar-thumb-color: var(--palette--23);
 
   &__scroll-box {
     display: flex;

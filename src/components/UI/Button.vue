@@ -206,5 +206,15 @@ const isDisabled = computed(() => props.isDisabled || props.isLoading);
   &--status-cta-3 {
     @include button-status(5, 2, 22, $text-hover: 2, $border: 5, $border-hover: 22);
   }
+  &--status-cta-1,
+  &--status-cta-2,
+  &--status-cta-3 {
+    &[disabled] {
+      color: var(--color-text--3);
+      background-color: var(--palette--23);
+      opacity: 1;
+      border-color: var(--palette--23);
+    }
+  }
 }
 </style>

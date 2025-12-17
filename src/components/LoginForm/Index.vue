@@ -3,7 +3,7 @@ import { BUTTON_BORDERS, BUTTON_SIZES, BUTTON_STATUSES, BUTTON_TYPES } from '@/e
 import { api } from '@/services/api';
 import { useLoadingStore, useUserStore } from '@/stores';
 import { emailRegex, otpCodeRegex } from '@/utils';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const userStore = useUserStore();
@@ -20,13 +20,13 @@ const handleSubmit = async () => {
 
   const handleEmailInput = () => {
     if (!emailRegex.test(email.value.trim())) {
-      emailTextError.value = 'The data in the email field is not valid.';
+      emailTextError.value = 'Enter a valid email';
       hasError = true;
     }
   };
   const handleOTPCodeInput = () => {
     if (!otpCodeRegex.test(OTPCode.value.trim())) {
-      OTPCodeTextError.value = 'The data in the OTP code field is not valid.';
+      OTPCodeTextError.value = 'Enter the 6-digit numeric code that was sent to your email';
       hasError = true;
     }
   };
@@ -36,6 +36,8 @@ const handleSubmit = async () => {
 
     handleEmailInput();
     if (hasError) return;
+
+    OTPCode.value = '';
 
     await api.auth.getOTPCode({
       email: email.value,
@@ -60,6 +62,19 @@ const handleSubmit = async () => {
 
   loadingStore.set(true);
 };
+
+const isDisabledSubmitButton = computed(() => {
+  if (userStore.isOTPCodeSended) {
+    if (email.value.trim().length === 0 || OTPCode.value.trim().length === 0) {
+      return true;
+    }
+  } else {
+    if (email.value.trim().length === 0) {
+      return true;
+    }
+  }
+  return false;
+});
 </script>
 
 <template>
@@ -71,7 +86,7 @@ const handleSubmit = async () => {
         id="login-email"
         v-model="email"
         :label="'Email'"
-        :placeholder="'Enter your email'"
+        :placeholder="'email@gmail.com'"
         type="email"
         :textError="emailTextError"
         @input="emailTextError = ''"
@@ -84,7 +99,7 @@ const handleSubmit = async () => {
         id="login-password"
         v-model="OTPCode"
         :label="'Code'"
-        :placeholder="'Enter your password'"
+        :placeholder="'******'"
         type="password"
         :textError="OTPCodeTextError"
         @input="OTPCodeTextError = ''"
@@ -97,9 +112,11 @@ const handleSubmit = async () => {
       :status="BUTTON_STATUSES.CTA_2"
       :type="BUTTON_TYPES.SUBMIT"
       :isLoading="loadingStore.isLoading"
-      :isDisabled="email.trim().length === 0"
+      :isDisabled="isDisabledSubmitButton"
     >
-      <p class="paragraph paragraph--l">Get OTP code</p>
+      <p class="paragraph paragraph--l">
+        {{ userStore.isOTPCodeSended ? 'Log in' : 'Get OTP code' }}
+      </p>
     </UIButton>
   </form>
 </template>

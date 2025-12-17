@@ -8,7 +8,7 @@ import { ROUTES } from '@/router/routes';
   <header class="header">
     <div class="header__layout">
       <RouterLink class="header__logo-link" :to="ROUTES.HOME.PATH">
-        <img alt="Vue logo" class="header__logo-image" src="@/assets/icons/logo.png" />
+        <img alt="Vue logo" class="header__logo-image" src="@/assets/images/logo.png" />
       </RouterLink>
 
       <div class="header__navigation-wrapper">
@@ -16,9 +16,9 @@ import { ROUTES } from '@/router/routes';
           <RouterLink :to="ROUTES.LOGIN.PATH">
             <p class="paragraph paragraph--l">{{ ROUTES.LOGIN.NAME }}</p>
           </RouterLink>
-          <RouterLink :to="ROUTES.UI_GUIDE.PATH">
-            <p class="paragraph paragraph--l">{{ ROUTES.UI_GUIDE.NAME }}</p>
-          </RouterLink>
+          <a href="mailto:test@example.com">
+            <p class="paragraph paragraph--l">Contact us</p>
+          </a>
           <button class="button button--transparent button--logout">
             <IconLogOut />
             <p class="paragraph paragraph--l">Log out</p>
@@ -52,6 +52,12 @@ import { ROUTES } from '@/router/routes';
     width: 2rem;
     height: 2rem;
     position: relative;
+    border-radius: 100vmax;
+    transition: var(--transition-default);
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
   &__logo-image {
     position: absolute;
