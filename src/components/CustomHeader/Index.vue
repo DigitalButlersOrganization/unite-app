@@ -13,12 +13,15 @@ import { ROUTES } from '@/router/routes';
 
       <div class="header__navigation-wrapper">
         <nav class="header__navigation">
+          <RouterLink :to="ROUTES.LOGIN.PATH">
+            <p class="paragraph paragraph--l">{{ ROUTES.LOGIN.NAME }}</p>
+          </RouterLink>
           <RouterLink :to="ROUTES.UI_GUIDE.PATH">
-            <div>{{ ROUTES.UI_GUIDE.NAME }}</div>
+            <p class="paragraph paragraph--l">{{ ROUTES.UI_GUIDE.NAME }}</p>
           </RouterLink>
           <button class="button button--transparent button--logout">
             <IconLogOut />
-            <div>Log out</div>
+            <p class="paragraph paragraph--l">Log out</p>
           </button>
         </nav>
       </div>
