@@ -33,7 +33,7 @@ export const auth = {
   },
   getAllEvents: async () => {
     instance
-      .get('/event/all')
+      .get('/event/all', {})
       .then((response) => {
         console.log(response);
       })
