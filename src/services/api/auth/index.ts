@@ -35,13 +35,19 @@ export const auth = {
     instance
       .get('/event/all', {})
       .then((response) => {
-        console.log(response);
+        console.log('✅ Events:', response.data);
       })
       .catch((error) => {
-        console.log('User not authenticated:', error);
+        if (error.response?.status === 500) {
+          console.error('❌ Server error (500):', error.response.data);
+          toast('Server error. Please contact backend team.', { type: 'error' });
+        } else {
+          console.error('❌ Error loading events:', error);
+          toast('Failed to load events', { type: 'error' });
+        }
       })
       .finally(() => {
-        console.log('getting of all events');
+        console.log('getAllEvents request completed');
       });
   },
   getOTPCode: async (payload: {
