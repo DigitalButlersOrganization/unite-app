@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { ROUTES } from '@/router/routes';
-// import { useUserStore } from '@/stores';
-// import { watch } from 'vue';
+import { useUserStore } from '@/stores';
+import { watch } from 'vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,36 +38,36 @@ const router = createRouter({
   ],
 });
 
-// router.beforeEach((to, from, next) => {
-//   const userStore = useUserStore();
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore();
 
-//   const isAuthPage = to.meta.isAuthPage;
+  const isAuthPage = to.meta.isAuthPage;
 
-//   // Ждем пока проверка авторизации завершится
-//   if (userStore.isFetchingUser) {
-//     // Можно добавить watcher для ожидания
-//     const unwatch = watch(
-//       () => userStore.isFetchingUser,
-//       (isFetching) => {
-//         if (!isFetching) {
-//           unwatch();
-//           // Повторно вызываем навигацию после загрузки
-//           next({ ...to, replace: true });
-//         }
-//       },
-//     );
-//     return;
-//   }
+  // Ждем пока проверка авторизации завершится
+  if (userStore.isFetchingUser) {
+    // Можно добавить watcher для ожидания
+    const unwatch = watch(
+      () => userStore.isFetchingUser,
+      (isFetching) => {
+        if (!isFetching) {
+          unwatch();
+          // Повторно вызываем навигацию после загрузки
+          next({ ...to, replace: true });
+        }
+      },
+    );
+    return;
+  }
 
-//   const isAuthenticated = userStore.isAuthenticated;
+  const isAuthenticated = userStore.isAuthenticated;
 
-//   if (!isAuthenticated && !isAuthPage) {
-//     next({ path: ROUTES.LOGIN.PATH });
-//   } else if (isAuthenticated && isAuthPage) {
-//     next({ path: ROUTES.HOME.PATH });
-//   } else {
-//     next();
-//   }
-// });
+  if (!isAuthenticated && !isAuthPage) {
+    next({ path: ROUTES.LOGIN.PATH });
+  } else if (isAuthenticated && isAuthPage) {
+    next({ path: ROUTES.HOME.PATH });
+  } else {
+    next();
+  }
+});
 
 export default router;
