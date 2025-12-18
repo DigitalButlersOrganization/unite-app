@@ -5,7 +5,6 @@ import { ROUTES } from '@/router/routes';
 <template>
   <main>
     <SmallSectionLayout>
-      !!!
       <div class="card">
         <div class="card__layout">
           <div class="card__header">
