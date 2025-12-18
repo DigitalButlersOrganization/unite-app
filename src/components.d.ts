@@ -27,6 +27,7 @@ declare module 'vue' {
     Login: typeof import('./components/Login/Index.vue')['default']
     LoginForm: typeof import('./components/LoginForm/Index.vue')['default']
     MainGrid: typeof import('./components/MainGrid/Index.vue')['default']
+    Milestone: typeof import('./components/Milestone/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SmallSectionLayout: typeof import('./components/SmallSectionLayout/Index.vue')['default']
