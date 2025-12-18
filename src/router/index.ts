@@ -30,6 +30,11 @@ const router = createRouter({
       component: () => import(`@/views/${ROUTES.UI_GUIDE.NAME}.vue`),
       meta: { keepAlive: true },
     },
+    {
+      path: ROUTES.NOT_FOUND.PATH,
+      name: ROUTES.NOT_FOUND.NAME,
+      component: () => import(`@/views/${ROUTES.NOT_FOUND.NAME}.vue`),
+    },
   ],
 });
 
