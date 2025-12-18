@@ -4,19 +4,44 @@ import type { IUserStore } from '@/stores/user.store';
 import type { ILoadingStore } from '@/stores/loading.store';
 import type { Router } from 'vue-router';
 import { ROUTES } from '@/router/routes';
+import type { IStore } from '@/stores';
 // import type { IStore } from '@/stores';
 
 export const auth = {
-  getUser: async () => {
+  getUser: async ({ store }: { store: IStore }) => {
+    const userStore = store.useUserStore();
+
     instance
-      .get('/user/all')
+      .get('/user/current', {})
       .then((response) => {
-        if (response.status === 200) {
-          console.log(response);
+        console.log(response);
+
+        if (response.status === 200 && response.data) {
+          userStore.setUserData({
+            email: response.data.email,
+            isAuthenticated: true,
+          });
         }
       })
+      .catch((error) => {
+        console.log('User not authenticated:', error);
+        userStore.setUserData({ isAuthenticated: false });
+      })
       .finally(() => {
-        console.log(1);
+        userStore.setFetchingUser(false);
+      });
+  },
+  getAllEvents: async () => {
+    instance
+      .get('/event/all')
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log('User not authenticated:', error);
+      })
+      .finally(() => {
+        console.log('getting of all events');
       });
   },
   getOTPCode: async (payload: {
@@ -80,20 +105,20 @@ export const auth = {
       .post('/auth/sign-out', {})
       .then((response) => {
         console.log(response);
-        router.push({ path: ROUTES.LOGIN.PATH });
+        // userStore.logout();
         userStore.setUserData({ isAuthenticated: false, email: '' });
+        router.push({ path: ROUTES.LOGIN.PATH });
       })
       .catch(({ response }) => {
         console.log(response);
         if (response && response.data && response.data.error) {
           toast(response.data.error, { type: 'error' });
         } else {
-          toast('An unexpected error occurred (login)', { type: 'error' });
+          toast('An unexpected error occurred (logout)', { type: 'error' });
         }
-        userStore.setUserData({ isOTPCodeSended: false });
       })
       .finally(() => {
-        console.log('logout');
+        console.log('logout finally');
       });
   },
 };

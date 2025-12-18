@@ -32,8 +32,6 @@ const handleSubmit = async () => {
   };
 
   if (!userStore.isOTPCodeSended) {
-    console.log('!userStore.isOTPCodeSended', !userStore.isOTPCodeSended);
-
     handleEmailInput();
     if (hasError) return;
 
@@ -45,8 +43,6 @@ const handleSubmit = async () => {
       loadingStore,
     });
   } else {
-    console.log('userStore.isOTPCodeSended', userStore.isOTPCodeSended);
-
     handleEmailInput();
     handleOTPCodeInput();
     if (hasError) return;

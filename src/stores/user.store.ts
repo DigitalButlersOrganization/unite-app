@@ -24,6 +24,14 @@ export const useUserStore = defineStore('UserStore', {
     setUserData(data: Partial<IUserState>) {
       this.$patch(data);
     },
+    logout() {
+      this.$patch({
+        email: '',
+        isAuthenticated: false,
+        isOTPCodeSended: false,
+        isFetchingUser: false,
+      });
+    },
   },
 });
 
