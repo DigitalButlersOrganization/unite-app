@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import IconArrowDown1 from '@/assets/icons/arrow-down-1.svg';
 import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
+import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
 </script>
 
 <template>
@@ -57,21 +58,51 @@ import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
     <div class="card__details">
       <div class="card__list-of-triggers">
         <div class="card__trigger-wrapper">
-          <a href="#" class="card__trigger">
-            <p class="paragraph paragraph--l">Milestones</p>
-            <IconArrowRight1 />
+          <a href="#" class="card__trigger js--active">
+            <div class="card__trigger-content">
+              <div class="card__trigger-content-text">
+                <p class="paragraph paragraph--l">Milestones</p>
+              </div>
+              <div style="display: none" class="card__trigger-content-icon">
+                <IconQuestionMark1 />
+              </div>
+              <div style="display: none" class="card__trigger-content-label">New!</div>
+            </div>
+            <div class="card__trigger-arrow">
+              <IconArrowRight1 />
+            </div>
           </a>
         </div>
         <div class="card__trigger-wrapper">
           <a href="#" class="card__trigger">
-            <p class="paragraph paragraph--l">Visa assistance</p>
-            <IconArrowRight1 />
+            <div class="card__trigger-content">
+              <div class="card__trigger-content-text">
+                <p class="paragraph paragraph--l">Visa assistance</p>
+              </div>
+              <div style="display: none" class="card__trigger-content-icon">
+                <IconQuestionMark1 />
+              </div>
+              <div class="card__trigger-content-label">New!</div>
+            </div>
+            <div class="card__trigger-arrow">
+              <IconArrowRight1 />
+            </div>
           </a>
         </div>
         <div class="card__trigger-wrapper">
-          <a href="#" class="card__trigger">
-            <p class="paragraph paragraph--l">Circle</p>
-            <IconArrowRight1 />
+          <a href="#" class="card__trigger card__trigger--disabled">
+            <div class="card__trigger-content">
+              <div class="card__trigger-content-text">
+                <p class="paragraph paragraph--l">Circle</p>
+              </div>
+              <div class="card__trigger-content-icon">
+                <IconQuestionMark1 />
+              </div>
+              <div style="display: none" class="card__trigger-content-label">New!</div>
+            </div>
+            <div class="card__trigger-arrow">
+              <IconArrowRight1 />
+            </div>
           </a>
         </div>
       </div>
@@ -231,13 +262,43 @@ import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
     align-items: center;
     gap: 1rem;
     text-decoration: none;
-    color: var(--palette--8);
+    color: var(--color-text--1);
     background: var(--color-background--1);
     transition: var(--transition-default);
 
+    &.js--active,
     &:hover {
       background: var(--palette--4);
       color: var(--palette--5);
+    }
+    &--disabled {
+      cursor: not-allowed;
+      color: var(--palette--8);
+    }
+
+    &-content {
+      display: flex;
+      align-items: center;
+    }
+    &-content-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.125rem;
+      height: 1.125rem;
+      margin-left: 0.75rem;
+    }
+    &-content-label {
+      margin-left: 0.5rem;
+      padding: 3px 0.375rem 2px;
+      background: var(--palette--5);
+      color: var(--color-text--2);
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: var(--border-radius--3);
+      text-transform: uppercase;
+      line-height: 100%;
+      letter-spacing: -0.03em;
     }
   }
 }
