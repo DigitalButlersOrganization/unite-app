@@ -6,10 +6,15 @@ import * as store from '@/stores';
 
 const userStore = useUserStore();
 
-onMounted(() => {
+onMounted(async () => {
   userStore.setFetchingUser(true);
-  api.auth.getUser({ store });
-  // api.auth.getAllEvents();
+
+  const statusOfUserFetching = await api.auth.getCurrentUser({ store });
+
+  if (!statusOfUserFetching) {
+    userStore.setFetchingUser(true);
+    api.auth.refreshToken({ store });
+  }
 });
 </script>
 

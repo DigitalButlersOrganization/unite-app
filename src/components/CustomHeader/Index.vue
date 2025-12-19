@@ -4,13 +4,14 @@ import IconLogOut from '@/assets/icons/log-out.svg';
 import { ROUTES } from '@/router/routes';
 import { api } from '@/services/api';
 import { useUserStore } from '@/stores';
+import * as store from '@/stores';
 
 const userStore = useUserStore();
 const router = useRouter();
 
 const logout = async () => {
   await api.auth.logout({
-    userStore,
+    store,
     router,
   });
 };
