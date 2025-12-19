@@ -63,9 +63,10 @@ import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
               <div class="card__trigger-content-text">
                 <p class="paragraph paragraph--l">Milestones</p>
               </div>
-              <div class="card__trigger-content-icon">
+              <div style="display: none" class="card__trigger-content-icon">
                 <IconQuestionMark1 />
               </div>
+              <div style="display: none" class="card__trigger-content-label">New!</div>
             </div>
             <div class="card__trigger-arrow">
               <IconArrowRight1 />
@@ -78,9 +79,10 @@ import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
               <div class="card__trigger-content-text">
                 <p class="paragraph paragraph--l">Visa assistance</p>
               </div>
-              <div class="card__trigger-content-icon">
+              <div style="display: none" class="card__trigger-content-icon">
                 <IconQuestionMark1 />
               </div>
+              <div class="card__trigger-content-label">New!</div>
             </div>
             <div class="card__trigger-arrow">
               <IconArrowRight1 />
@@ -88,7 +90,7 @@ import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
           </a>
         </div>
         <div class="card__trigger-wrapper">
-          <a href="#" class="card__trigger">
+          <a href="#" class="card__trigger card__trigger--disabled">
             <div class="card__trigger-content">
               <div class="card__trigger-content-text">
                 <p class="paragraph paragraph--l">Circle</p>
@@ -96,6 +98,7 @@ import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
               <div class="card__trigger-content-icon">
                 <IconQuestionMark1 />
               </div>
+              <div style="display: none" class="card__trigger-content-label">New!</div>
             </div>
             <div class="card__trigger-arrow">
               <IconArrowRight1 />
@@ -259,7 +262,7 @@ import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
     align-items: center;
     gap: 1rem;
     text-decoration: none;
-    color: var(--palette--8);
+    color: var(--color-text--1);
     background: var(--color-background--1);
     transition: var(--transition-default);
 
@@ -267,6 +270,10 @@ import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
     &:hover {
       background: var(--palette--4);
       color: var(--palette--5);
+    }
+    &--disabled {
+      cursor: not-allowed;
+      color: var(--palette--8);
     }
 
     &-content {
@@ -280,6 +287,18 @@ import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
       width: 1.125rem;
       height: 1.125rem;
       margin-left: 0.75rem;
+    }
+    &-content-label {
+      margin-left: 0.5rem;
+      padding: 3px 0.375rem 2px;
+      background: var(--palette--5);
+      color: var(--color-text--2);
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: var(--border-radius--3);
+      text-transform: uppercase;
+      line-height: 100%;
+      letter-spacing: -0.03em;
     }
   }
 }
