@@ -3,10 +3,8 @@ import { RouterLink, useRouter } from 'vue-router';
 import IconLogOut from '@/assets/icons/log-out.svg';
 import { ROUTES } from '@/router/routes';
 import { api } from '@/services/api';
-import { useUserStore } from '@/stores';
 import * as store from '@/stores';
 
-const userStore = useUserStore();
 const router = useRouter();
 
 const logout = async () => {
@@ -20,21 +18,19 @@ const logout = async () => {
 <template>
   <header class="header">
     <div class="header__layout">
-      {{ userStore.email }}
       <RouterLink class="header__logo-link" :to="ROUTES.HOME.PATH">
         <img alt="Vue logo" class="header__logo-image" src="@/assets/images/logo.png" />
       </RouterLink>
 
       <div class="header__navigation-wrapper">
         <nav class="header__navigation">
-          <RouterLink :to="ROUTES.LOGIN.PATH">
-            <p class="paragraph paragraph--l">{{ ROUTES.LOGIN.NAME }}</p>
-          </RouterLink>
-          <a href="mailto:test@example.com">
+          <a href="mailto:test@example.com" class="button button--transparent">
             <p class="paragraph paragraph--l">Contact us</p>
           </a>
-          <button @click="logout" class="button button--transparent button--logout">
-            <IconLogOut />
+          <button @click="logout" class="button button--transparent">
+            <div class="button__icon-wrapper">
+              <IconLogOut />
+            </div>
             <p class="paragraph paragraph--l">Log out</p>
           </button>
         </nav>
@@ -64,6 +60,7 @@ const logout = async () => {
   &__logo-link {
     display: flex;
     width: 2rem;
+    min-width: 2rem;
     height: 2rem;
     position: relative;
     border-radius: 100vmax;
@@ -87,10 +84,22 @@ const logout = async () => {
     gap: 5rem;
 
     .button {
-      &--logout {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: var(--transition-default);
+
+      &__icon-wrapper {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        justify-content: center;
+        width: 1.125rem;
+        min-width: 1.125rem;
+        height: 1.125rem;
+      }
+
+      &:hover {
+        opacity: 0.7;
       }
     }
   }
