@@ -195,7 +195,7 @@ const isDisabled = computed(() => props.isDisabled || props.isLoading);
     @include button-status(10, 18, 19);
   }
   &--status-available {
-    @include button-status(5, 20, 21);
+    @include button-status(5, 20, 4);
   }
   &--status-cta-1 {
     @include button-status(5, 2, 5, $text-hover: 2, $border-hover: 2);

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { auth } from './auth';
 
 export const instance = axios.create({
-  baseURL: import.meta.env.DEV ? '/api/' : 'https://api.unite2030.digitalbutlers.team/api/',
+  baseURL: '/api/',
   timeout: 10000,
   headers: {
     accept: 'application/json',

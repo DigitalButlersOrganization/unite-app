@@ -1,4 +1,4 @@
-import { instance } from '@/services/api';
+import { api, instance } from '@/services/api';
 import { toast } from 'vue3-toastify';
 import type { IUserStore } from '@/stores/user.store';
 import type { ILoadingStore } from '@/stores/loading.store';
@@ -8,40 +8,49 @@ import type { IStore } from '@/stores';
 // import type { IStore } from '@/stores';
 
 export const auth = {
-  getUser: async ({ store }: { store: IStore }) => {
+  getCurrentUser: async (payload: { store: IStore }) => {
+    const { store } = payload;
     const userStore = store.useUserStore();
 
-    instance
+    return instance
       .get('/user/current', {})
       .then((response) => {
-        console.log(response);
-
         if (response.status === 200 && response.data) {
           userStore.setUserData({
             email: response.data.email,
             isAuthenticated: true,
           });
+          api.auth.getAllEvents({ store });
         }
+        return true;
       })
-      .catch((error) => {
-        console.log('User not authenticated:', error);
+      .catch(() => {
         userStore.setUserData({ isAuthenticated: false });
+        return false;
       })
       .finally(() => {
         userStore.setFetchingUser(false);
       });
   },
-  getAllEvents: async () => {
+  getAllEvents: async (payload: { store: IStore }) => {
+    const { store } = payload;
+    const eventsStore = store.useEventsStore();
     instance
-      .get('/event/all')
+      .get('/event/all', {})
       .then((response) => {
-        console.log(response);
+        console.log('✅ Events:', response.data);
+        if (response.data.items) {
+          eventsStore.set(response.data.items);
+        }
       })
       .catch((error) => {
-        console.log('User not authenticated:', error);
-      })
-      .finally(() => {
-        console.log('getting of all events');
+        if (error.response?.status === 500) {
+          console.error('❌ Server error (500):', error.response.data);
+          toast('Server error. Please contact backend team.', { type: 'error' });
+        } else {
+          console.error('❌ Error loading events:', error);
+          toast('Failed to load events', { type: 'error' });
+        }
       });
   },
   getOTPCode: async (payload: {
@@ -56,16 +65,15 @@ export const auth = {
         if (response.data.message) {
           toast(response.data.message, { type: 'success' });
         }
-
         userStore.setUserData({ isOTPCodeSended: true });
       })
       .catch(({ response }) => {
-        console.log(response);
-
         if (response && response.data && response.data.message) {
           toast(response.data.message, { type: 'error' });
         } else {
-          toast('An unexpected error occurred (getOTPCode)', { type: 'error' });
+          toast('An unexpected error occurred while attempting to request the OTP code', {
+            type: 'error',
+          });
         }
       })
       .finally(() => {
@@ -82,8 +90,7 @@ export const auth = {
     const { email, OTPCode, userStore, loadingStore, router } = payload;
     instance
       .post('/auth/sign-in', { email, requestOtp: false, password: OTPCode })
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         router.push({ path: ROUTES.HOME.PATH });
         userStore.setUserData({ isAuthenticated: true, email });
       })
@@ -91,22 +98,37 @@ export const auth = {
         if (response && response.data && response.data.error) {
           toast(response.data.error, { type: 'error' });
         } else {
-          toast('An unexpected error occurred (login)', { type: 'error' });
+          toast('An unexpected error occurred during the authorization attempt', { type: 'error' });
         }
-        userStore.setUserData({ isOTPCodeSended: false });
       })
       .finally(() => {
+        userStore.setUserData({ isOTPCodeSended: false });
         loadingStore.set(false);
       });
   },
-  logout: async (payload: { userStore: IUserStore; router: Router }) => {
-    const { userStore, router } = payload;
+  refreshToken: async (payload: { store: IStore }) => {
+    const { store } = payload;
+    const userStore = store.useUserStore();
+
+    instance
+      .post('/auth/refresh', {})
+      .then((response) => {
+        if (response.status === 200) {
+          api.auth.getCurrentUser({ store });
+        }
+      })
+      .catch(() => {
+        userStore.setFetchingUser(false);
+      });
+  },
+  logout: async (payload: { store: IStore; router: Router }) => {
+    const { store, router } = payload;
+    const userStore = store.useUserStore();
     instance
       .post('/auth/sign-out', {})
       .then((response) => {
         console.log(response);
-        // userStore.logout();
-        userStore.setUserData({ isAuthenticated: false, email: '' });
+        userStore.logout();
         router.push({ path: ROUTES.LOGIN.PATH });
       })
       .catch(({ response }) => {
@@ -116,9 +138,6 @@ export const auth = {
         } else {
           toast('An unexpected error occurred (logout)', { type: 'error' });
         }
-      })
-      .finally(() => {
-        console.log('logout finally');
       });
   },
 };

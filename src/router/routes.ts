@@ -15,4 +15,8 @@ export const ROUTES = {
     PATH: '/ui-guide',
     NAME: 'UIGuide',
   },
+  NOT_FOUND: {
+    PATH: '/:pathMatch(.*)*',
+    NAME: 'NotFound',
+  },
 };
