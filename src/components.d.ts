@@ -11,11 +11,13 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AccentBox: typeof import('./components/AccentBox/Index.vue')['default']
     Aside: typeof import('./components/Aside/Index.vue')['default']
     CustomAside: typeof import('./components/CustomAside/Index.vue')['default']
     CustomHeader: typeof import('./components/CustomHeader/Index.vue')['default']
     CustomMain: typeof import('./components/CustomMain/Index.vue')['default']
     CustomMainListOfPages: typeof import('./components/CustomMain/ListOfPages/Index.vue')['default']
+    CustomMainListOfTabs: typeof import('./components/CustomMain/ListOfTabs/Index.vue')['default']
     EventCard: typeof import('./components/EventCard/Index.vue')['default']
     Header: typeof import('./components/Header/Index.vue')['default']
     LayoutAside: typeof import('./components/Layout/Aside/Index.vue')['default']
@@ -27,6 +29,9 @@ declare module 'vue' {
     Login: typeof import('./components/Login/Index.vue')['default']
     LoginForm: typeof import('./components/LoginForm/Index.vue')['default']
     MainGrid: typeof import('./components/MainGrid/Index.vue')['default']
+    MainStone: typeof import('./components/MainStone/Index.vue')['default']
+    MainStoneAccentBox: typeof import('./components/MainStone/AccentBox/Index.vue')['default']
+    MainStoneTabs: typeof import('./components/MainStone/Tabs/Index.vue')['default']
     Milestone: typeof import('./components/Milestone/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
