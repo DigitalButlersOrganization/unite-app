@@ -6,4 +6,5 @@ export interface IEvents {
 
 export interface IEvent {
   name: string;
+  id: string;
 }

@@ -44,11 +44,11 @@ export const auth = {
           console.log(response.data.items);
 
           eventsStore.set([
-            { name: 'Camp 1' },
-            { name: 'Camp 2' },
-            { name: 'Camp 3' },
-            { name: 'Camp 4' },
-            { name: 'Camp 5' },
+            { name: 'Camp 1', id: 'camp_1' },
+            { name: 'Camp 2', id: 'camp_2' },
+            { name: 'Camp 3', id: 'camp_3' },
+            { name: 'Camp 4', id: 'camp_4' },
+            { name: 'Camp 5', id: 'camp_5' },
           ]);
           // eventsStore.set(response.data.items);
         }

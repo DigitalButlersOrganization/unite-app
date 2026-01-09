@@ -32,6 +32,7 @@ declare module 'vue' {
     MainStone: typeof import('./components/MainStone/Index.vue')['default']
     MainStoneAccentBox: typeof import('./components/MainStone/AccentBox/Index.vue')['default']
     MainStoneTabs: typeof import('./components/MainStone/Tabs/Index.vue')['default']
+    MainStoneTabsListOfTabs: typeof import('./components/MainStone/Tabs/ListOfTabs/Index.vue')['default']
     Milestone: typeof import('./components/Milestone/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
