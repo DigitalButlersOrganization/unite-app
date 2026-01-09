@@ -35,12 +35,22 @@ export const auth = {
   getAllEvents: async (payload: { store: IStore }) => {
     const { store } = payload;
     const eventsStore = store.useEventsStore();
+    eventsStore.IsEventsLoading = true;
     instance
       .get('/event/all', {})
       .then((response) => {
         console.log('✅ Events:', response.data);
         if (response.data.items) {
-          eventsStore.set(response.data.items);
+          console.log(response.data.items);
+
+          eventsStore.set([
+            { name: 'Camp 1' },
+            { name: 'Camp 2' },
+            { name: 'Camp 3' },
+            { name: 'Camp 4' },
+            { name: 'Camp 5' },
+          ]);
+          // eventsStore.set(response.data.items);
         }
       })
       .catch((error) => {
@@ -51,6 +61,9 @@ export const auth = {
           console.error('❌ Error loading events:', error);
           toast('Failed to load events', { type: 'error' });
         }
+      })
+      .finally(() => {
+        eventsStore.IsEventsLoading = false;
       });
   },
   getOTPCode: async (payload: {

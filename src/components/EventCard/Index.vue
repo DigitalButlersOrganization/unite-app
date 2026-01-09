@@ -2,6 +2,9 @@
 import IconArrowDown1 from '@/assets/icons/arrow-down-1.svg';
 import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
 import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
+import type { IEvent } from '@/types/event';
+
+const props = defineProps<{ options: IEvent }>();
 </script>
 
 <template>
@@ -9,7 +12,7 @@ import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
     <button class="card__summary" role="button" tabindex="0">
       <div class="card__header">
         <div class="card__heading">
-          <h2 class="heading heading--l">Camp 1</h2>
+          <h2 class="heading heading--l">{{ props.options.name }}</h2>
         </div>
         <div class="card__arrow-box">
           <div class="card__arrow-svg">
