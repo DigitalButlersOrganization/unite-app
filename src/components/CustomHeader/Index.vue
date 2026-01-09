@@ -4,6 +4,7 @@ import IconLogOut from '@/assets/icons/log-out.svg';
 import { ROUTES } from '@/router/routes';
 import { api } from '@/services/api';
 import * as store from '@/stores';
+import { COMPANY_INFO } from '@/constants';
 
 const router = useRouter();
 
@@ -24,7 +25,7 @@ const logout = async () => {
 
       <div class="header__navigation-wrapper">
         <nav class="header__navigation">
-          <a href="mailto:test@example.com" class="button button--transparent">
+          <a :href="`mailto:${COMPANY_INFO.email}`" class="button button--transparent">
             <p class="paragraph paragraph--l">Contact us</p>
           </a>
           <button @click="logout" class="button button--transparent">

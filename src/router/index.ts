@@ -13,12 +13,6 @@ const router = createRouter({
       meta: { keepAlive: true },
     },
     {
-      path: ROUTES.ABOUT.PATH,
-      name: ROUTES.ABOUT.NAME,
-      component: () => import(`@/views/${ROUTES.ABOUT.NAME}.vue`),
-      meta: { keepAlive: true },
-    },
-    {
       path: ROUTES.LOGIN.PATH,
       name: ROUTES.LOGIN.NAME,
       component: () => import(`@/views/${ROUTES.LOGIN.NAME}.vue`),
