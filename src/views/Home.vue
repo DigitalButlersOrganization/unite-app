@@ -10,7 +10,7 @@ const eventsStore = useEventsStore();
     <CustomHeader />
     <CustomAside v-if="eventsStore.data?.length" />
     <CustomMain>
-      <main>
+      <UIContainer type="main-box">
         <h1 v-if="eventsStore.data?.length" class="heading heading--m">
           Hi! Select an event from the list to view its details.
         </h1>
@@ -23,7 +23,7 @@ const eventsStore = useEventsStore();
 
           <a :href="`mailto:${COMPANY_INFO.email}`" class="link"> email </a>.
         </h1>
-      </main>
+      </UIContainer>
     </CustomMain>
   </MainGrid>
 </template>
