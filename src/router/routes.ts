@@ -3,10 +3,6 @@ export const ROUTES = {
     PATH: '/',
     NAME: 'Home',
   },
-  ABOUT: {
-    PATH: '/about',
-    NAME: 'About',
-  },
   LOGIN: {
     PATH: '/login',
     NAME: 'Login',

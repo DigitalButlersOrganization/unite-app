@@ -5,7 +5,7 @@
     <CustomHeader />
     <CustomAside />
     <CustomMain>
-      <main>Hello! This is Home View</main>
+      <main>Hi! Select an event from the list to view its details.</main>
     </CustomMain>
   </MainGrid>
 </template>
