@@ -25,6 +25,12 @@ const router = createRouter({
       meta: { keepAlive: true },
     },
     {
+      path: ROUTES.EVENT_DETAIL.PATH,
+      name: ROUTES.EVENT_DETAIL.NAME,
+      component: () => import(`@/views/${ROUTES.EVENT_DETAIL.NAME}.vue`),
+      meta: { keepAlive: false },
+    },
+    {
       path: ROUTES.NOT_FOUND.PATH,
       name: ROUTES.NOT_FOUND.NAME,
       component: () => import(`@/views/${ROUTES.NOT_FOUND.NAME}.vue`),

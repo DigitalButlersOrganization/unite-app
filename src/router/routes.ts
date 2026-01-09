@@ -11,6 +11,10 @@ export const ROUTES = {
     PATH: '/ui-guide',
     NAME: 'UIGuide',
   },
+  EVENT_DETAIL: {
+    PATH: '/events/:id',
+    NAME: 'EventDetail',
+  },
   NOT_FOUND: {
     PATH: '/:pathMatch(.*)*',
     NAME: 'NotFound',

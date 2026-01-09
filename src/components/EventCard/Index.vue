@@ -3,13 +3,21 @@ import IconArrowDown1 from '@/assets/icons/arrow-down-1.svg';
 import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
 import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
 import type { IEvent } from '@/types/event';
+import { useRouter } from 'vue-router';
 
 const props = defineProps<{ options: IEvent }>();
+
+const router = useRouter();
 </script>
 
 <template>
   <div class="card">
-    <button class="card__summary" role="button" tabindex="0">
+    <button
+      class="card__summary"
+      role="button"
+      tabindex="0"
+      @click="router.push({ name: 'EventDetail', params: { id: props.options.id } })"
+    >
       <div class="card__header">
         <div class="card__heading">
           <h2 class="heading heading--l">{{ props.options.name }}</h2>
@@ -58,6 +66,7 @@ const props = defineProps<{ options: IEvent }>();
         </div>
       </div>
     </button>
+
     <div class="card__details">
       <div class="card__list-of-triggers">
         <div class="card__trigger-wrapper">
