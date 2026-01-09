@@ -15,32 +15,18 @@ const event = ref<IEvent | null>(null);
 const isLoading = ref(true);
 const error = ref('');
 
-const loadEvent = async (id: string) => {
-  try {
-    isLoading.value = true;
-    error.value = '';
+const loadEvent = (id: string) => {
+  isLoading.value = true;
+  error.value = '';
 
-    // Попробуем найти мероприятие в store
-    event.value = eventsStore.data.find((e) => e.id === id) || null;
+  event.value = eventsStore.data.find((e) => e.id === id) || null;
 
-    // Если не нашли в store, загрузим с сервера
-    if (!event.value) {
-      // Здесь добавьте вызов API для загрузки конкретного мероприятия
-      // event.value = await eventsStore.fetchEventById(id);
-    }
-
-    if (!event.value) {
-      error.value = 'Мероприятие не найдено или недоступно';
-    }
-  } catch (err) {
-    error.value = 'Ошибка при загрузке мероприятия';
-    console.error(err);
-  } finally {
-    isLoading.value = false;
+  if (!event.value) {
+    error.value = 'The event was not found or unavailable';
   }
+  isLoading.value = false;
 };
 
-// Ждем загрузки событий из store, затем загружаем текущее мероприятие
 const initEvent = () => {
   if (!eventsStore.IsEventsLoading) {
     loadEvent(route.params.id as string);
@@ -59,7 +45,6 @@ const initEvent = () => {
 
 initEvent();
 
-// Отслеживаем изменения параметра id в URL
 watch(
   () => route.params.id,
   (newId) => {
@@ -76,10 +61,11 @@ watch(
     <CustomAside v-if="eventsStore.data?.length" />
     <CustomMain>
       <div class="event-detail">
-        <div v-if="isLoading" class="event-detail__loading">Loading ...</div>
-
+        <div v-if="isLoading" class="event-detail__loading">
+          <UIContainer type="main-box"> Loading ... </UIContainer>
+        </div>
         <div v-else-if="error" class="event-detail__error">
-          {{ error }}
+          <UIContainer type="main-box"> {{ error }} </UIContainer>
         </div>
 
         <div v-else-if="event" class="event-detail__content">
@@ -94,6 +80,8 @@ watch(
 
 <style scoped lang="scss">
 .event-detail {
+  width: 100%;
+
   &__error {
     color: red;
   }

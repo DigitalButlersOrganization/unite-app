@@ -6,7 +6,7 @@ const eventsStore = useEventsStore();
 
 <template>
   <div class="main-grid-wrapper">
-    <UIContainer class="main-grid-container">
+    <UIContainer :type="null" class="main-grid-container">
       <div class="main-grid" :class="eventsStore.data.length ? '' : 'main-grid--without-aside'">
         <slot />
       </div>

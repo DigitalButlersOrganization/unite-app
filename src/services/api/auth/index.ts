@@ -39,10 +39,7 @@ export const auth = {
     instance
       .get('/event/all', {})
       .then((response) => {
-        console.log('✅ Events:', response.data);
         if (response.data.items) {
-          console.log(response.data.items);
-
           eventsStore.set([
             { name: 'Camp 1', id: 'camp_1' },
             { name: 'Camp 2', id: 'camp_2' },
