@@ -5,17 +5,17 @@
   line-height: 110%;
   letter-spacing: -0.04em;
   margin: 0;
-  font-size: linearClump(1.5, 1.25);
+  font-size: linearClamp(1.5, 1.25);
 
   &--l {
     font-weight: 500;
-    font-size: linearClump(2, 1.5);
+    font-size: linearClamp(2, 1.5);
     letter-spacing: -0.03em;
   }
 
   &--xl {
     font-weight: 700;
-    font-size: linearClump(3, 2);
+    font-size: linearClamp(3, 2);
     letter-spacing: -0.06em;
   }
 }
@@ -24,17 +24,17 @@
   letter-spacing: -0.03em;
   line-height: 150%;
   font-weight: 500;
-  font-size: linearClump(1, 0.875);
+  font-size: linearClamp(1, 0.875);
   margin: 0;
 
   &--l {
-    font-size: linearClump(1, 0.875);
+    font-size: linearClamp(1, 0.875);
     font-weight: 600;
     line-height: 100%;
   }
 
   &--xl {
-    font-size: linearClump(1.25, 1.125);
+    font-size: linearClamp(1.25, 1.125);
     font-weight: 600;
     line-height: 110%;
   }
