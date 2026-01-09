@@ -3,7 +3,8 @@
 <template>
   <main class="main">
     <div class="main__list">
-      <CustomMainListOfPages />
+      <CustomMainListOfTabs />
+      <MainStone />
     </div>
     <div class="main__content">
       <slot />
