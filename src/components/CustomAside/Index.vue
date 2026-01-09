@@ -1,13 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useEventsStore } from '@/stores';
+
+const eventsStore = useEventsStore();
+console.log(eventsStore.data, 'eventsStore');
+</script>
 
 <template>
   <aside class="aside">
     <div class="aside__scroll-box">
-      <EventCard />
-      <EventCard />
-      <EventCard />
-      <EventCard />
-      <EventCard />
+      <EventCard v-for="event in eventsStore.data" :key="event.name" :options="event" />
     </div>
   </aside>
 </template>
