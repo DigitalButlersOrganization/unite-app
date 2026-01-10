@@ -4,25 +4,19 @@
   @return math.div($pixels, $context) * 1rem;
 }
 
-@function linearClump(
-  $targetSizeOnMaxViewport,
+@function linearClamp($targetSizeOnMaxViewport,
   $targetSizeOnMinViewport,
   $maxViewport: 120,
-  $minViewport: 23.5
-) {
+  $minViewport: 23.5) {
   $targetSizeRange: $targetSizeOnMaxViewport - $targetSizeOnMinViewport;
   $viewportRange: $maxViewport - $minViewport;
   $slope: math.div(round(math.div($targetSizeRange, $viewportRange) * 1000), 1000);
-  $intersectionYAxis: math.div(
-    round((-1 * $minViewport * $slope + $targetSizeOnMinViewport) * 1000),
-    1000
-  );
+  $intersectionYAxis: math.div(round((-1 * $minViewport * $slope + $targetSizeOnMinViewport) * 1000),
+      1000);
   $minTargetSize: math.min($targetSizeOnMaxViewport, $targetSizeOnMinViewport);
   $maxTargetSize: math.max($targetSizeOnMaxViewport, $targetSizeOnMinViewport);
 
-  @return clamp(
-    #{$minTargetSize}rem,
+  @return clamp(#{$minTargetSize}rem,
     #{$intersectionYAxis}rem + #{$slope * 100}vw,
-    #{$maxTargetSize}rem
-  );
+    #{$maxTargetSize}rem);
 }

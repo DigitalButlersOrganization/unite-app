@@ -1,10 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { defineStore } from 'pinia';
+import type { IEvents } from '@/types/event';
 
 export const useEventsStore = defineStore('eventsStore', {
-  state: () => ({
-    data: [] as any[],
-  }),
+  state: (): IEvents => {
+    return {
+      isEventSelected: false,
+      IsEventsLoading: false,
+      data: [],
+    };
+  },
   actions: {
     set(data: any[]) {
       this.data = data;

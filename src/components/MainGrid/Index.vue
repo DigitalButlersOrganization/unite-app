@@ -1,9 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useEventsStore } from '@/stores';
+
+const eventsStore = useEventsStore();
+</script>
 
 <template>
   <div class="main-grid-wrapper">
-    <UIContainer class="main-grid-container">
-      <div class="main-grid">
+    <UIContainer :type="null" class="main-grid-container">
+      <div class="main-grid" :class="eventsStore.data.length ? '' : 'main-grid--without-aside'">
         <slot />
       </div>
     </UIContainer>
@@ -27,5 +31,11 @@
   gap: 6px;
   grid-template-columns: 346px auto;
   grid-template-rows: max-content auto;
+
+  &--without-aside {
+    & > *:nth-child(2) {
+      grid-column: 1 / 3;
+    }
+  }
 }
 </style>

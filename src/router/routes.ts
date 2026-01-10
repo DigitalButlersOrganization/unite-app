@@ -3,10 +3,6 @@ export const ROUTES = {
     PATH: '/',
     NAME: 'Home',
   },
-  ABOUT: {
-    PATH: '/about',
-    NAME: 'About',
-  },
   LOGIN: {
     PATH: '/login',
     NAME: 'Login',
@@ -14,6 +10,10 @@ export const ROUTES = {
   UI_GUIDE: {
     PATH: '/ui-guide',
     NAME: 'UIGuide',
+  },
+  EVENT_DETAIL: {
+    PATH: '/events/:id',
+    NAME: 'EventDetail',
   },
   NOT_FOUND: {
     PATH: '/:pathMatch(.*)*',

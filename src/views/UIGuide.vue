@@ -58,55 +58,55 @@ import { ROUTES } from '@/router/routes';
             :border="BUTTON_BORDERS.MEDIUM"
             :size="BUTTON_SIZES.MEDIUM"
             :status="BUTTON_STATUSES.ACTIVE"
-            :to="ROUTES.ABOUT.PATH"
+            :to="ROUTES.HOME.PATH"
             class=""
           >
             <p class="paragraph paragraph--l">
-              {{ ROUTES.ABOUT.NAME }}
+              {{ ROUTES.HOME.NAME }}
             </p>
           </UIButton>
           <UIButton
             :border="BUTTON_BORDERS.MEDIUM"
             :size="BUTTON_SIZES.MEDIUM"
             :status="BUTTON_STATUSES.SUCCESS"
-            :to="ROUTES.ABOUT.PATH"
+            :to="ROUTES.HOME.PATH"
             class=""
           >
             <p class="paragraph paragraph--l">
-              {{ ROUTES.ABOUT.NAME }}
+              {{ ROUTES.HOME.NAME }}
             </p>
           </UIButton>
           <UIButton
             :border="BUTTON_BORDERS.MEDIUM"
             :size="BUTTON_SIZES.MEDIUM"
             :status="BUTTON_STATUSES.PAUSED"
-            :to="ROUTES.ABOUT.PATH"
+            :to="ROUTES.HOME.PATH"
             class=""
           >
             <p class="paragraph paragraph--l">
-              {{ ROUTES.ABOUT.NAME }}
+              {{ ROUTES.HOME.NAME }}
             </p>
           </UIButton>
           <UIButton
             :border="BUTTON_BORDERS.MEDIUM"
             :size="BUTTON_SIZES.MEDIUM"
             :status="BUTTON_STATUSES.NOT_APPROVED"
-            :to="ROUTES.ABOUT.PATH"
+            :to="ROUTES.HOME.PATH"
             class=""
           >
             <p class="paragraph paragraph--l">
-              {{ ROUTES.ABOUT.NAME }}
+              {{ ROUTES.HOME.NAME }}
             </p>
           </UIButton>
           <UIButton
             :border="BUTTON_BORDERS.MEDIUM"
             :size="BUTTON_SIZES.MEDIUM"
             :status="BUTTON_STATUSES.AVAILABLE"
-            :to="ROUTES.ABOUT.PATH"
+            :to="ROUTES.HOME.PATH"
             class=""
           >
             <p class="paragraph paragraph--l">
-              {{ ROUTES.ABOUT.NAME }}
+              {{ ROUTES.HOME.NAME }}
             </p>
           </UIButton>
           <UIButton
@@ -114,11 +114,11 @@ import { ROUTES } from '@/router/routes';
             :size="BUTTON_SIZES.MEDIUM"
             :status="BUTTON_STATUSES.BASE"
             :is-disabled="true"
-            :to="ROUTES.ABOUT.PATH"
+            :to="ROUTES.HOME.PATH"
             class=""
           >
             <p class="paragraph paragraph--l">
-              {{ ROUTES.ABOUT.NAME }}
+              {{ ROUTES.HOME.NAME }}
             </p>
           </UIButton>
         </div>

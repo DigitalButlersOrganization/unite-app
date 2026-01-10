@@ -13,12 +13,6 @@ const router = createRouter({
       meta: { keepAlive: true },
     },
     {
-      path: ROUTES.ABOUT.PATH,
-      name: ROUTES.ABOUT.NAME,
-      component: () => import(`@/views/${ROUTES.ABOUT.NAME}.vue`),
-      meta: { keepAlive: true },
-    },
-    {
       path: ROUTES.LOGIN.PATH,
       name: ROUTES.LOGIN.NAME,
       component: () => import(`@/views/${ROUTES.LOGIN.NAME}.vue`),
@@ -29,6 +23,12 @@ const router = createRouter({
       name: ROUTES.UI_GUIDE.NAME,
       component: () => import(`@/views/${ROUTES.UI_GUIDE.NAME}.vue`),
       meta: { keepAlive: true },
+    },
+    {
+      path: ROUTES.EVENT_DETAIL.PATH,
+      name: ROUTES.EVENT_DETAIL.NAME,
+      component: () => import(`@/views/${ROUTES.EVENT_DETAIL.NAME}.vue`),
+      meta: { keepAlive: false },
     },
     {
       path: ROUTES.NOT_FOUND.PATH,

@@ -2,14 +2,24 @@
 import IconArrowDown1 from '@/assets/icons/arrow-down-1.svg';
 import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
 import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
+import type { IEvent } from '@/types/event';
+import { useRouter } from 'vue-router';
+
+const props = defineProps<{ options: IEvent }>();
+
+const router = useRouter();
+
+const clickHandler = () => {
+  router.push({ name: 'EventDetail', params: { id: props.options.id } });
+};
 </script>
 
 <template>
   <div class="card">
-    <button class="card__summary" role="button" tabindex="0">
+    <button class="card__summary" role="button" tabindex="0" @click="clickHandler">
       <div class="card__header">
         <div class="card__heading">
-          <h2 class="heading heading--l">Camp 1</h2>
+          <h2 class="heading heading--l">{{ props.options.name }}</h2>
         </div>
         <div class="card__arrow-box">
           <div class="card__arrow-svg">
@@ -55,6 +65,7 @@ import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
         </div>
       </div>
     </button>
+
     <div class="card__details">
       <div class="card__list-of-triggers">
         <div class="card__trigger-wrapper">
@@ -114,9 +125,19 @@ import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
 .card {
   width: 100%;
   border-radius: var(--border-radius--2);
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: max-content 0fr;
+  overflow: hidden;
   background: var(--color-background--1);
+  transition: var(--transition-default);
+
+  &.js--active {
+    grid-template-rows: max-content 1fr;
+
+    .card__arrow-box {
+      rotate: 180deg;
+    }
+  }
 
   &__summary {
     padding: 2.25rem 1.75rem 1.25rem;
@@ -233,6 +254,7 @@ import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
     width: 100%;
     border-bottom-left-radius: var(--border-radius--2);
     border-bottom-right-radius: var(--border-radius--2);
+    overflow: hidden;
   }
 
   &__list-of-triggers {

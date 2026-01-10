@@ -13,76 +13,62 @@ import { ROUTES } from '@/router/routes';
         :to="ROUTES.HOME.PATH"
         class=""
       >
-        <p class="paragraph paragraph--l">
-          {{ ROUTES.HOME.NAME }}
-        </p>
+        <p class="paragraph paragraph--l">Step 1: Complete application</p>
       </UIButton>
       <UIButton
         :border="BUTTON_BORDERS.MEDIUM"
         :size="BUTTON_SIZES.MEDIUM"
         :status="BUTTON_STATUSES.ACTIVE"
-        :to="ROUTES.ABOUT.PATH"
+        :to="ROUTES.HOME.PATH"
         class=""
       >
-        <p class="paragraph paragraph--l">
-          {{ ROUTES.ABOUT.NAME }}
-        </p>
+        <p class="paragraph paragraph--l">Step 2: Application review</p>
       </UIButton>
       <UIButton
         :border="BUTTON_BORDERS.MEDIUM"
         :size="BUTTON_SIZES.MEDIUM"
         :status="BUTTON_STATUSES.SUCCESS"
-        :to="ROUTES.ABOUT.PATH"
+        :to="ROUTES.HOME.PATH"
         class=""
       >
-        <p class="paragraph paragraph--l">
-          {{ ROUTES.ABOUT.NAME }}
-        </p>
+        <p class="paragraph paragraph--l">Step 3: Deposit payment</p>
       </UIButton>
       <UIButton
         :border="BUTTON_BORDERS.MEDIUM"
         :size="BUTTON_SIZES.MEDIUM"
         :status="BUTTON_STATUSES.PAUSED"
-        :to="ROUTES.ABOUT.PATH"
+        :to="ROUTES.HOME.PATH"
         class=""
       >
-        <p class="paragraph paragraph--l">
-          {{ ROUTES.ABOUT.NAME }}
-        </p>
+        <p class="paragraph paragraph--l">Step 4: Info form</p>
       </UIButton>
       <UIButton
         :border="BUTTON_BORDERS.MEDIUM"
         :size="BUTTON_SIZES.MEDIUM"
         :status="BUTTON_STATUSES.NOT_APPROVED"
-        :to="ROUTES.ABOUT.PATH"
+        :to="ROUTES.HOME.PATH"
         class=""
       >
-        <p class="paragraph paragraph--l">
-          {{ ROUTES.ABOUT.NAME }}
-        </p>
+        <p class="paragraph paragraph--l">Step 5: Full payment</p>
       </UIButton>
       <UIButton
         :border="BUTTON_BORDERS.MEDIUM"
         :size="BUTTON_SIZES.MEDIUM"
         :status="BUTTON_STATUSES.AVAILABLE"
-        :to="ROUTES.ABOUT.PATH"
+        :to="ROUTES.HOME.PATH"
         class=""
       >
-        <p class="paragraph paragraph--l">
-          {{ ROUTES.ABOUT.NAME }}
-        </p>
+        <p class="paragraph paragraph--l">Step 6: Pre-assessment survey</p>
       </UIButton>
       <UIButton
         :border="BUTTON_BORDERS.MEDIUM"
         :size="BUTTON_SIZES.MEDIUM"
         :status="BUTTON_STATUSES.BASE"
         :is-disabled="true"
-        :to="ROUTES.ABOUT.PATH"
+        :to="ROUTES.HOME.PATH"
         class=""
       >
-        <p class="paragraph paragraph--l">
-          {{ ROUTES.ABOUT.NAME }}
-        </p>
+        <p class="paragraph paragraph--l">Step 7: Event</p>
       </UIButton>
     </div>
   </div>
