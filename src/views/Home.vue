@@ -6,26 +6,17 @@ const eventsStore = useEventsStore();
 </script>
 
 <template>
-  <MainGrid>
-    <CustomHeader />
-    <CustomAside v-if="eventsStore.data?.length" />
-    <CustomMain>
-      <UIContainer type="main-box">
-        <h1 v-if="eventsStore.data?.length" class="heading heading--m">
-          Hi! Select an event from the list to view its details.
-        </h1>
-        <h1
-          v-if="!eventsStore.data?.length && !eventsStore.IsEventsLoading"
-          class="heading heading--m"
-        >
-          You don't have access to any events. First, register for an event, and then check your
-          access to it again on this page. If events are still not displayed, please contact us by
+  <UIContainer type="main-box">
+    <h1 v-if="eventsStore.data?.length" class="heading heading--m">
+      Hi! Select an event from the list to view its details.
+    </h1>
+    <h1 v-if="!eventsStore.data?.length && !eventsStore.IsEventsLoading" class="heading heading--m">
+      You don't have access to any events. First, register for an event, and then check your access
+      to it again on this page. If events are still not displayed, please contact us by
 
-          <a :href="`mailto:${COMPANY_INFO.email}`" class="link"> email </a>.
-        </h1>
-      </UIContainer>
-    </CustomMain>
-  </MainGrid>
+      <a :href="`mailto:${COMPANY_INFO.email}`" class="link"> email </a>.
+    </h1>
+  </UIContainer>
 </template>
 <style lang="scss" scoped>
 .link {

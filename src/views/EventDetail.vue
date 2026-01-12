@@ -3,10 +3,6 @@ import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useEventsStore } from '@/stores';
 import type { IEvent } from '@/types/event';
-import MainGrid from '@/components/MainGrid/Index.vue';
-import CustomHeader from '@/components/CustomHeader/Index.vue';
-import CustomAside from '@/components/CustomAside/Index.vue';
-import CustomMain from '@/components/CustomMain/Index.vue';
 
 const route = useRoute();
 const eventsStore = useEventsStore();
@@ -56,26 +52,20 @@ watch(
 </script>
 
 <template>
-  <MainGrid>
-    <CustomHeader />
-    <CustomAside v-if="eventsStore.data?.length" />
-    <CustomMain>
-      <div class="event-detail">
-        <div v-if="isLoading" class="event-detail__loading">
-          <UIContainer type="main-box"> Loading ... </UIContainer>
-        </div>
-        <div v-else-if="error" class="event-detail__error">
-          <UIContainer type="main-box"> {{ error }} </UIContainer>
-        </div>
+  <div class="event-detail">
+    <div v-if="isLoading" class="event-detail__loading">
+      <UIContainer type="main-box"> Loading ... </UIContainer>
+    </div>
+    <div v-else-if="error" class="event-detail__error">
+      <UIContainer type="main-box"> {{ error }} </UIContainer>
+    </div>
 
-        <div v-else-if="event" class="event-detail__content">
-          <MainStone :eventId="event.id" />
-        </div>
+    <div v-else-if="event" class="event-detail__content">
+      <MainStone :eventId="event.id" />
+    </div>
 
-        <div v-else class="event-detail__not-found">The event not found</div>
-      </div>
-    </CustomMain>
-  </MainGrid>
+    <div v-else class="event-detail__not-found">The event not found</div>
+  </div>
 </template>
 
 <style scoped lang="scss">
