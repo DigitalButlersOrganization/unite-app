@@ -3,20 +3,13 @@ import IconArrowDown1 from '@/assets/icons/arrow-down-1.svg';
 import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
 import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
 import type { IEvent } from '@/types/event';
-import { useRouter } from 'vue-router';
 
 const props = defineProps<{ options: IEvent }>();
-
-const router = useRouter();
-
-const clickHandler = () => {
-  router.push({ name: 'EventDetail', params: { id: props.options.id } });
-};
 </script>
 
 <template>
   <div class="card">
-    <button class="card__summary" role="button" tabindex="0" @click="clickHandler">
+    <button class="card__summary" role="button" tabindex="0">
       <div class="card__header">
         <div class="card__heading">
           <h2 class="heading heading--l">{{ props.options.name }}</h2>

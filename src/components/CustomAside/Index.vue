@@ -1,11 +1,22 @@
 <script setup lang="ts">
 import { CLASSES } from '@/constants/classes';
 import { useEventsStore } from '@/stores';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 
 const eventsStore = useEventsStore();
+const router = useRouter();
+const route = useRoute();
 
 const activeCardId = ref<string | null>(null);
+
+watch(
+  () => route.params.id,
+  (newId) => {
+    activeCardId.value = newId ? (newId as string) : null;
+  },
+  { immediate: true },
+);
 
 const clickHandler = (event: MouseEvent, eventId: string) => {
   const { target } = event;
@@ -14,8 +25,10 @@ const clickHandler = (event: MouseEvent, eventId: string) => {
 
   if (activeCardId.value === eventId) {
     activeCardId.value = null;
+    router.push({ name: 'Home' });
   } else {
     activeCardId.value = eventId;
+    router.push({ name: 'EventDetail', params: { id: eventId } });
   }
 };
 </script>
