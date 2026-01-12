@@ -5,7 +5,7 @@
     <div class="small-section">
       <div class="small-section__scrolled-box">
         <div class="small-section__max-height-box">
-          <UIContainer class="small-section__container">
+          <UIContainer :type="null" class="small-section__container">
             <div class="small-section__content">
               <slot />
             </div>
