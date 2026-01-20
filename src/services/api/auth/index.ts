@@ -40,14 +40,16 @@ export const auth = {
       .get('/event/all', {})
       .then((response) => {
         if (response.data.items) {
-          eventsStore.set([
-            { name: 'Camp 1', id: 'camp_1' },
-            { name: 'Camp 2', id: 'camp_2' },
-            { name: 'Camp 3', id: 'camp_3' },
-            { name: 'Camp 4', id: 'camp_4' },
-            { name: 'Camp 5', id: 'camp_5' },
-          ]);
-          // eventsStore.set(response.data.items);
+          console.log(response.data.items);
+
+          // eventsStore.set([
+          //   { eventName: 'Camp 1', id: 'camp_1' },
+          //   { eventName: 'Camp 2', id: 'camp_2' },
+          //   { eventName: 'Camp 3', id: 'camp_3' },
+          //   { eventName: 'Camp 4', id: 'camp_4' },
+          //   { eventName: 'Camp 5', id: 'camp_5' },
+          // ]);
+          eventsStore.set(response.data.items);
         }
       })
       .catch((error) => {

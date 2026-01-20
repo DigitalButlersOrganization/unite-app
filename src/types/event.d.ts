@@ -5,6 +5,11 @@ export interface IEvents {
 }
 
 export interface IEvent {
-  name: string;
+  eventName: string;
   id: string;
+  eventStatus: string;
+  order: number;
+  progress: number;
+  startDate: string;
+  timeRemaining: string;
 }
