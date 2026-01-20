@@ -28,13 +28,14 @@ export enum BUTTON_BORDERS {
 }
 
 export enum BUTTON_STATUSES {
-  BASE = 'base',
+  DEFAULT = 'default',
   ACTIVE = 'active',
-  PAUSED = 'paused',
-  SUCCESS = 'success',
-  NOT_APPROVED = 'not-approved',
-  AVAILABLE = 'available',
+  COMPLETED = 'completed',
+  PENDING = 'pending',
+  REJECTED = 'rejected',
+  BASE = 'base',
   DISABLED = 'disabled',
+
   CTA_1 = 'cta-1',
   CTA_2 = 'cta-2',
   CTA_3 = 'cta-3',

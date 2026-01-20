@@ -40,14 +40,16 @@ export const auth = {
       .get('/event/all', {})
       .then((response) => {
         if (response.data.items) {
-          eventsStore.set([
-            { name: 'Camp 1', id: 'camp_1' },
-            { name: 'Camp 2', id: 'camp_2' },
-            { name: 'Camp 3', id: 'camp_3' },
-            { name: 'Camp 4', id: 'camp_4' },
-            { name: 'Camp 5', id: 'camp_5' },
-          ]);
-          // eventsStore.set(response.data.items);
+          console.log(response.data.items);
+
+          // eventsStore.setEvents([
+          //   { eventName: 'Camp 1', id: 'camp_1' },
+          //   { eventName: 'Camp 2', id: 'camp_2' },
+          //   { eventName: 'Camp 3', id: 'camp_3' },
+          //   { eventName: 'Camp 4', id: 'camp_4' },
+          //   { eventName: 'Camp 5', id: 'camp_5' },
+          // ]);
+          eventsStore.setEvents(response.data.items);
         }
       })
       .catch((error) => {
@@ -61,6 +63,35 @@ export const auth = {
       })
       .finally(() => {
         eventsStore.IsEventsLoading = false;
+      });
+  },
+  getCurrentEvent: async (payload: { store: IStore; id: string }) => {
+    const { store, id } = payload;
+    const eventsStore = store.useEventsStore();
+    const currentEvent = eventsStore.data.find((event) => event.id === id);
+    if (!currentEvent) {
+      return;
+    }
+    currentEvent.isCurrentMilestoneLoading = true;
+    instance
+      .get(`/event/${id}/milestones`, {})
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.items) {
+          eventsStore.setMilestones({ eventId: id, data: response.data.items });
+        }
+      })
+      .catch((error) => {
+        if (error.response?.status === 500) {
+          console.error('❌ Server error (500):', error.response.data);
+          toast('Server error. Please contact backend team.', { type: 'error' });
+        } else {
+          console.error('❌ Error loading milestones:', error);
+          toast('Failed to load milestones', { type: 'error' });
+        }
+      })
+      .finally(() => {
+        currentEvent.isCurrentMilestoneLoading = false;
       });
   },
   getOTPCode: async (payload: {

@@ -61,7 +61,7 @@ watch(
     </div>
 
     <div v-else-if="event" class="event-detail__content">
-      <MainStone :eventId="event.id" />
+      <MainStone :eventData="event" />
     </div>
 
     <div v-else class="event-detail__not-found">The event not found</div>

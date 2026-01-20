@@ -3,6 +3,7 @@ import IconArrowDown1 from '@/assets/icons/arrow-down-1.svg';
 import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
 import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
 import type { IEvent } from '@/types/event';
+import { formatDate } from '@/utils';
 
 const props = defineProps<{ options: IEvent }>();
 </script>
@@ -12,7 +13,7 @@ const props = defineProps<{ options: IEvent }>();
     <button class="card__summary" role="button" tabindex="0">
       <div class="card__header">
         <div class="card__heading">
-          <h2 class="heading heading--l">{{ props.options.name }}</h2>
+          <h2 class="heading heading--l">{{ props.options.eventName }}</h2>
         </div>
         <div class="card__arrow-box">
           <div class="card__arrow-svg">
@@ -22,12 +23,12 @@ const props = defineProps<{ options: IEvent }>();
       </div>
       <div class="card__progress-data">
         <div class="card__progress-bar-wrapper">
-          <div class="card__progress-bar"></div>
+          <div class="card__progress-bar" :style="{ width: props.options.progress + '%' }"></div>
         </div>
         <div class="card__progress-value-box">
           <div class="card__progress-value-point"></div>
           <div class="card__progress-value-text">
-            <p class="paragraph paragraph">20%</p>
+            <p class="paragraph paragraph">{{ props.options.progress }}%</p>
           </div>
         </div>
       </div>
@@ -37,7 +38,7 @@ const props = defineProps<{ options: IEvent }>();
             <p class="paragraph paragraph--l">Start Date:</p>
           </div>
           <div class="card__information-value">
-            <p class="paragraph paragraph--l">01.01.2026</p>
+            <p class="paragraph paragraph--l">{{ formatDate(props.options.startDate) }}</p>
           </div>
         </div>
         <div class="card__information-row">
@@ -45,7 +46,7 @@ const props = defineProps<{ options: IEvent }>();
             <p class="paragraph paragraph--l">Status:</p>
           </div>
           <div class="card__information-value">
-            <p class="paragraph paragraph--l">Pending application</p>
+            <p class="paragraph paragraph--l">{{ props.options.eventStatus }}</p>
           </div>
         </div>
         <div class="card__information-row">
@@ -53,7 +54,7 @@ const props = defineProps<{ options: IEvent }>();
             <p class="paragraph paragraph--l">Time Remaining:</p>
           </div>
           <div class="card__information-value">
-            <p class="paragraph paragraph--l">14d 23h 15m</p>
+            <p class="paragraph paragraph--l">{{ props.options.timeRemaining }}</p>
           </div>
         </div>
       </div>
@@ -157,12 +158,14 @@ const props = defineProps<{ options: IEvent }>();
     display: flex;
     justify-content: space-between;
     align-items: center;
+    text-align: left;
   }
   &__arrow-box {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 2.5rem;
+    min-width: 2.5rem;
     height: 2.5rem;
     min-height: 2.5rem;
     border-radius: var(--border-radius--3);
@@ -197,7 +200,6 @@ const props = defineProps<{ options: IEvent }>();
   }
 
   &__progress-bar {
-    width: 20%;
     height: 100%;
     background: var(--palette--5);
     border-radius: var(--border-radius--4);
@@ -241,6 +243,7 @@ const props = defineProps<{ options: IEvent }>();
 
   &__information-key {
     color: var(--palette--5);
+    white-space: nowrap;
   }
 
   &__details {

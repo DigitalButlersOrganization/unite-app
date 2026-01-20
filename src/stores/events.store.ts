@@ -1,18 +1,32 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { defineStore } from 'pinia';
-import type { IEvents } from '@/types/event';
+import type { IEvent, IEvents, IEventStep } from '@/types/event';
 
 export const useEventsStore = defineStore('eventsStore', {
   state: (): IEvents => {
     return {
-      isEventSelected: false,
       IsEventsLoading: false,
+
       data: [],
     };
   },
   actions: {
-    set(data: any[]) {
-      this.data = data;
+    setEvents(data: IEvent[]) {
+      const changedData = data.map((item) => {
+        item.isCurrentMilestoneLoading = false;
+        return item;
+      });
+
+      this.data = changedData;
+    },
+    setMilestones({ eventId, data }: { eventId: string; data: IEventStep[] }) {
+      const currentEvent = this.data.find((event) => event.id === eventId);
+
+      if (!currentEvent) {
+        console.error(`Event with id ${eventId} not found`);
+        return;
+      }
+
+      currentEvent.steps = data;
     },
   },
 });
