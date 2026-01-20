@@ -1,20 +1,78 @@
 <script setup lang="ts">
-import { BUTTON_BORDERS, BUTTON_SIZES, BUTTON_STATUSES } from '@/enums';
+import { BUTTON_BORDERS, BUTTON_SIZES, BUTTON_STATUSES, BUTTON_TAGS } from '@/enums';
+import { api } from '@/services/api';
+import type { IEvent } from '@/types/event';
+import * as store from '@/stores';
+import { ref } from 'vue';
 
-const props = defineProps<{ eventId: string }>();
+import Tabs from 'primevue/tabs';
+import TabList from 'primevue/tablist';
+import Tab from 'primevue/tab';
+import TabPanels from 'primevue/tabpanels';
+import TabPanel from 'primevue/tabpanel';
+
+const props = defineProps<{ eventData: IEvent }>();
+
+const activeTab = ref('0');
+
+api.auth.getCurrentEvent({ store, id: props.eventData.id });
 </script>
 
 <template>
-  <div class="tabs">
+  <div v-if="props.eventData.isCurrentMilestoneLoading" class="tabs__loading">
+    <UIContainer type="main-box">
+      <p class="heading heading--l">Loading...</p>
+    </UIContainer>
+  </div>
+  <Tabs v-model:value="activeTab" v-else class="tabs">
+    <div class="tabs__buttons-wrapper with-scrollbar">
+      <TabList class="tabs__buttons">
+        <Tab
+          v-for="(value, index) in props.eventData.steps"
+          :key="index"
+          :value="index.toString()"
+          class="tabs__button"
+        >
+          <UIButton
+            :border="BUTTON_BORDERS.MEDIUM"
+            :size="BUTTON_SIZES.MEDIUM"
+            :status="activeTab === index.toString() ? BUTTON_STATUSES.ACTIVE : BUTTON_STATUSES.BASE"
+            :is-disabled="false"
+            :tag="BUTTON_TAGS.DIV"
+            class=""
+          >
+            <p class="paragraph paragraph--l">Step {{ index + 1 }}: {{ value.milestone.step }}</p>
+          </UIButton></Tab
+        >
+      </TabList>
+    </div>
+    <UIContainer type="main-box">
+      <TabPanels class="tabs__tabpanels">
+        <TabPanel
+          v-for="(value, index) in props.eventData.steps"
+          :key="index"
+          :value="index.toString()"
+        >
+          <p v-if="activeTab === index.toString()" class="m-0">
+            {{ value.milestone.title }}
+            <br /><br />
+
+            {{ value.milestone.description }}
+          </p>
+        </TabPanel>
+      </TabPanels>
+    </UIContainer>
+  </Tabs>
+  <!-- <div v-else class="tabs">
     <div class="tabs__buttons-wrapper with-scrollbar">
       <div class="tabs__buttons">
         <UIButton
           :border="BUTTON_BORDERS.MEDIUM"
           :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.BASE"
+          :status="BUTTON_STATUSES.DEFAULT"
           class=""
         >
-          <p class="paragraph paragraph--l">Step 1: Complete application</p>
+          <p class="paragraph paragraph--l">DEFAULT</p>
         </UIButton>
         <UIButton
           :border="BUTTON_BORDERS.MEDIUM"
@@ -22,39 +80,39 @@ const props = defineProps<{ eventId: string }>();
           :status="BUTTON_STATUSES.ACTIVE"
           class=""
         >
-          <p class="paragraph paragraph--l">Step 2: Application review</p>
+          <p class="paragraph paragraph--l">ACTIVE</p>
         </UIButton>
         <UIButton
           :border="BUTTON_BORDERS.MEDIUM"
           :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.SUCCESS"
+          :status="BUTTON_STATUSES.COMPLETED"
           class=""
         >
-          <p class="paragraph paragraph--l">Step 3: Deposit payment</p>
+          <p class="paragraph paragraph--l">COMPLETED</p>
         </UIButton>
         <UIButton
           :border="BUTTON_BORDERS.MEDIUM"
           :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.PAUSED"
+          :status="BUTTON_STATUSES.PENDING"
           class=""
         >
-          <p class="paragraph paragraph--l">Step 4: Info form</p>
+          <p class="paragraph paragraph--l">PENDING</p>
         </UIButton>
         <UIButton
           :border="BUTTON_BORDERS.MEDIUM"
           :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.NOT_APPROVED"
+          :status="BUTTON_STATUSES.REJECTED"
           class=""
         >
-          <p class="paragraph paragraph--l">Step 5: Full payment</p>
+          <p class="paragraph paragraph--l">REJECTED</p>
         </UIButton>
         <UIButton
           :border="BUTTON_BORDERS.MEDIUM"
           :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.AVAILABLE"
+          :status="BUTTON_STATUSES.BASE"
           class=""
         >
-          <p class="paragraph paragraph--l">Step 6: Pre-assessment survey</p>
+          <p class="paragraph paragraph--l">BASE</p>
         </UIButton>
         <UIButton
           :border="BUTTON_BORDERS.MEDIUM"
@@ -63,17 +121,14 @@ const props = defineProps<{ eventId: string }>();
           :is-disabled="true"
           class=""
         >
-          <p class="paragraph paragraph--l">Step 7: Event</p>
+          <p class="paragraph paragraph--l">DISABLED</p>
         </UIButton>
       </div>
     </div>
     <div class="tabs__tabpanels">
-      <UIContainer type="main-box"> Some tab content </UIContainer>
+      <UIContainer type="main-box"> {{ props.eventData.id }} <br /> </UIContainer>
     </div>
-  </div>
-  <UIContainer type="main-box">
-    <h1 class="heading heading--l">{{ props.eventId }}</h1>
-  </UIContainer>
+  </div> -->
 </template>
 
 <style lang="scss" scoped>
@@ -95,6 +150,10 @@ const props = defineProps<{ eventId: string }>();
     overflow: auto;
     display: flex;
     padding: 6px;
+  }
+  &__button {
+    padding: 0;
+    border: none;
   }
 }
 </style>

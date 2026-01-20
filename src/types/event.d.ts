@@ -1,5 +1,4 @@
 export interface IEvents {
-  isEventSelected: boolean;
   IsEventsLoading: boolean;
   data: IEvent[];
 }
@@ -14,6 +13,7 @@ export interface IEvent {
   startDate: string;
   timeRemaining: string;
   steps: IEventStep[];
+  isCurrentMilestoneLoading: boolean;
 }
 
 export interface IEventStep {

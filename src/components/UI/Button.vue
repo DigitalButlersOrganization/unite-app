@@ -179,22 +179,22 @@ const isDisabled = computed(() => props.isDisabled || props.isLoading);
     --color-border-hover--button: var(--palette--#{$border-hover});
   }
 
-  &--status-base {
+  &--status-default {
     @include button-status(8, 13, 14);
   }
-  &--status-success {
+  &--status-completed {
     @include button-status(6, 13, 15);
   }
   &--status-active {
     @include button-status(2, 5, 16);
   }
-  &--status-paused {
+  &--status-pending {
     @include button-status(2, 7, 17);
   }
-  &--status-not-approved {
+  &--status-rejected {
     @include button-status(10, 18, 19);
   }
-  &--status-available {
+  &--status-base {
     @include button-status(5, 20, 4);
   }
   &--status-cta-1 {
