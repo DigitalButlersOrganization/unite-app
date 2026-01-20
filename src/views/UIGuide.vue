@@ -41,13 +41,11 @@ import { ROUTES } from '@/router/routes';
     <UIButton
       :border="BUTTON_BORDERS.MEDIUM"
       :size="BUTTON_SIZES.MEDIUM"
-      :status="BUTTON_STATUSES.BASE"
+      :status="BUTTON_STATUSES.DEFAULT"
       :to="ROUTES.HOME.PATH"
       class=""
     >
-      <p class="paragraph paragraph--l">
-        {{ ROUTES.HOME.NAME }}
-      </p>
+      <p class="paragraph paragraph--l">DEFAULT</p>
     </UIButton>
     <UIButton
       :border="BUTTON_BORDERS.MEDIUM"
@@ -56,65 +54,53 @@ import { ROUTES } from '@/router/routes';
       :to="ROUTES.HOME.PATH"
       class=""
     >
-      <p class="paragraph paragraph--l">
-        {{ ROUTES.HOME.NAME }}
-      </p>
+      <p class="paragraph paragraph--l">ACTIVE</p>
     </UIButton>
     <UIButton
       :border="BUTTON_BORDERS.MEDIUM"
       :size="BUTTON_SIZES.MEDIUM"
-      :status="BUTTON_STATUSES.SUCCESS"
+      :status="BUTTON_STATUSES.COMPLETED"
       :to="ROUTES.HOME.PATH"
       class=""
     >
-      <p class="paragraph paragraph--l">
-        {{ ROUTES.HOME.NAME }}
-      </p>
+      <p class="paragraph paragraph--l">COMPLETED</p>
     </UIButton>
     <UIButton
       :border="BUTTON_BORDERS.MEDIUM"
       :size="BUTTON_SIZES.MEDIUM"
-      :status="BUTTON_STATUSES.PAUSED"
+      :status="BUTTON_STATUSES.PENDING"
       :to="ROUTES.HOME.PATH"
       class=""
     >
-      <p class="paragraph paragraph--l">
-        {{ ROUTES.HOME.NAME }}
-      </p>
+      <p class="paragraph paragraph--l">PENDING</p>
     </UIButton>
     <UIButton
       :border="BUTTON_BORDERS.MEDIUM"
       :size="BUTTON_SIZES.MEDIUM"
-      :status="BUTTON_STATUSES.NOT_APPROVED"
+      :status="BUTTON_STATUSES.REJECTED"
       :to="ROUTES.HOME.PATH"
       class=""
     >
-      <p class="paragraph paragraph--l">
-        {{ ROUTES.HOME.NAME }}
-      </p>
-    </UIButton>
-    <UIButton
-      :border="BUTTON_BORDERS.MEDIUM"
-      :size="BUTTON_SIZES.MEDIUM"
-      :status="BUTTON_STATUSES.AVAILABLE"
-      :to="ROUTES.HOME.PATH"
-      class=""
-    >
-      <p class="paragraph paragraph--l">
-        {{ ROUTES.HOME.NAME }}
-      </p>
+      <p class="paragraph paragraph--l">REJECTED</p>
     </UIButton>
     <UIButton
       :border="BUTTON_BORDERS.MEDIUM"
       :size="BUTTON_SIZES.MEDIUM"
       :status="BUTTON_STATUSES.BASE"
+      :to="ROUTES.HOME.PATH"
+      class=""
+    >
+      <p class="paragraph paragraph--l">BASE</p>
+    </UIButton>
+    <UIButton
+      :border="BUTTON_BORDERS.MEDIUM"
+      :size="BUTTON_SIZES.MEDIUM"
+      :status="BUTTON_STATUSES.DISABLED"
       :is-disabled="true"
       :to="ROUTES.HOME.PATH"
       class=""
     >
-      <p class="paragraph paragraph--l">
-        {{ ROUTES.HOME.NAME }}
-      </p>
+      <p class="paragraph paragraph--l">DISABLED</p>
     </UIButton>
   </div>
 </template>

@@ -39,7 +39,7 @@ const clickHandler = (event: MouseEvent, eventId: string) => {
       <EventCard
         :class="activeCardId === event.id ? CLASSES.ACTIVE : ''"
         v-for="event in eventsStore.data"
-        :key="event.name"
+        :key="event.eventName"
         :options="event"
         @click="clickHandler($event, event.id)"
       />
