@@ -67,72 +67,6 @@ api.auth.getCurrentEvent({ store, id: props.eventData.id });
       </TabPanel>
     </TabPanels>
   </Tabs>
-  <!-- <div v-else class="tabs">
-    <div class="tabs__buttons-wrapper with-scrollbar">
-      <div class="tabs__buttons">
-        <UIButton
-          :border="BUTTON_BORDERS.MEDIUM"
-          :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.DEFAULT"
-          class=""
-        >
-          <p class="paragraph paragraph--l">DEFAULT</p>
-        </UIButton>
-        <UIButton
-          :border="BUTTON_BORDERS.MEDIUM"
-          :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.ACTIVE"
-          class=""
-        >
-          <p class="paragraph paragraph--l">ACTIVE</p>
-        </UIButton>
-        <UIButton
-          :border="BUTTON_BORDERS.MEDIUM"
-          :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.COMPLETED"
-          class=""
-        >
-          <p class="paragraph paragraph--l">COMPLETED</p>
-        </UIButton>
-        <UIButton
-          :border="BUTTON_BORDERS.MEDIUM"
-          :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.PENDING"
-          class=""
-        >
-          <p class="paragraph paragraph--l">PENDING</p>
-        </UIButton>
-        <UIButton
-          :border="BUTTON_BORDERS.MEDIUM"
-          :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.REJECTED"
-          class=""
-        >
-          <p class="paragraph paragraph--l">REJECTED</p>
-        </UIButton>
-        <UIButton
-          :border="BUTTON_BORDERS.MEDIUM"
-          :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.BASE"
-          class=""
-        >
-          <p class="paragraph paragraph--l">BASE</p>
-        </UIButton>
-        <UIButton
-          :border="BUTTON_BORDERS.MEDIUM"
-          :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.BASE"
-          :is-disabled="true"
-          class=""
-        >
-          <p class="paragraph paragraph--l">DISABLED</p>
-        </UIButton>
-      </div>
-    </div>
-    <div class="tabs__tabpanels">
-      <UIContainer type="main-box"> {{ props.eventData.id }} <br /> </UIContainer>
-    </div>
-  </div> -->
 </template>
 <style lang="scss">
 .tabs__tabpanel {
@@ -161,6 +95,7 @@ api.auth.getCurrentEvent({ store, id: props.eventData.id });
     top: 0;
     z-index: 2;
   }
+
   &__buttons {
     min-width: 100%;
     width: max-content;
@@ -170,15 +105,23 @@ api.auth.getCurrentEvent({ store, id: props.eventData.id });
     display: flex;
     padding: 6px;
   }
+
   &__button {
     padding: 0;
     border: none;
     border-radius: var(--border-radius--1);
+
+    &:focus,
+    &:focus-visible {
+      z-index: 2;
+    }
   }
+
   &__tabpanels {
     width: 100%;
     flex-grow: 1;
   }
+
   &__tabpanel {
     width: 100%;
     height: 100%;

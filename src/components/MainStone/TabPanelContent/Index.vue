@@ -23,6 +23,23 @@ const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
         <div v-if="currentMilestone?.milestone.description" class="description">
           <p class="paragraph paragraph--l">{{ currentMilestone?.milestone.description }}</p>
         </div>
+        <div
+          v-if="
+            currentMilestone?.milestone.notes ||
+            (currentMilestone?.milestone?.files?.length ?? 0) > 0
+          "
+          class="description"
+        >
+          <MainStoneAccentBox>
+            <p class="paragraph paragraph--l">
+              {{ currentMilestone?.milestone.notes }}
+            </p>
+            <br />
+            <p class="paragraph paragraph--l">
+              {{ currentMilestone?.milestone.files }}
+            </p>
+          </MainStoneAccentBox>
+        </div>
       </div>
       <div class="grid__cell">
         <MainStoneMainDataBox
@@ -44,9 +61,11 @@ const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
             width="100%"
             height="600px"
             frameborder="0"
-            style="border: none"
+            scrolling="no"
+            style="border: none; pointer-events: auto"
             allow="fullscreen"
             class="form-iframe"
+            tabindex="-1"
           >
           </iframe>
         </div>
@@ -93,9 +112,13 @@ const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
   overflow: hidden;
   border-radius: var(--border-radius--2);
   box-shadow: 0px 4px 3.75rem 0px rgba(0, 0, 0, 0.11);
+  /* Предотвращаем прокрутку к iframe */
+  overflow-anchor: none;
 }
 .form-iframe {
   display: block;
   width: 100%;
+  /* Предотвращаем автоскролл */
+  scroll-margin: 0;
 }
 </style>
