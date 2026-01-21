@@ -71,6 +71,7 @@ watch(
 <style scoped lang="scss">
 .event-detail {
   width: 100%;
+  height: 100%;
 
   &__error {
     color: red;
@@ -78,6 +79,7 @@ watch(
 
   &__content {
     width: 100%;
+    height: 100%;
     margin: 0 auto;
 
     h1 {

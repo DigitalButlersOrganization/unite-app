@@ -46,22 +46,26 @@ api.auth.getCurrentEvent({ store, id: props.eventData.id });
         >
       </TabList>
     </div>
-    <UIContainer type="main-box">
-      <TabPanels class="tabs__tabpanels">
-        <TabPanel
-          v-for="(value, index) in props.eventData.steps"
-          :key="index"
-          :value="index.toString()"
-        >
-          <p v-if="activeTab === index.toString()" class="m-0">
-            {{ value.milestone.title }}
-            <br /><br />
-
-            {{ value.milestone.description }}
-          </p>
-        </TabPanel>
-      </TabPanels>
-    </UIContainer>
+    <TabPanels class="tabs__tabpanels">
+      <TabPanel
+        v-for="(value, index) in props.eventData.steps"
+        :key="index"
+        :value="index.toString()"
+        class="tabs__tabpanel"
+        :class="
+          value.status === BUTTON_STATUSES.REJECTED
+            ? `tabs__tabpanel--${BUTTON_STATUSES.REJECTED.toLowerCase()}`
+            : ''
+        "
+      >
+        <div v-if="activeTab === index.toString()">
+          <MainStoneTabPanelContent
+            :event-data="props.eventData"
+            :milestone-slug="value.milestone.slug"
+          />
+        </div>
+      </TabPanel>
+    </TabPanels>
   </Tabs>
   <!-- <div v-else class="tabs">
     <div class="tabs__buttons-wrapper with-scrollbar">
@@ -130,10 +134,21 @@ api.auth.getCurrentEvent({ store, id: props.eventData.id });
     </div>
   </div> -->
 </template>
-
+<style lang="scss">
+.tabs__tabpanel {
+  width: 100%;
+  height: 100%;
+  &--rejected {
+    background-color: var(--palette--9);
+  }
+}
+</style>
 <style lang="scss" scoped>
 .tabs {
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
   &__buttons-wrapper {
     width: 100%;
@@ -154,6 +169,15 @@ api.auth.getCurrentEvent({ store, id: props.eventData.id });
   &__button {
     padding: 0;
     border: none;
+    border-radius: var(--border-radius--1);
+  }
+  &__tabpanels {
+    width: 100%;
+    flex-grow: 1;
+  }
+  &__tabpanel {
+    width: 100%;
+    height: 100%;
   }
 }
 </style>
