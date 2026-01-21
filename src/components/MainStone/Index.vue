@@ -156,6 +156,10 @@ api.auth.getCurrentEvent({ store, id: props.eventData.id });
     border-top-left-radius: var(--border-radius--2);
     border-top-right-radius: var(--border-radius--2);
     background: var(--color-background--3);
+    min-height: max-content;
+    position: sticky;
+    top: 0;
+    z-index: 2;
   }
   &__buttons {
     min-width: 100%;
