@@ -46,94 +46,43 @@ api.auth.getCurrentEvent({ store, id: props.eventData.id });
         >
       </TabList>
     </div>
-    <UIContainer type="main-box">
-      <TabPanels class="tabs__tabpanels">
-        <TabPanel
-          v-for="(value, index) in props.eventData.steps"
-          :key="index"
-          :value="index.toString()"
-        >
-          <p v-if="activeTab === index.toString()" class="m-0">
-            {{ value.milestone.title }}
-            <br /><br />
-
-            {{ value.milestone.description }}
-          </p>
-        </TabPanel>
-      </TabPanels>
-    </UIContainer>
+    <TabPanels class="tabs__tabpanels">
+      <TabPanel
+        v-for="(value, index) in props.eventData.steps"
+        :key="index"
+        :value="index.toString()"
+        class="tabs__tabpanel"
+        :class="
+          value.status === BUTTON_STATUSES.REJECTED
+            ? `tabs__tabpanel--${BUTTON_STATUSES.REJECTED.toLowerCase()}`
+            : ''
+        "
+      >
+        <div v-if="activeTab === index.toString()">
+          <MainStoneTabPanelContent
+            :event-data="props.eventData"
+            :milestone-slug="value.milestone.slug"
+          />
+        </div>
+      </TabPanel>
+    </TabPanels>
   </Tabs>
-  <!-- <div v-else class="tabs">
-    <div class="tabs__buttons-wrapper with-scrollbar">
-      <div class="tabs__buttons">
-        <UIButton
-          :border="BUTTON_BORDERS.MEDIUM"
-          :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.DEFAULT"
-          class=""
-        >
-          <p class="paragraph paragraph--l">DEFAULT</p>
-        </UIButton>
-        <UIButton
-          :border="BUTTON_BORDERS.MEDIUM"
-          :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.ACTIVE"
-          class=""
-        >
-          <p class="paragraph paragraph--l">ACTIVE</p>
-        </UIButton>
-        <UIButton
-          :border="BUTTON_BORDERS.MEDIUM"
-          :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.COMPLETED"
-          class=""
-        >
-          <p class="paragraph paragraph--l">COMPLETED</p>
-        </UIButton>
-        <UIButton
-          :border="BUTTON_BORDERS.MEDIUM"
-          :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.PENDING"
-          class=""
-        >
-          <p class="paragraph paragraph--l">PENDING</p>
-        </UIButton>
-        <UIButton
-          :border="BUTTON_BORDERS.MEDIUM"
-          :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.REJECTED"
-          class=""
-        >
-          <p class="paragraph paragraph--l">REJECTED</p>
-        </UIButton>
-        <UIButton
-          :border="BUTTON_BORDERS.MEDIUM"
-          :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.BASE"
-          class=""
-        >
-          <p class="paragraph paragraph--l">BASE</p>
-        </UIButton>
-        <UIButton
-          :border="BUTTON_BORDERS.MEDIUM"
-          :size="BUTTON_SIZES.MEDIUM"
-          :status="BUTTON_STATUSES.BASE"
-          :is-disabled="true"
-          class=""
-        >
-          <p class="paragraph paragraph--l">DISABLED</p>
-        </UIButton>
-      </div>
-    </div>
-    <div class="tabs__tabpanels">
-      <UIContainer type="main-box"> {{ props.eventData.id }} <br /> </UIContainer>
-    </div>
-  </div> -->
 </template>
-
+<style lang="scss">
+.tabs__tabpanel {
+  width: 100%;
+  height: 100%;
+  &--rejected {
+    background-color: var(--palette--9);
+  }
+}
+</style>
 <style lang="scss" scoped>
 .tabs {
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
   &__buttons-wrapper {
     width: 100%;
@@ -141,7 +90,12 @@ api.auth.getCurrentEvent({ store, id: props.eventData.id });
     border-top-left-radius: var(--border-radius--2);
     border-top-right-radius: var(--border-radius--2);
     background: var(--color-background--3);
+    min-height: max-content;
+    position: sticky;
+    top: 0;
+    z-index: 2;
   }
+
   &__buttons {
     min-width: 100%;
     width: max-content;
@@ -151,9 +105,26 @@ api.auth.getCurrentEvent({ store, id: props.eventData.id });
     display: flex;
     padding: 6px;
   }
+
   &__button {
     padding: 0;
     border: none;
+    border-radius: var(--border-radius--1);
+
+    &:focus,
+    &:focus-visible {
+      z-index: 2;
+    }
+  }
+
+  &__tabpanels {
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  &__tabpanel {
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

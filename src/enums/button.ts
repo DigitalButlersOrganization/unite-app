@@ -1,3 +1,5 @@
+import { MILESTONE_STATUSES } from './milestone';
+
 export enum BUTTON_SIZES {
   SMALL = 'small',
   MEDIUM = 'medium',
@@ -28,13 +30,13 @@ export enum BUTTON_BORDERS {
 }
 
 export enum BUTTON_STATUSES {
-  DEFAULT = 'default',
-  ACTIVE = 'active',
-  COMPLETED = 'completed',
-  PENDING = 'pending',
-  REJECTED = 'rejected',
-  BASE = 'base',
-  DISABLED = 'disabled',
+  DEFAULT = MILESTONE_STATUSES.DEFAULT,
+  ACTIVE = MILESTONE_STATUSES.ACTIVE,
+  COMPLETED = MILESTONE_STATUSES.COMPLETED,
+  PENDING = MILESTONE_STATUSES.PENDING,
+  REJECTED = MILESTONE_STATUSES.REJECTED,
+  BASE = MILESTONE_STATUSES.BASE,
+  DISABLED = MILESTONE_STATUSES.DISABLED,
 
   CTA_1 = 'cta-1',
   CTA_2 = 'cta-2',
