@@ -5,7 +5,6 @@
     <div class="card__background"></div>
     <div class="card__content">
       <slot />
-      Test
     </div>
   </div>
 </template>

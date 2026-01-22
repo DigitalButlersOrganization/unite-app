@@ -26,6 +26,8 @@
     flex-direction: column;
     justify-content: start;
     align-items: start;
+    height: max-content;
+    min-height: 100%;
   }
 }
 </style>

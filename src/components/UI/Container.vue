@@ -20,6 +20,10 @@ const props = withDefaults(defineProps<{ type: 'main-box' | null }>(), {
   padding-inline: 6px;
   max-width: 120rem;
 
+  @media screen and (max-width: 767px) {
+    padding-inline: 0.75rem;
+  }
+
   &--main-box {
     padding: linearClamp(3, 1.5);
   }

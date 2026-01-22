@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, ref, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useUserStore, useEventsStore } from './stores';
 import { api } from './services/api';
@@ -17,6 +17,11 @@ const route = useRoute();
 const layoutPages = ['Home', 'EventDetail', 'UIGuide'];
 const useLayout = computed(() => layoutPages.includes(route.name as string));
 
+const isMobile = ref(window.innerWidth < 767);
+const handleResize = () => {
+  isMobile.value = window.innerWidth < 767;
+};
+
 onMounted(async () => {
   userStore.setFetchingUser(true);
 
@@ -26,6 +31,12 @@ onMounted(async () => {
     userStore.setFetchingUser(true);
     api.auth.refreshToken({ store });
   }
+
+  window.addEventListener('resize', handleResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize);
 });
 </script>
 
@@ -33,7 +44,7 @@ onMounted(async () => {
   <MainGrid v-if="useLayout">
     <CustomHeader />
     <CustomAside v-if="eventsStore.data?.length" />
-    <CustomMain>
+    <CustomMain v-if="eventsStore.currentEventId || !isMobile">
       <RouterView />
     </CustomMain>
   </MainGrid>

@@ -104,5 +104,9 @@ const logout = async () => {
       }
     }
   }
+
+  @media screen and (max-width: 767px) {
+    margin-bottom: 0.75rem;
+  }
 }
 </style>

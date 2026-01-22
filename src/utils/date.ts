@@ -52,3 +52,32 @@ export function formatDateWithMonth(dateString: string): string {
 
   return `${day} ${month} ${year}`;
 }
+
+/**
+ * Форматирует количество секунд в формат "Xd Xh Xm"
+ * @param seconds - Количество секунд
+ * @returns Отформатированная строка времени
+ */
+export function formatTimeRemaining(seconds: number): string {
+  if (seconds <= 0) {
+    return '0m';
+  }
+
+  const days = Math.floor(seconds / 86400);
+  const hours = Math.floor((seconds % 86400) / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+
+  const parts: string[] = [];
+
+  if (days > 0) {
+    parts.push(`${days}d`);
+  }
+  if (hours > 0) {
+    parts.push(`${hours}h`);
+  }
+  if (minutes > 0) {
+    parts.push(`${minutes}m`);
+  }
+
+  return parts.length > 0 ? parts.join(' ') : '0m';
+}

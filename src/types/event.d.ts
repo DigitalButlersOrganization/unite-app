@@ -1,5 +1,6 @@
 export interface IEvents {
   IsEventsLoading: boolean;
+  currentEventId: string | null;
   data: IEvent[];
 }
 
@@ -11,7 +12,7 @@ export interface IEvent {
   order: number;
   progress: number;
   startDate: string;
-  timeRemaining: string;
+  timeRemaining: number;
   steps: IEventStep[];
   isCurrentMilestoneLoading: boolean;
 }
