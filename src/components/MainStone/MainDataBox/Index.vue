@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { IEvent } from '@/types/event';
+import { formatTimeRemaining } from '@/utils';
 
 const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
 </script>
@@ -12,7 +13,7 @@ const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
           <p class="paragraph paragraph--l">Time Remaining:</p>
         </div>
         <div class="card__chapter-content">
-          <p class="heading heading--l">{{ props.eventData.timeRemaining }}</p>
+          <p class="heading heading--l">{{ formatTimeRemaining(props.eventData.timeRemaining) }}</p>
         </div>
       </div>
       <div class="card__chapter">
@@ -37,6 +38,7 @@ const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
   max-width: 406px;
   box-shadow: 0px 4px 3.75rem 0px rgba(0, 0, 0, 0.11);
   margin-inline-start: auto;
+  background: var(--color-background--1);
 
   &__content {
     display: flex;

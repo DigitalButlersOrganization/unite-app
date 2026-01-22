@@ -3,7 +3,7 @@ import IconArrowDown1 from '@/assets/icons/arrow-down-1.svg';
 import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
 import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
 import type { IEvent } from '@/types/event';
-import { formatDate } from '@/utils';
+import { formatDate, formatTimeRemaining } from '@/utils';
 
 const props = defineProps<{ options: IEvent }>();
 </script>
@@ -54,7 +54,9 @@ const props = defineProps<{ options: IEvent }>();
             <p class="paragraph paragraph--l">Time Remaining:</p>
           </div>
           <div class="card__information-value">
-            <p class="paragraph paragraph--l">{{ props.options.timeRemaining }}</p>
+            <p class="paragraph paragraph--l">
+              {{ formatTimeRemaining(props.options.timeRemaining) }}
+            </p>
           </div>
         </div>
       </div>
