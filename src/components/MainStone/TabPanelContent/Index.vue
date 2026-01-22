@@ -62,10 +62,9 @@ const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
             height="600px"
             frameborder="0"
             scrolling="no"
-            style="border: none; pointer-events: auto"
+            style="border: none"
             allow="fullscreen"
             class="form-iframe"
-            tabindex="-1"
           >
           </iframe>
         </div>
@@ -86,6 +85,8 @@ const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
   &__cell {
     display: flex;
     flex-direction: column;
+    z-index: 0;
+
     &:nth-child(1) {
       grid-column: 1 / 7;
     }

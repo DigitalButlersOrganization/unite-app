@@ -110,6 +110,7 @@ api.auth.getCurrentEvent({ store, id: props.eventData.id });
     padding: 0;
     border: none;
     border-radius: var(--border-radius--1);
+    position: relative;
 
     &:focus,
     &:focus-visible {

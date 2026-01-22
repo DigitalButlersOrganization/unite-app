@@ -71,7 +71,8 @@ watch(
 <style scoped lang="scss">
 .event-detail {
   width: 100%;
-  height: 100%;
+  height: max-content;
+  flex-grow: 1;
 
   &__error {
     color: red;
