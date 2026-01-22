@@ -32,10 +32,24 @@ const eventsStore = useEventsStore();
   grid-template-columns: 346px auto;
   grid-template-rows: max-content auto;
 
+  @media screen and (max-width: 767px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content auto;
+    gap: 0rem;
+
+    & > * {
+      grid-column: 1 / 3;
+    }
+  }
+
   &--without-aside {
     & > *:nth-child(2) {
       grid-column: 1 / 3;
     }
+  }
+
+  @media screen and (max-width: 767px) {
+    padding-top: 0.75rem;
   }
 }
 </style>

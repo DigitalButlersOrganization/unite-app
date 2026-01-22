@@ -5,7 +5,7 @@ export const useEventsStore = defineStore('eventsStore', {
   state: (): IEvents => {
     return {
       IsEventsLoading: false,
-
+      currentEventId: null,
       data: [],
     };
   },

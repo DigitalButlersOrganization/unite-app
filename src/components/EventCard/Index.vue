@@ -1,17 +1,42 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import IconArrowDown1 from '@/assets/icons/arrow-down-1.svg';
 import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
 import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
 import type { IEvent } from '@/types/event';
 import { formatDate, formatTimeRemaining } from '@/utils';
-import { event } from '@primeuix/themes/aura/timeline';
 
 const props = defineProps<{ options: IEvent }>();
+
+const isDesktop = computed(() => window.innerWidth > 767);
 </script>
 
 <template>
   <div class="card">
     <button class="card__summary" role="button" tabindex="0">
+      <div v-if="!isDesktop" class="card__first-information-wrapper">
+        <div class="card__first-information-wrapper-inner">
+          <div class="card__first-information">
+            <div class="card__first-information-row">
+              <div class="card__first-information-key">
+                <p class="paragraph paragraph--l">Start Date:</p>
+              </div>
+              <div class="card__first-information-value">
+                <p class="paragraph paragraph--l">{{ formatDate(props.options.startDate) }}</p>
+              </div>
+            </div>
+            <div class="card__first-information-row">
+              <div class="card__first-information-key">
+                <p class="paragraph paragraph--l">Status:</p>
+              </div>
+              <div class="card__first-information-value">
+                <p class="paragraph paragraph--l">{{ props.options.eventStatus }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="card__header">
         <div class="card__heading">
           <h2 class="heading heading--l">{{ props.options.eventName }}</h2>
@@ -33,37 +58,41 @@ const props = defineProps<{ options: IEvent }>();
           </div>
         </div>
       </div>
-      <div class="card__information">
-        <div class="card__information-row">
-          <div class="card__information-key">
-            <p class="paragraph paragraph--l">Start Date:</p>
-          </div>
-          <div class="card__information-value">
-            <p class="paragraph paragraph--l">{{ formatDate(props.options.startDate) }}</p>
-          </div>
-        </div>
-        <div class="card__information-row">
-          <div class="card__information-key">
-            <p class="paragraph paragraph--l">Status:</p>
-          </div>
-          <div class="card__information-value">
-            <p class="paragraph paragraph--l">{{ props.options.eventStatus }}</p>
-          </div>
-        </div>
-        <div class="card__information-row">
-          <div class="card__information-key">
-            <p class="paragraph paragraph--l">Time Remaining:</p>
-          </div>
-          <div class="card__information-value">
-            <p class="paragraph paragraph--l">
-              {{ formatTimeRemaining(props.options.timeRemaining) }}
-            </p>
+      <div class="card__information-wrapper">
+        <div class="card__information-wrapper-inner">
+          <div class="card__information">
+            <div class="card__information-row">
+              <div class="card__information-key">
+                <p class="paragraph paragraph--l">Start Date:</p>
+              </div>
+              <div class="card__information-value">
+                <p class="paragraph paragraph--l">{{ formatDate(props.options.startDate) }}</p>
+              </div>
+            </div>
+            <div class="card__information-row">
+              <div class="card__information-key">
+                <p class="paragraph paragraph--l">Status:</p>
+              </div>
+              <div class="card__information-value">
+                <p class="paragraph paragraph--l">{{ props.options.eventStatus }}</p>
+              </div>
+            </div>
+            <div class="card__information-row">
+              <div class="card__information-key">
+                <p class="paragraph paragraph--l">Time Remaining:</p>
+              </div>
+              <div class="card__information-value">
+                <p class="paragraph paragraph--l">
+                  {{ formatTimeRemaining(props.options.timeRemaining) }}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </button>
 
-    <div class="card__details">
+    <div class="card__details" v-if="isDesktop">
       <div class="card__list-of-triggers">
         <div class="card__trigger-wrapper">
           <a href="#" class="card__trigger js--active">
@@ -134,6 +163,17 @@ const props = defineProps<{ options: IEvent }>();
     .card__arrow-box {
       rotate: 180deg;
     }
+
+    @media screen and (max-width: 767px) {
+      .card__first-information-wrapper {
+        grid-template-rows: 1fr;
+      }
+    }
+    @media screen and (max-width: 767px) {
+      .card__information-wrapper {
+        grid-template-rows: 0fr;
+      }
+    }
   }
 
   &__summary {
@@ -152,14 +192,53 @@ const props = defineProps<{ options: IEvent }>();
         background: var(--palette--4);
       }
     }
+
+    @media screen and (max-width: 767px) {
+      padding: 0rem;
+    }
+  }
+  &__first-information-wrapper {
+    width: 100%;
+    overflow: hidden;
+    padding-inline: 1.75rem;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: var(--transition-default);
   }
 
+  &__first-information-wrapper-inner {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  &__first-information {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    padding-top: 1.5rem;
+
+    &-row {
+      display: flex;
+      justify-content: start;
+      align-items: top;
+      gap: 0.25rem;
+    }
+    &-key {
+      color: var(--palette--5);
+      white-space: nowrap;
+    }
+  }
   &__header {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     text-align: left;
+    @media screen and (max-width: 767px) {
+      padding-top: 2rem;
+      padding-inline: 1.75rem;
+    }
   }
   &__arrow-box {
     display: flex;
@@ -189,6 +268,9 @@ const props = defineProps<{ options: IEvent }>();
     flex-direction: column;
     gap: 0.5rem;
     margin-top: 1rem;
+    @media screen and (max-width: 767px) {
+      padding-inline: 1.75rem;
+    }
   }
   &__progress-bar-wrapper {
     width: 100%;
@@ -221,6 +303,26 @@ const props = defineProps<{ options: IEvent }>();
     background: var(--palette--5);
   }
 
+  &__information-wrapper {
+    width: 100%;
+    transition: var(--transition-default);
+
+    &-inner {
+      width: 100%;
+
+      @media screen and (max-width: 767px) {
+        overflow: hidden;
+        padding-inline: 1.75rem;
+        padding-bottom: 1.25rem;
+      }
+    }
+
+    @media screen and (max-width: 767px) {
+      display: grid;
+      grid-template-rows: 1fr;
+    }
+  }
+
   &__information {
     display: flex;
     flex-direction: column;
@@ -233,6 +335,9 @@ const props = defineProps<{ options: IEvent }>();
     border-radius: var(--border-radius--2);
     padding: 1.5rem 1.25rem;
     text-align: left;
+    @media screen and (max-width: 767px) {
+      box-shadow: 0px 4px 30px 0 rgba(0, 0, 0, 0.11);
+    }
   }
   &__information-row {
     display: inline-flex;
