@@ -3,7 +3,7 @@ import { BUTTON_BORDERS, BUTTON_SIZES, BUTTON_STATUSES, BUTTON_TAGS } from '@/en
 import { api } from '@/services/api';
 import type { IEvent } from '@/types/event';
 import * as store from '@/stores';
-import { ref } from 'vue';
+import { ref, watch, nextTick } from 'vue';
 
 import Tabs from 'primevue/tabs';
 import TabList from 'primevue/tablist';
@@ -14,8 +14,36 @@ import TabPanel from 'primevue/tabpanel';
 const props = defineProps<{ eventData: IEvent }>();
 
 const activeTab = ref('0');
+const tabsButtonsWrapper = ref<HTMLElement | null>(null);
 
 api.auth.getCurrentEvent({ store, id: props.eventData.id });
+
+watch(activeTab, async () => {
+  await nextTick();
+  if (tabsButtonsWrapper.value) {
+    const activeButton = tabsButtonsWrapper.value.querySelector(
+      '.tabs__button[data-p-active="true"]',
+    ) as HTMLElement;
+    if (activeButton) {
+      const wrapperRect = tabsButtonsWrapper.value.getBoundingClientRect();
+      const buttonRect = activeButton.getBoundingClientRect();
+      const scrollLeft = tabsButtonsWrapper.value.scrollLeft;
+
+      // Вычисляем позицию кнопки относительно контейнера
+      const buttonLeft = buttonRect.left - wrapperRect.left + scrollLeft;
+      const buttonWidth = buttonRect.width;
+      const wrapperWidth = wrapperRect.width;
+
+      // Скроллим так, чтобы кнопка была в центре (если возможно)
+      const targetScroll = buttonLeft - wrapperWidth / 2 + buttonWidth / 2;
+
+      tabsButtonsWrapper.value.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth',
+      });
+    }
+  }
+});
 </script>
 
 <template>
@@ -25,7 +53,7 @@ api.auth.getCurrentEvent({ store, id: props.eventData.id });
     </UIContainer>
   </div>
   <Tabs v-model:value="activeTab" v-else class="tabs">
-    <div class="tabs__buttons-wrapper with-scrollbar">
+    <div ref="tabsButtonsWrapper" class="tabs__buttons-wrapper with-scrollbar">
       <TabList class="tabs__buttons">
         <Tab
           v-for="(value, index) in props.eventData.steps"
