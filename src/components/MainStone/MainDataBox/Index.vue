@@ -40,6 +40,10 @@ const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
   margin-inline-start: auto;
   background: var(--color-background--1);
 
+  @media screen and (max-width: 991px) {
+    max-width: none;
+  }
+
   &__content {
     display: flex;
     flex-direction: column;

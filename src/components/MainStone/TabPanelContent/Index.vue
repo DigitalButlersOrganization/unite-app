@@ -28,16 +28,28 @@ const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
             currentMilestone?.milestone.notes ||
             (currentMilestone?.milestone?.files?.length ?? 0) > 0
           "
-          class="description"
+          class="notes"
         >
           <MainStoneAccentBox>
-            <p class="paragraph paragraph--l">
-              {{ currentMilestone?.milestone.notes }}
-            </p>
-            <br />
-            <p class="paragraph paragraph--l">
-              {{ currentMilestone?.milestone.files }}
-            </p>
+            <div class="notes__inner">
+              <template v-if="currentMilestone?.milestone.notes">
+                <p class="paragraph paragraph--l">
+                  {{ currentMilestone?.milestone.notes }}
+                </p>
+              </template>
+              <template v-if="currentMilestone?.milestone.files">
+                <a
+                  v-for="(value, index) in currentMilestone.milestone.files"
+                  :key="index"
+                  :href="value.url"
+                  class="notes__link"
+                >
+                  <p class="paragraph paragraph--l">
+                    {{ value.title }}
+                  </p>
+                </a>
+              </template>
+            </div>
           </MainStoneAccentBox>
         </div>
       </div>
@@ -82,10 +94,18 @@ const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
   gap: 3.75rem;
   align-items: start;
 
+  @media screen and (max-width: 991px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
   &__cell {
     display: flex;
     flex-direction: column;
     z-index: 0;
+
+    & > *:last-child {
+      margin-bottom: 0 !important;
+    }
 
     &:nth-child(1) {
       grid-column: 1 / 7;
@@ -95,6 +115,14 @@ const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
     }
     &:nth-child(3) {
       grid-column: 4 / 10;
+
+      @media screen and (max-width: 1280px) {
+        grid-column: 1 / 13;
+      }
+    }
+
+    @media screen and (max-width: 991px) {
+      grid-column: 1 / 2 !important;
     }
   }
 }
@@ -107,6 +135,17 @@ const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
 }
 .description {
   margin-bottom: 2rem;
+}
+.notes {
+  &__link {
+    padding: 1rem 0;
+    display: inline-block;
+  }
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 }
 .form-wrapper {
   width: 100%;

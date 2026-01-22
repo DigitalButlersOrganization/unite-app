@@ -4,6 +4,7 @@ import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
 import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
 import type { IEvent } from '@/types/event';
 import { formatDate, formatTimeRemaining } from '@/utils';
+import { event } from '@primeuix/themes/aura/timeline';
 
 const props = defineProps<{ options: IEvent }>();
 </script>
@@ -97,7 +98,7 @@ const props = defineProps<{ options: IEvent }>();
           </a>
         </div>
         <div class="card__trigger-wrapper">
-          <a href="#" class="card__trigger card__trigger--disabled">
+          <a href="/" class="card__trigger card__trigger--disabled" @click.prevent>
             <div class="card__trigger-content">
               <div class="card__trigger-content-text">
                 <p class="paragraph paragraph--l">Circle</p>
@@ -148,8 +149,6 @@ const props = defineProps<{ options: IEvent }>();
     &:hover,
     &:focus-visible {
       .card__arrow-box {
-        // background: var(--color-text--1);
-        // color: var(--color-background--1);
         background: var(--palette--4);
       }
     }
@@ -288,8 +287,10 @@ const props = defineProps<{ options: IEvent }>();
 
     &.js--active,
     &:hover {
-      background: var(--palette--4);
-      color: var(--palette--5);
+      &:not(.card__trigger--disabled) {
+        background: var(--palette--4);
+        color: var(--palette--5);
+      }
     }
     &--disabled {
       cursor: not-allowed;
