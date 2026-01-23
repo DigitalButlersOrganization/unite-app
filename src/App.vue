@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { onMounted, computed, ref, onUnmounted } from 'vue';
+import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useUserStore, useEventsStore } from './stores';
+import { useBreakpoints } from './composables';
 import { api } from './services/api';
 import * as store from '@/stores';
 import MainGrid from '@/components/MainGrid/Index.vue';
@@ -12,15 +13,11 @@ import CustomMain from '@/components/CustomMain/Index.vue';
 const userStore = useUserStore();
 const eventsStore = useEventsStore();
 const route = useRoute();
+const { isDesktop } = useBreakpoints();
 
 // Страницы, которые используют MainLayout
 const layoutPages = ['Home', 'EventDetail', 'UIGuide'];
 const useLayout = computed(() => layoutPages.includes(route.name as string));
-
-const isMobile = ref(window.innerWidth < 767);
-const handleResize = () => {
-  isMobile.value = window.innerWidth < 767;
-};
 
 onMounted(async () => {
   userStore.setFetchingUser(true);
@@ -31,12 +28,6 @@ onMounted(async () => {
     userStore.setFetchingUser(true);
     api.auth.refreshToken({ store });
   }
-
-  window.addEventListener('resize', handleResize);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', handleResize);
 });
 </script>
 
@@ -44,7 +35,7 @@ onUnmounted(() => {
   <MainGrid v-if="useLayout">
     <CustomHeader />
     <CustomAside v-if="eventsStore.data?.length" />
-    <CustomMain v-if="eventsStore.currentEventId || !isMobile">
+    <CustomMain v-if="eventsStore.currentEventId || isDesktop">
       <RouterView />
     </CustomMain>
   </MainGrid>

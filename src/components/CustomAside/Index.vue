@@ -70,5 +70,10 @@ const clickHandler = (event: MouseEvent, eventId: string) => {
       padding-bottom: 0;
     }
   }
+
+  @media screen and (max-width: 767px) {
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
 }
 </style>

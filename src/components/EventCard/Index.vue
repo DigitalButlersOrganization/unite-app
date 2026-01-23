@@ -1,25 +1,23 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import IconArrowDown1 from '@/assets/icons/arrow-down-1.svg';
 import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
 import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
 import type { IEvent } from '@/types/event';
 import { formatDate, formatTimeRemaining } from '@/utils';
 import { useEventsStore } from '@/stores';
+import { useBreakpoints } from '@/composables';
 
 const props = defineProps<{ options: IEvent }>();
 
-const isDesktop = computed(() => window.innerWidth > 767);
-const isMobile = computed(() => window.innerWidth < 767);
-
 const eventsStore = useEventsStore();
+const { isDesktop } = useBreakpoints();
 </script>
 
 <template>
   <div
     class="card"
     :style="
-      eventsStore.currentEventId && isMobile && eventsStore.currentEventId === props.options.id
+      eventsStore.currentEventId && !isDesktop && eventsStore.currentEventId === props.options.id
         ? 'border-bottom-left-radius: 0; border-bottom-right-radius: 0;'
         : ''
     "
