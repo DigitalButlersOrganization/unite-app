@@ -19,6 +19,10 @@ const eventsStore = useEventsStore();
   width: 100%;
   height: 100%;
   padding-top: 6px;
+
+  @media screen and (max-width: 767px) {
+    padding-top: 1rem;
+  }
 }
 .main-grid-container {
   width: 100%;
@@ -49,7 +53,6 @@ const eventsStore = useEventsStore();
   }
 
   @media screen and (max-width: 767px) {
-    padding-top: 0.75rem;
     display: flex;
     flex-direction: column;
   }

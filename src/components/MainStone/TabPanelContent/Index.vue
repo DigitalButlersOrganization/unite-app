@@ -24,7 +24,10 @@ const { isDesktop } = useBreakpoints();
           <p class="heading heading--xl">{{ currentMilestone?.milestone.title }}</p>
         </div>
         <div v-if="currentMilestone?.milestone.description" class="description">
-          <p class="paragraph paragraph--l">{{ currentMilestone?.milestone.description }}</p>
+          <div
+            v-html="currentMilestone?.milestone.description"
+            class="paragraph paragraph--l"
+          ></div>
         </div>
         <div
           v-if="
@@ -35,11 +38,12 @@ const { isDesktop } = useBreakpoints();
         >
           <MainStoneAccentBox>
             <div class="notes__inner">
-              <template v-if="currentMilestone?.milestone.notes">
-                <p class="paragraph paragraph--l">
-                  {{ currentMilestone?.milestone.notes }}
-                </p>
-              </template>
+              <div class="notes__inner-content" v-if="currentMilestone?.milestone.notes">
+                <div
+                  class="paragraph paragraph--l"
+                  v-html="currentMilestone?.milestone.notes"
+                ></div>
+              </div>
               <template v-if="currentMilestone?.milestone.files">
                 <a
                   v-for="(value, index) in currentMilestone.milestone.files"
@@ -87,7 +91,24 @@ const { isDesktop } = useBreakpoints();
     </div>
   </UIContainer>
 </template>
+<style lang="scss">
+.notes__inner-content {
+  // line-height: 150%;
+  // *,
+  // * > * {
+  //   line-height: 150%;
+  // }
+  a {
+    text-decoration: underline;
+    font-weight: 700;
+    transition: var(--transition-default);
 
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+</style>
 <style lang="scss" scoped>
 .grid {
   position: relative;
@@ -96,6 +117,10 @@ const { isDesktop } = useBreakpoints();
   grid-template-columns: repeat(12, 1fr);
   gap: 3.75rem;
   align-items: start;
+
+  .paragraph {
+    line-height: 150%;
+  }
 
   @media screen and (max-width: 991px) {
     grid-template-columns: repeat(1, 1fr);

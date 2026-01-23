@@ -209,7 +209,7 @@ const { isDesktop } = useBreakpoints();
   &__first-information-wrapper {
     width: 100%;
     overflow: hidden;
-    padding-inline: 1.75rem;
+    padding-inline: 1.5rem;
     display: grid;
     grid-template-rows: 0fr;
     transition: var(--transition-default);
@@ -246,7 +246,7 @@ const { isDesktop } = useBreakpoints();
     text-align: left;
     @media screen and (max-width: 767px) {
       padding-top: 2rem;
-      padding-inline: 1.75rem;
+      padding-inline: 1.5rem;
     }
   }
   &__arrow-box {
@@ -278,7 +278,7 @@ const { isDesktop } = useBreakpoints();
     gap: 0.5rem;
     margin-top: 1rem;
     @media screen and (max-width: 767px) {
-      padding-inline: 1.75rem;
+      padding-inline: 1.5rem;
     }
   }
   &__progress-bar-wrapper {
@@ -321,7 +321,7 @@ const { isDesktop } = useBreakpoints();
 
       @media screen and (max-width: 767px) {
         overflow: hidden;
-        padding-inline: 1.75rem;
+        padding-inline: 1.5rem;
         padding-bottom: 1.25rem;
       }
     }
