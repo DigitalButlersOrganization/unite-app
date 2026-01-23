@@ -60,10 +60,22 @@ const { isDesktop } = useBreakpoints();
         <div class="card__progress-bar-wrapper">
           <div class="card__progress-bar" :style="{ width: props.options.progress + '%' }"></div>
         </div>
-        <div class="card__progress-value-box">
-          <div class="card__progress-value-point"></div>
-          <div class="card__progress-value-text">
-            <p class="paragraph paragraph">{{ props.options.progress }}%</p>
+        <div class="card__progress-value-box-wrapper">
+          <div class="card__progress-value-box">
+            <div class="card__progress-value-point"></div>
+            <div class="card__progress-value-text">
+              <p class="paragraph paragraph">{{ props.options.progress }}%</p>
+            </div>
+          </div>
+          <div class="card__progress-information-row">
+            <div class="card__progress-information-key">
+              <p class="paragraph paragraph--l">Time Remaining:</p>
+            </div>
+            <div class="card__progress-information-value">
+              <p class="paragraph paragraph--l">
+                {{ formatTimeRemaining(props.options.timeRemaining) }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -183,6 +195,11 @@ const { isDesktop } = useBreakpoints();
         grid-template-rows: 0fr;
       }
     }
+    @media screen and (max-width: 767px) {
+      .card__progress-information-row {
+        display: flex;
+      }
+    }
   }
 
   &__summary {
@@ -297,11 +314,33 @@ const { isDesktop } = useBreakpoints();
     border-radius: var(--border-radius--4);
     transition: var(--transition-default);
   }
+  &__progress-value-box-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
   &__progress-value-box {
     display: flex;
     width: 100%;
     align-items: center;
     gap: 0.25rem;
+  }
+
+  &__progress-information-row {
+    display: none;
+    align-items: center;
+    width: auto;
+    gap: 0.25rem;
+  }
+
+  &__progress-information-key {
+    color: var(--palette--5);
+    white-space: nowrap;
+  }
+  &__progress-information-value {
+    white-space: nowrap;
   }
 
   &__progress-value-point {
