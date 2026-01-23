@@ -50,6 +50,8 @@ const eventsStore = useEventsStore();
 
   @media screen and (max-width: 767px) {
     padding-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

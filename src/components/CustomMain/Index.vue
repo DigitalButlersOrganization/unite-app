@@ -28,6 +28,11 @@
     align-items: start;
     height: max-content;
     min-height: 100%;
+
+    @media screen and (max-width: 767px) {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
   }
 }
 </style>

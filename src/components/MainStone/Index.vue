@@ -122,6 +122,11 @@ watch(activeTab, async () => {
     position: sticky;
     top: 0;
     z-index: 2;
+
+    @media screen and (max-width: 767px) {
+      border-radius: 0;
+      background-color: var(--palette--13);
+    }
   }
 
   &__buttons {

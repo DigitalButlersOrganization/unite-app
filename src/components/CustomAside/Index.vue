@@ -65,6 +65,10 @@ const clickHandler = (event: MouseEvent, eventId: string) => {
     width: 100%;
     height: max-content;
     padding-bottom: 6px;
+
+    @media screen and (max-width: 767px) {
+      padding-bottom: 0;
+    }
   }
 }
 </style>
