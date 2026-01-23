@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useBreakpoints } from '@/composables';
 import { MILESTONE_TYPES } from '@/enums';
 import type { IEvent } from '@/types/event';
 
@@ -8,6 +9,8 @@ const currentMilestone = props.eventData.steps.find(
   (step) => step.milestone.slug === props.milestoneSlug,
 );
 const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
+
+const { isDesktop } = useBreakpoints();
 </script>
 
 <template>
@@ -53,7 +56,7 @@ const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
           </MainStoneAccentBox>
         </div>
       </div>
-      <div class="grid__cell">
+      <div class="grid__cell" v-if="isDesktop">
         <MainStoneMainDataBox
           v-if="currentMilestone"
           :event-data="props.eventData"

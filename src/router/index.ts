@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { ROUTES } from '@/router/routes';
-import { useUserStore } from '@/stores';
+import { useUserStore, useEventsStore } from '@/stores';
 import { watch } from 'vue';
 
 const router = createRouter({
@@ -40,6 +40,16 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
+  const eventsStore = useEventsStore();
+
+  // Управление currentEventId
+  if (to.name === ROUTES.EVENT_DETAIL.NAME && to.params.id) {
+    // Устанавливаем currentEventId при переходе на страницу события
+    eventsStore.currentEventId = to.params.id as string;
+  } else if (to.name !== ROUTES.EVENT_DETAIL.NAME) {
+    // Сбрасываем currentEventId на всех страницах кроме EventDetail
+    eventsStore.currentEventId = null;
+  }
 
   const isAuthPage = to.meta.isAuthPage;
 

@@ -26,11 +26,9 @@ const clickHandler = (event: MouseEvent, eventId: string) => {
   if (activeCardId.value === eventId) {
     activeCardId.value = null;
     router.push({ name: 'Home' });
-    eventsStore.currentEventId = null;
   } else {
     activeCardId.value = eventId;
     router.push({ name: 'EventDetail', params: { id: eventId } });
-    eventsStore.currentEventId = eventId;
   }
 };
 </script>
