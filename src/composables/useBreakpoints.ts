@@ -3,7 +3,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 const MOBILE_BREAKPOINT = 767;
 
 const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 0);
-let isListenerAdded = false;
+let subscribersCount = 0;
 
 const handleResize = () => {
   windowWidth.value = window.innerWidth;
@@ -15,16 +15,20 @@ const handleResize = () => {
  */
 export function useBreakpoints() {
   onMounted(() => {
-    if (!isListenerAdded && typeof window !== 'undefined') {
-      window.addEventListener('resize', handleResize);
-      isListenerAdded = true;
+    if (typeof window !== 'undefined') {
+      subscribersCount++;
+      if (subscribersCount === 1) {
+        window.addEventListener('resize', handleResize);
+      }
     }
   });
 
   onUnmounted(() => {
-    if (isListenerAdded && typeof window !== 'undefined') {
-      window.removeEventListener('resize', handleResize);
-      isListenerAdded = false;
+    if (typeof window !== 'undefined') {
+      subscribersCount--;
+      if (subscribersCount === 0) {
+        window.removeEventListener('resize', handleResize);
+      }
     }
   });
 
