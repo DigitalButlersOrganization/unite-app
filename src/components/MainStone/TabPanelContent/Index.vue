@@ -93,11 +93,6 @@ const { isDesktop } = useBreakpoints();
 </template>
 <style lang="scss">
 .notes__inner-content {
-  // line-height: 150%;
-  // *,
-  // * > * {
-  //   line-height: 150%;
-  // }
   a {
     text-decoration: underline;
     font-weight: 700;
