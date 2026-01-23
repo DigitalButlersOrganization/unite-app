@@ -26,11 +26,9 @@ const clickHandler = (event: MouseEvent, eventId: string) => {
   if (activeCardId.value === eventId) {
     activeCardId.value = null;
     router.push({ name: 'Home' });
-    eventsStore.currentEventId = null;
   } else {
     activeCardId.value = eventId;
     router.push({ name: 'EventDetail', params: { id: eventId } });
-    eventsStore.currentEventId = eventId;
   }
 };
 </script>
@@ -65,6 +63,15 @@ const clickHandler = (event: MouseEvent, eventId: string) => {
     width: 100%;
     height: max-content;
     padding-bottom: 6px;
+
+    @media screen and (max-width: 767px) {
+      padding-bottom: 0;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    flex-grow: 1;
+    flex-shrink: 0;
   }
 }
 </style>

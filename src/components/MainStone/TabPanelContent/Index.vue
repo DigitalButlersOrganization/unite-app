@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useBreakpoints } from '@/composables';
 import { MILESTONE_TYPES } from '@/enums';
 import type { IEvent } from '@/types/event';
 
@@ -8,6 +9,8 @@ const currentMilestone = props.eventData.steps.find(
   (step) => step.milestone.slug === props.milestoneSlug,
 );
 const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
+
+const { isDesktop } = useBreakpoints();
 </script>
 
 <template>
@@ -21,7 +24,10 @@ const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
           <p class="heading heading--xl">{{ currentMilestone?.milestone.title }}</p>
         </div>
         <div v-if="currentMilestone?.milestone.description" class="description">
-          <p class="paragraph paragraph--l">{{ currentMilestone?.milestone.description }}</p>
+          <div
+            v-html="currentMilestone?.milestone.description"
+            class="paragraph paragraph--l"
+          ></div>
         </div>
         <div
           v-if="
@@ -32,11 +38,12 @@ const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
         >
           <MainStoneAccentBox>
             <div class="notes__inner">
-              <template v-if="currentMilestone?.milestone.notes">
-                <p class="paragraph paragraph--l">
-                  {{ currentMilestone?.milestone.notes }}
-                </p>
-              </template>
+              <div class="notes__inner-content" v-if="currentMilestone?.milestone.notes">
+                <div
+                  class="paragraph paragraph--l"
+                  v-html="currentMilestone?.milestone.notes"
+                ></div>
+              </div>
               <template v-if="currentMilestone?.milestone.files">
                 <a
                   v-for="(value, index) in currentMilestone.milestone.files"
@@ -53,7 +60,7 @@ const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
           </MainStoneAccentBox>
         </div>
       </div>
-      <div class="grid__cell">
+      <div class="grid__cell" v-if="isDesktop">
         <MainStoneMainDataBox
           v-if="currentMilestone"
           :event-data="props.eventData"
@@ -84,7 +91,19 @@ const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
     </div>
   </UIContainer>
 </template>
+<style lang="scss">
+.notes__inner-content {
+  a {
+    text-decoration: underline;
+    font-weight: 700;
+    transition: var(--transition-default);
 
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+</style>
 <style lang="scss" scoped>
 .grid {
   position: relative;
@@ -93,6 +112,10 @@ const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
   grid-template-columns: repeat(12, 1fr);
   gap: 3.75rem;
   align-items: start;
+
+  .paragraph {
+    line-height: 150%;
+  }
 
   @media screen and (max-width: 991px) {
     grid-template-columns: repeat(1, 1fr);

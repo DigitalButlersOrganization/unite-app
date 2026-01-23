@@ -1,18 +1,27 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import IconArrowDown1 from '@/assets/icons/arrow-down-1.svg';
 import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
 import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
 import type { IEvent } from '@/types/event';
 import { formatDate, formatTimeRemaining } from '@/utils';
+import { useEventsStore } from '@/stores';
+import { useBreakpoints } from '@/composables';
 
 const props = defineProps<{ options: IEvent }>();
 
-const isDesktop = computed(() => window.innerWidth > 767);
+const eventsStore = useEventsStore();
+const { isDesktop } = useBreakpoints();
 </script>
 
 <template>
-  <div class="card">
+  <div
+    class="card"
+    :style="
+      eventsStore.currentEventId && !isDesktop && eventsStore.currentEventId === props.options.id
+        ? 'border-bottom-left-radius: 0; border-bottom-right-radius: 0;'
+        : ''
+    "
+  >
     <button class="card__summary" role="button" tabindex="0">
       <div v-if="!isDesktop" class="card__first-information-wrapper">
         <div class="card__first-information-wrapper-inner">
@@ -200,7 +209,7 @@ const isDesktop = computed(() => window.innerWidth > 767);
   &__first-information-wrapper {
     width: 100%;
     overflow: hidden;
-    padding-inline: 1.75rem;
+    padding-inline: 1.5rem;
     display: grid;
     grid-template-rows: 0fr;
     transition: var(--transition-default);
@@ -237,7 +246,7 @@ const isDesktop = computed(() => window.innerWidth > 767);
     text-align: left;
     @media screen and (max-width: 767px) {
       padding-top: 2rem;
-      padding-inline: 1.75rem;
+      padding-inline: 1.5rem;
     }
   }
   &__arrow-box {
@@ -269,7 +278,7 @@ const isDesktop = computed(() => window.innerWidth > 767);
     gap: 0.5rem;
     margin-top: 1rem;
     @media screen and (max-width: 767px) {
-      padding-inline: 1.75rem;
+      padding-inline: 1.5rem;
     }
   }
   &__progress-bar-wrapper {
@@ -312,7 +321,7 @@ const isDesktop = computed(() => window.innerWidth > 767);
 
       @media screen and (max-width: 767px) {
         overflow: hidden;
-        padding-inline: 1.75rem;
+        padding-inline: 1.5rem;
         padding-bottom: 1.25rem;
       }
     }
