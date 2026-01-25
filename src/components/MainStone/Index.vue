@@ -4,6 +4,7 @@ import { api } from '@/services/api';
 import type { IEvent } from '@/types/event';
 import * as store from '@/stores';
 import { ref, watch, nextTick } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 
 import Tabs from 'primevue/tabs';
 import TabList from 'primevue/tablist';
@@ -13,12 +14,56 @@ import TabPanel from 'primevue/tabpanel';
 
 const props = defineProps<{ eventData: IEvent }>();
 
-const activeTab = ref('0');
+const router = useRouter();
+const route = useRoute();
+
+const activeTab = ref<string | null>(null);
 const tabsButtonsWrapper = ref<HTMLElement | null>(null);
 
 api.auth.getCurrentEvent({ store, id: props.eventData.id });
 
-watch(activeTab, async () => {
+// Отслеживаем загрузку steps и инициализируем активный таб из URL
+watch(
+  () => props.eventData.steps,
+  async (steps) => {
+    if (steps && steps.length > 0 && activeTab.value === null) {
+      const milestoneSlug = route.query.milestone as string;
+      let targetIndex = 0;
+
+      if (milestoneSlug) {
+        const index = steps.findIndex((step) => step.milestone.slug === milestoneSlug);
+        if (index !== -1) {
+          targetIndex = index;
+        }
+      }
+
+      // Устанавливаем активный таб
+      activeTab.value = targetIndex.toString();
+
+      // Сразу обновляем URL с правильным slug
+      const slug = steps[targetIndex]?.milestone.slug;
+      if (slug && route.query.milestone !== slug) {
+        await router.replace({
+          query: { ...route.query, milestone: slug },
+        });
+      }
+    }
+  },
+  { immediate: true },
+);
+
+watch(activeTab, async (newValue) => {
+  if (newValue === null) return;
+
+  // Обновляем GET параметр milestone в URL
+  const index = parseInt(newValue);
+  const slug = props.eventData.steps[index]?.milestone.slug;
+  if (slug) {
+    await router.replace({
+      query: { ...route.query, milestone: slug },
+    });
+  }
+
   await nextTick();
   if (tabsButtonsWrapper.value) {
     const activeButton = tabsButtonsWrapper.value.querySelector(
@@ -52,7 +97,7 @@ watch(activeTab, async () => {
       <p class="heading heading--l">Loading...</p>
     </UIContainer>
   </div>
-  <Tabs v-model:value="activeTab" v-else class="tabs">
+  <Tabs v-else-if="activeTab !== null" v-model:value="activeTab" class="tabs">
     <div ref="tabsButtonsWrapper" class="tabs__buttons-wrapper with-scrollbar">
       <TabList class="tabs__buttons">
         <Tab
