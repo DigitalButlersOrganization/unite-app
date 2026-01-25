@@ -194,6 +194,10 @@ const isDisabled = computed(() => props.isDisabled || props.isLoading);
   &--status-rejected {
     @include button-status(10, 18, 19);
   }
+  &--status-disabled {
+    opacity: 0.7;
+    pointer-events: none;
+  }
   &--status-base {
     @include button-status(5, 20, 4);
   }

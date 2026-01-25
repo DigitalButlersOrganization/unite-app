@@ -40,7 +40,7 @@ export const auth = {
       .get('/event/all', {})
       .then((response) => {
         if (response.data.items) {
-          console.log(response.data.items);
+          // console.log(response.data.items);
 
           // eventsStore.setEvents([
           //   { eventName: 'Camp 1', id: 'camp_1' },
