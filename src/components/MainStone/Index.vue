@@ -37,6 +37,11 @@ watch(
         }
       }
 
+      // Если найденный таб заблокирован, используем первый таб !!!!!
+      if (steps[targetIndex]?.status === BUTTON_STATUSES.DISABLED) {
+        targetIndex = 0;
+      }
+
       // Устанавливаем активный таб
       activeTab.value = targetIndex.toString();
 
