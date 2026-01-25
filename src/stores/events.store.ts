@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import type { IEvent, IEvents, IEventStep } from '@/types/event';
+import { BUTTON_STATUSES } from '@/enums';
 
 export const useEventsStore = defineStore('eventsStore', {
   state: (): IEvents => {
@@ -25,8 +26,28 @@ export const useEventsStore = defineStore('eventsStore', {
         console.error(`Event with id ${eventId} not found`);
         return;
       }
+      let isBlocked = false;
 
-      currentEvent.steps = data;
+      const modifiedData = data.map((step, index) => {
+        if (index === 0) {
+          isBlocked = step.milestone?.isBlocked || false;
+          return step;
+        }
+
+        if (isBlocked) {
+          if (data[index - 1]?.status === BUTTON_STATUSES.COMPLETED) {
+            return step;
+          } else {
+            step.status = BUTTON_STATUSES.DISABLED;
+            return step;
+          }
+        } else {
+          return step;
+        }
+      });
+      console.log(modifiedData, 'modifiedData');
+
+      currentEvent.steps = modifiedData;
     },
   },
 });

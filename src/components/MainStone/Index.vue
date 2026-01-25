@@ -105,11 +105,21 @@ watch(activeTab, async (newValue) => {
           :key="index"
           :value="index.toString()"
           class="tabs__button"
+          :class="
+            value.status === BUTTON_STATUSES.DISABLED
+              ? `tabs__button--${BUTTON_STATUSES.DISABLED.toLowerCase()}`
+              : ''
+          "
+          :disabled="value.status === BUTTON_STATUSES.DISABLED"
         >
           <UIButton
             :border="BUTTON_BORDERS.MEDIUM"
             :size="BUTTON_SIZES.MEDIUM"
-            :status="activeTab === index.toString() ? BUTTON_STATUSES.ACTIVE : BUTTON_STATUSES.BASE"
+            :status="
+              activeTab === index.toString()
+                ? BUTTON_STATUSES.ACTIVE
+                : (value.status.toLowerCase() as BUTTON_STATUSES)
+            "
             :is-disabled="false"
             :tag="BUTTON_TAGS.DIV"
             class=""
@@ -193,6 +203,10 @@ watch(activeTab, async (newValue) => {
     &:focus,
     &:focus-visible {
       z-index: 2;
+    }
+
+    &--disabled {
+      cursor: not-allowed;
     }
   }
 
