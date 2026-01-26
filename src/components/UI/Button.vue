@@ -147,6 +147,10 @@ const isDisabled = computed(() => props.isDisabled || props.isLoading);
   &--medium {
     padding: 1.25rem 1.5rem;
     gap: 1rem;
+
+    @media screen and (max-width: 767px) {
+      padding: 1rem;
+    }
   }
   &--small {
     padding: 0.75rem 1rem;
