@@ -145,8 +145,12 @@ onUnmounted(() => {
     line-height: 150%;
   }
 
+  @media screen and (max-width: 1280px) {
+    gap: 2.75rem;
+  }
   @media screen and (max-width: 991px) {
     grid-template-columns: repeat(1, 1fr);
+    gap: 1.25rem;
   }
 
   &__cell {
