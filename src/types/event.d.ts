@@ -1,5 +1,6 @@
 export interface IEvents {
   IsEventsLoading: boolean;
+  isTimeRemainingOpen: boolean;
   currentEventId: string | null;
   data: IEvent[];
 }

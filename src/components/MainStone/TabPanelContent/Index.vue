@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue';
 import { useBreakpoints } from '@/composables';
 import { MILESTONE_TYPES } from '@/enums';
 import type { IEvent } from '@/types/event';
+import { api } from '@/services/api';
+import * as store from '@/stores';
 
 const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
 
@@ -11,9 +14,33 @@ const currentMilestone = props.eventData.steps.find(
 const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
 
 const { isDesktop } = useBreakpoints();
+
+const handleFilloutMessage = (event: MessageEvent) => {
+  if (event.origin !== 'https://applications.unite2030.com') {
+    return;
+  }
+
+  if (event.data?.type === 'form_submit') {
+    console.log('Нужно здесь запросить обновление данного евента');
+    api.auth.getCurrentEvent({ store, id: props.eventData.id });
+  }
+};
+
+onMounted(() => {
+  window.addEventListener('message', handleFilloutMessage);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('message', handleFilloutMessage);
+});
 </script>
 
 <template>
+  <MainStoneMainDataBoxMobile
+    v-if="currentMilestone && !isDesktop"
+    :event-data="props.eventData"
+    :milestone-slug="props.milestoneSlug"
+  />
   <UIContainer type="main-box">
     <div class="grid">
       <div class="grid__cell">
@@ -175,13 +202,9 @@ const { isDesktop } = useBreakpoints();
   overflow: hidden;
   border-radius: var(--border-radius--2);
   box-shadow: 0px 4px 3.75rem 0px rgba(0, 0, 0, 0.11);
-  /* Предотвращаем прокрутку к iframe */
-  overflow-anchor: none;
 }
 .form-iframe {
   display: block;
   width: 100%;
-  /* Предотвращаем автоскролл */
-  scroll-margin: 0;
 }
 </style>
