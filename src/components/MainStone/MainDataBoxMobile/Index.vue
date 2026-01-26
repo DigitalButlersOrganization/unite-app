@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IEvent } from '@/types/event';
-import { formatTimeRemaining } from '@/utils';
+import { formatTimeRemaining, getCurrentProgressForTimeRemaining } from '@/utils';
 import IconArrowDown1 from '@/assets/icons/arrow-down-1.svg';
 import { useEventsStore } from '@/stores';
 
@@ -10,10 +10,6 @@ const eventsStore = useEventsStore();
 
 const toggleIsTimeRemainingStatus = () => {
   eventsStore.isTimeRemainingOpen = !eventsStore.isTimeRemainingOpen;
-};
-
-const getCurrentProgress: () => number = () => {
-  return 35;
 };
 
 window.addEventListener('resize', () => {
@@ -46,7 +42,10 @@ window.addEventListener('resize', () => {
           </div>
           <div class="card__progress-box-wrapper">
             <div class="card__progress-box">
-              <div class="card__progress-line" :style="`width: ${getCurrentProgress()}%`"></div>
+              <div
+                class="card__progress-line"
+                :style="`width: ${getCurrentProgressForTimeRemaining(props.eventData)}%`"
+              ></div>
             </div>
           </div>
         </div>

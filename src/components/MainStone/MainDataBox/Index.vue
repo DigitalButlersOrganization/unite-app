@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IEvent } from '@/types/event';
-import { formatTimeRemaining } from '@/utils';
+import { formatTimeRemaining, getCurrentProgressForTimeRemaining } from '@/utils';
 
 const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
 </script>
@@ -14,6 +14,14 @@ const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
         </div>
         <div class="card__chapter-content">
           <p class="heading heading--l">{{ formatTimeRemaining(props.eventData.timeRemaining) }}</p>
+        </div>
+        <div class="card__progress-box-wrapper">
+          <div class="card__progress-box">
+            <div
+              class="card__progress-line"
+              :style="`width: ${getCurrentProgressForTimeRemaining(props.eventData)}%`"
+            ></div>
+          </div>
         </div>
       </div>
       <div class="card__chapter">
@@ -58,6 +66,21 @@ const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
     &-title {
       color: var(--palette--5);
     }
+  }
+  &__progress-box-wrapper {
+    width: 100%;
+    margin-top: -4px;
+  }
+  &__progress-box {
+    width: 100%;
+    height: 6px;
+    background: var(--palette--23);
+    border-radius: var(--border-radius--2);
+  }
+  &__progress-line {
+    height: 100%;
+    background: var(--palette--10);
+    border-radius: var(--border-radius--2);
   }
 }
 </style>

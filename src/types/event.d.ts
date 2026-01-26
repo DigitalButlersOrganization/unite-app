@@ -13,6 +13,7 @@ export interface IEvent {
   order: number;
   progress: number;
   startDate: string;
+  createdAt: string;
   timeRemaining: number;
   steps: IEventStep[];
   isCurrentMilestoneLoading: boolean;

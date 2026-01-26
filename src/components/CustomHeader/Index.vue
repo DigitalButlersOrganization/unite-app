@@ -89,7 +89,6 @@ window.addEventListener('resize', resizeHandler);
     @media screen and (max-width: 767px) {
       padding-inline: 1.5rem;
       flex-wrap: wrap;
-      // padding-bottom: 0;
     }
   }
 
