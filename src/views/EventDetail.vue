@@ -11,11 +11,11 @@ const event = ref<IEvent | null>(null);
 const isLoading = ref(true);
 const error = ref('');
 
-const loadEvent = (id: string) => {
+const loadEvent = (slug: string) => {
   isLoading.value = true;
   error.value = '';
 
-  event.value = eventsStore.data.find((e) => e.id === id) || null;
+  event.value = eventsStore.data.find((e) => e.slug === slug) || null;
 
   if (!event.value) {
     error.value = 'The event was not found or unavailable';

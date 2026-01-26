@@ -7,7 +7,7 @@ export interface IEvents {
 
 export interface IEvent {
   eventName: string;
-  id: string;
+  slug: string;
   currentStatus: string | null;
   eventStatus: string;
   order: number;

@@ -11,6 +11,7 @@ const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
 const currentMilestone = props.eventData.steps.find(
   (step) => step.milestone.slug === props.milestoneSlug,
 );
+
 const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
 
 const { isDesktop } = useBreakpoints();
@@ -22,7 +23,7 @@ const handleFilloutMessage = (event: MessageEvent) => {
 
   if (event.data?.type === 'form_submit') {
     console.log('Нужно здесь запросить обновление данного евента');
-    api.auth.getCurrentEvent({ store, id: props.eventData.id });
+    api.auth.getCurrentEvent({ store, id: props.eventData.slug });
   }
 };
 
@@ -144,8 +145,12 @@ onUnmounted(() => {
     line-height: 150%;
   }
 
+  @media screen and (max-width: 1280px) {
+    gap: 2.75rem;
+  }
   @media screen and (max-width: 991px) {
     grid-template-columns: repeat(1, 1fr);
+    gap: 1.25rem;
   }
 
   &__cell {

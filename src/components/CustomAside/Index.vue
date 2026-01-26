@@ -37,11 +37,11 @@ const clickHandler = (event: MouseEvent, eventId: string) => {
   <aside class="aside">
     <div class="aside__scroll-box">
       <EventCard
-        :class="activeCardId === event.id ? CLASSES.ACTIVE : ''"
+        :class="activeCardId === event.slug ? CLASSES.ACTIVE : ''"
         v-for="event in eventsStore.data"
         :key="event.eventName"
         :options="event"
-        @click="clickHandler($event, event.id)"
+        @click="clickHandler($event, event.slug)"
       />
     </div>
   </aside>
