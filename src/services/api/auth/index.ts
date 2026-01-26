@@ -5,6 +5,7 @@ import type { ILoadingStore } from '@/stores/loading.store';
 import type { Router } from 'vue-router';
 import { ROUTES } from '@/router/routes';
 import type { IStore } from '@/stores';
+import router from '@/router';
 // import type { IStore } from '@/stores';
 
 export const auth = {
@@ -89,6 +90,8 @@ export const auth = {
           console.error('❌ Error loading milestones:', error);
           toast('Failed to load milestones', { type: 'error' });
         }
+        currentEvent.steps = [];
+        router.push({ name: ROUTES.HOME.NAME });
       })
       .finally(() => {
         currentEvent.isCurrentMilestoneLoading = false;
