@@ -36,6 +36,11 @@ onUnmounted(() => {
 </script>
 
 <template>
+  <MainStoneMainDataBoxMobile
+    v-if="currentMilestone && !isDesktop"
+    :event-data="props.eventData"
+    :milestone-slug="props.milestoneSlug"
+  />
   <UIContainer type="main-box">
     <div class="grid">
       <div class="grid__cell">

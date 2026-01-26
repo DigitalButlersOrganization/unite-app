@@ -7,6 +7,7 @@ export const useEventsStore = defineStore('eventsStore', {
     return {
       IsEventsLoading: false,
       currentEventId: null,
+      isTimeRemainingOpen: false,
       data: [],
     };
   },

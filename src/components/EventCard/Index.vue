@@ -262,7 +262,7 @@ const { isDesktop } = useBreakpoints();
     align-items: center;
     text-align: left;
     @media screen and (max-width: 767px) {
-      padding-top: 2rem;
+      padding-top: 1.75rem;
       padding-inline: 1.5rem;
     }
   }
@@ -296,6 +296,7 @@ const { isDesktop } = useBreakpoints();
     margin-top: 1rem;
     @media screen and (max-width: 767px) {
       padding-inline: 1.5rem;
+      margin-top: 1.25rem;
     }
   }
   &__progress-bar-wrapper {

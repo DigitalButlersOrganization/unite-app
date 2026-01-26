@@ -21,7 +21,7 @@ const eventsStore = useEventsStore();
 <style lang="scss" scoped>
 .link {
   text-decoration: underline;
-  transition: var(--transition--default);
+  transition: var(--transition-default);
 
   &:hover {
     opacity: 0.8;
