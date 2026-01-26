@@ -46,7 +46,6 @@ export const useEventsStore = defineStore('eventsStore', {
           return step;
         }
       });
-      console.log(modifiedData, 'modifiedData');
 
       currentEvent.steps = modifiedData;
     },
