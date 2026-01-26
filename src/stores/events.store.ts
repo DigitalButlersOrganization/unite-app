@@ -21,7 +21,7 @@ export const useEventsStore = defineStore('eventsStore', {
       this.data = changedData;
     },
     setMilestones({ eventId, data }: { eventId: string; data: IEventStep[] }) {
-      const currentEvent = this.data.find((event) => event.id === eventId);
+      const currentEvent = this.data.find((event) => event.slug === eventId);
 
       if (!currentEvent) {
         console.error(`Event with id ${eventId} not found`);

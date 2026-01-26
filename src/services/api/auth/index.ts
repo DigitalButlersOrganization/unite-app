@@ -69,7 +69,7 @@ export const auth = {
   getCurrentEvent: async (payload: { store: IStore; id: string }) => {
     const { store, id } = payload;
     const eventsStore = store.useEventsStore();
-    const currentEvent = eventsStore.data.find((event) => event.id === id);
+    const currentEvent = eventsStore.data.find((event) => event.slug === id);
     if (!currentEvent) {
       return;
     }

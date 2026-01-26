@@ -17,7 +17,7 @@ const { isDesktop } = useBreakpoints();
   <div
     class="card"
     :style="
-      eventsStore.currentEventId && !isDesktop && eventsStore.currentEventId === props.options.id
+      eventsStore.currentEventId && !isDesktop && eventsStore.currentEventId === props.options.slug
         ? 'border-bottom-left-radius: 0; border-bottom-right-radius: 0;'
         : ''
     "
