@@ -7,6 +7,10 @@ import { formatDate, formatTimeRemaining } from '@/utils';
 import { useEventsStore } from '@/stores';
 import { useBreakpoints } from '@/composables';
 
+defineOptions({
+  inheritAttrs: false,
+});
+
 const props = defineProps<{ options: IEvent }>();
 
 const eventsStore = useEventsStore();
@@ -14,8 +18,13 @@ const { isDesktop } = useBreakpoints();
 </script>
 
 <template>
+  <EventCardMobileMenu
+    v-if="!isDesktop && eventsStore.currentEventId === props.options.slug"
+    :options="props.options"
+  />
   <div
     class="card"
+    v-bind="$attrs"
     :style="
       eventsStore.currentEventId && !isDesktop && eventsStore.currentEventId === props.options.slug
         ? 'border-bottom-left-radius: 0; border-bottom-right-radius: 0;'
