@@ -26,6 +26,7 @@ export interface IEventMenu {
   title: string;
   order: number;
   slug: string;
+  enableTagNew: boolean;
 }
 
 export interface IEventStep {

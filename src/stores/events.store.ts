@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
-import type { IEvent, IEvents, IEventStep } from '@/types/event';
+import type { IEvent, IEventMenu, IEvents, IEventStep } from '@/types/event';
 import { BUTTON_STATUSES } from '@/enums';
+import { getCookie, setCookie } from '@/utils';
 
 export const useEventsStore = defineStore('eventsStore', {
   state: (): IEvents => {
@@ -19,6 +20,7 @@ export const useEventsStore = defineStore('eventsStore', {
       });
 
       this.data = changedData;
+      this.checkTagNewStatus();
     },
     setMilestones({ eventId, data }: { eventId: string; data: IEventStep[] }) {
       const currentEvent = this.data.find((event) => event.slug === eventId);
@@ -48,6 +50,32 @@ export const useEventsStore = defineStore('eventsStore', {
       });
 
       currentEvent.steps = modifiedData;
+    },
+    checkTagNewStatus() {
+      // Reset all enableTagNew flags
+      // this.data.forEach((event) => {
+      //   event.menu.forEach((menuItem) => {
+      //     menuItem.enableTagNew = false;
+      //   });
+      // });
+
+      this.data.forEach((event) => {
+        event.menu.forEach((menuItem: IEventMenu) => {
+          const { id } = menuItem;
+          const cookieValue = getCookie(`menu_item_${id}_enable`);
+          const currentValue = menuItem.enable.toString();
+
+          if (cookieValue && cookieValue === 'false' && currentValue === 'true') {
+            menuItem.enableTagNew = true;
+          } else {
+            menuItem.enableTagNew = false;
+          }
+
+          setCookie(`menu_item_${id}_enable`, currentValue, { path: '/', maxAge: 8640000 });
+        });
+      });
+
+      console.log('this.data', this.data);
     },
   },
 });

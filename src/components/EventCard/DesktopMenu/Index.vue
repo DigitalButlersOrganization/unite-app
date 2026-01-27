@@ -27,7 +27,7 @@ const props = defineProps<{ options: IEvent }>();
           <div v-if="!option.enable" class="card__trigger-content-icon">
             <IconQuestionMark1 />
           </div>
-          <div style="display: none" class="card__trigger-content-label">New!</div>
+          <div v-if="option.enableTagNew" class="card__trigger-content-label">New!</div>
         </div>
         <div class="card__trigger-arrow">
           <IconArrowRight1 />
