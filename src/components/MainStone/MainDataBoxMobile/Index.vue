@@ -104,9 +104,9 @@ window.addEventListener('resize', () => {
     width: 100%;
     align-items: center;
     overflow: hidden;
-    padding-top: 2rem;
-    padding-inline: 2rem;
-    padding-bottom: 1.25rem;
+    padding-top: 1.5rem;
+    padding-inline: 1.5rem;
+    padding-bottom: 0.625rem;
     background: var(--palette--5);
     color: var(--color-text--2);
     border: none;
