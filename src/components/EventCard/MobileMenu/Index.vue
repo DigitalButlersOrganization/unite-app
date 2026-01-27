@@ -3,28 +3,28 @@ import IconArrowDown1 from '@/assets/icons/arrow-down-1.svg';
 
 import type { IEvent } from '@/types/event';
 
-const props = defineProps<{ options: IEvent }>();
+const props = defineProps<{ options: IEvent; currentPageName: string }>();
 console.log(props.options.eventName);
+
+const modifiedMenu = props.options.menu.filter((item) => {
+  if (!item.enable || props.currentPageName === item.title) return;
+  return item;
+});
 </script>
 
 <template>
   <div class="menu" v-bind="$attrs">
     <div class="menu__inner">
       <div class="menu__list">
-        <div class="menu__item">
-          <a href="#" class="menu__trigger">
+        <div class="menu__item" v-for="option in modifiedMenu" :key="option.id">
+          <a
+            :href="option.enable ? option.slug : '#'"
+            class="menu__trigger"
+            :class="{ 'menu__trigger--disabled': !option.enable }"
+            @click.prevent="!option.enable ? null : null"
+          >
             <div class="menu__trigger-content">
-              <div class="menu__trigger-content-text">Visa assistance</div>
-              <div class="menu__trigger-content-arrow">
-                <IconArrowDown1 />
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="menu__item">
-          <a href="/" class="menu__trigger menu__trigger--disabled" @click.prevent>
-            <div class="menu__trigger-content">
-              <div class="menu__trigger-content-text">Circle</div>
+              <div class="menu__trigger-content-text">{{ option.title }}</div>
               <div class="menu__trigger-content-arrow">
                 <IconArrowDown1 />
               </div>

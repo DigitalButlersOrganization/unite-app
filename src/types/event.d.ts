@@ -17,6 +17,15 @@ export interface IEvent {
   timeRemaining: number;
   steps: IEventStep[];
   isCurrentMilestoneLoading: boolean;
+  menu: IEventMenu[];
+}
+
+export interface IEventMenu {
+  enable: boolean;
+  id: string;
+  title: string;
+  order: number;
+  slug: string;
 }
 
 export interface IEventStep {

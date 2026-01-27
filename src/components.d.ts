@@ -19,6 +19,7 @@ declare module 'vue' {
     CustomMainListOfPages: typeof import('./components/CustomMain/ListOfPages/Index.vue')['default']
     CustomMainListOfTabs: typeof import('./components/CustomMain/ListOfTabs/Index.vue')['default']
     EventCard: typeof import('./components/EventCard/Index.vue')['default']
+    EventCardDesktopMenu: typeof import('./components/EventCard/DesktopMenu/Index.vue')['default']
     EventCardEventMobileMenu: typeof import('./components/EventCard/EventMobileMenu/Index.vue')['default']
     EventCardMobileMenu: typeof import('./components/EventCard/MobileMenu/Index.vue')['default']
     Header: typeof import('./components/Header/Index.vue')['default']
