@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
 import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
+import router from '@/router';
 import type { IEvent } from '@/types/event';
 
 defineOptions({
@@ -8,17 +9,24 @@ defineOptions({
 });
 
 const props = defineProps<{ options: IEvent }>();
+const isCurrentPage = (slug: string) => {
+  const currentSlug = router.currentRoute.value;
+  return currentSlug.path === slug;
+};
 </script>
 
 <template>
   <div class="card__list-of-triggers">
     <div class="card__trigger-wrapper" v-for="option in props.options.menu" :key="option.id">
-      <a
-        href="#"
-        class="card__trigger js--active"
-        :class="!option.enable ? 'card__trigger--disabled' : ''"
-        @click.prevent="!option.enable ? null : null"
+      <router-link
+        :to="option.enable ? option.slug : ''"
+        class="card__trigger"
+        :event="option.enable ? 'click' : ''"
         :title="!option.enable ? 'Link unlocks after next steps' : ''"
+        :class="{
+          'js--active': isCurrentPage(option.slug),
+          'card__trigger--disabled': !option.enable,
+        }"
       >
         <div class="card__trigger-content">
           <div class="card__trigger-content-text">
@@ -32,23 +40,7 @@ const props = defineProps<{ options: IEvent }>();
         <div class="card__trigger-arrow">
           <IconArrowRight1 />
         </div>
-      </a>
-    </div>
-    <div class="card__trigger-wrapper">
-      <a href="#" class="card__trigger">
-        <div class="card__trigger-content">
-          <div class="card__trigger-content-text">
-            <p class="paragraph paragraph--l">Visa assistance</p>
-          </div>
-          <div style="display: none" class="card__trigger-content-icon">
-            <IconQuestionMark1 />
-          </div>
-          <div class="card__trigger-content-label">New!</div>
-        </div>
-        <div class="card__trigger-arrow">
-          <IconArrowRight1 />
-        </div>
-      </a>
+      </router-link>
     </div>
   </div>
 </template>

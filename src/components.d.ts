@@ -41,6 +41,7 @@ declare module 'vue' {
     MainStoneTabs: typeof import('./components/MainStone/Tabs/Index.vue')['default']
     MainStoneTabsListOfTabs: typeof import('./components/MainStone/Tabs/ListOfTabs/Index.vue')['default']
     Milestone: typeof import('./components/Milestone/index.vue')['default']
+    MilestoneInnerPage: typeof import('./components/MilestoneInnerPage/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SmallSectionLayout: typeof import('./components/SmallSectionLayout/Index.vue')['default']

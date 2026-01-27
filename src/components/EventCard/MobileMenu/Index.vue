@@ -17,8 +17,8 @@ const modifiedMenu = props.options.menu.filter((item) => {
     <div class="menu__inner">
       <div class="menu__list">
         <div class="menu__item" v-for="option in modifiedMenu" :key="option.id">
-          <a
-            :href="option.enable ? option.slug : '#'"
+          <router-link
+            :to="option.enable ? option.slug : '#'"
             class="menu__trigger"
             :class="{ 'menu__trigger--disabled': !option.enable }"
             @click.prevent="!option.enable ? null : null"
@@ -29,7 +29,7 @@ const modifiedMenu = props.options.menu.filter((item) => {
                 <IconArrowDown1 />
               </div>
             </div>
-          </a>
+          </router-link>
         </div>
       </div>
     </div>

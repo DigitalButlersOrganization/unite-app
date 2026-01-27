@@ -31,6 +31,12 @@ const router = createRouter({
       meta: { keepAlive: false },
     },
     {
+      path: ROUTES.EVENT_INNER_PAGE.PATH,
+      name: ROUTES.EVENT_INNER_PAGE.NAME,
+      component: () => import(`@/views/${ROUTES.EVENT_INNER_PAGE.NAME}.vue`),
+      meta: { keepAlive: false },
+    },
+    {
       path: ROUTES.NOT_FOUND.PATH,
       name: ROUTES.NOT_FOUND.NAME,
       component: () => import(`@/views/${ROUTES.NOT_FOUND.NAME}.vue`),
@@ -43,11 +49,14 @@ router.beforeEach((to, from, next) => {
   const eventsStore = useEventsStore();
 
   // Управление currentEventId
-  if (to.name === ROUTES.EVENT_DETAIL.NAME && to.params.id) {
-    // Устанавливаем currentEventId при переходе на страницу события
+  const isEventPage =
+    to.name === ROUTES.EVENT_DETAIL.NAME || to.name === ROUTES.EVENT_INNER_PAGE.NAME;
+
+  if (isEventPage && to.params.id) {
+    // Устанавливаем currentEventId при переходе на страницу события или внутреннюю страницу
     eventsStore.currentEventId = to.params.id as string;
-  } else if (to.name !== ROUTES.EVENT_DETAIL.NAME) {
-    // Сбрасываем currentEventId на всех страницах кроме EventDetail
+  } else if (!isEventPage) {
+    // Сбрасываем currentEventId на всех страницах кроме страниц события
     eventsStore.currentEventId = null;
   }
 

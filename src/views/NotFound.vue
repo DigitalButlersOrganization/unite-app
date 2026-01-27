@@ -13,7 +13,7 @@ const router = useRouter();
         <h1 class="not-found__title heading">404</h1>
         <p class="not-found__description heading heading--xl">Page not found</p>
         <p class="not-found__text paragraph">
-          The page you're looking for doesn't exist or has been moved.
+          The page you are looking for does not exist, has been moved, or is blocked for you.
         </p>
         <UIButton
           :status="BUTTON_STATUSES.CTA_3"

@@ -16,7 +16,7 @@ const route = useRoute();
 const { isDesktop } = useBreakpoints();
 
 // Страницы, которые используют MainLayout
-const layoutPages = ['Home', 'EventDetail', 'UIGuide'];
+const layoutPages = ['Home', 'EventDetail', 'EventInnerPage', 'UIGuide'];
 const useLayout = computed(() => layoutPages.includes(route.name as string));
 
 onMounted(async () => {

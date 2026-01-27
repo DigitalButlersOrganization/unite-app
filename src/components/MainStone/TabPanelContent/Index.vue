@@ -73,16 +73,16 @@ onUnmounted(() => {
                 ></div>
               </div>
               <template v-if="currentMilestone?.milestone.files">
-                <a
+                <router-link
                   v-for="(value, index) in currentMilestone.milestone.files"
                   :key="index"
-                  :href="value.url"
+                  :to="value.url"
                   class="notes__link"
                 >
                   <p class="paragraph paragraph--l">
                     {{ value.title }}
                   </p>
-                </a>
+                </router-link>
               </template>
             </div>
           </MainStoneAccentBox>

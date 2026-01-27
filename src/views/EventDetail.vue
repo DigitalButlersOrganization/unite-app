@@ -3,22 +3,26 @@ import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useEventsStore } from '@/stores';
 import type { IEvent } from '@/types/event';
+import router from '@/router';
+import { ROUTES } from '@/router/routes';
 
 const route = useRoute();
 const eventsStore = useEventsStore();
 
 const event = ref<IEvent | null>(null);
 const isLoading = ref(true);
-const error = ref('');
 
 const loadEvent = (slug: string) => {
   isLoading.value = true;
-  error.value = '';
 
   event.value = eventsStore.data.find((e) => e.slug === slug) || null;
 
   if (!event.value) {
-    error.value = 'The event was not found or unavailable';
+    console.log('The event was not found or unavailable');
+
+    router.push({
+      name: ROUTES.NOT_FOUND.NAME,
+    });
   }
   isLoading.value = false;
 };
@@ -56,9 +60,6 @@ watch(
     <div v-if="isLoading" class="event-detail__loading">
       <UIContainer type="main-box"> Loading ... </UIContainer>
     </div>
-    <div v-else-if="error" class="event-detail__error">
-      <UIContainer type="main-box"> {{ error }} </UIContainer>
-    </div>
 
     <div v-else-if="event" class="event-detail__content">
       <MainStone :eventData="event" />
@@ -73,10 +74,6 @@ watch(
   width: 100%;
   height: max-content;
   flex-grow: 1;
-
-  &__error {
-    color: red;
-  }
 
   &__content {
     width: 100%;
