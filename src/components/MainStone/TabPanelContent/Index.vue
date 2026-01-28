@@ -42,7 +42,14 @@ onUnmounted(() => {
     :event-data="props.eventData"
     :milestone-slug="props.milestoneSlug"
   />
-  <UIContainer type="main-box">
+  <UIContainer
+    type="main-box"
+    :style="
+      !isDesktop && currentMilestone && currentMilestone.milestone.rewards
+        ? 'padding-bottom: 152px'
+        : ''
+    "
+  >
     <div class="grid">
       <div class="grid__cell">
         <div v-if="numberOfCurrentStep !== -1" class="step-number">
