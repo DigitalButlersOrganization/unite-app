@@ -86,6 +86,14 @@ export const useEventsStore = defineStore('eventsStore', {
       console.log('this.data', this.data);
     },
   },
+  getters: {
+    isSetMilestones(): (id: string) => boolean {
+      return (id: string) => {
+        const event = this.data.find((event) => event.slug === id);
+        return !!event?.steps && event.steps.length > 0;
+      };
+    },
+  },
 });
 
 export type IEventsStore = ReturnType<typeof useEventsStore>;

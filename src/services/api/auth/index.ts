@@ -43,13 +43,6 @@ export const auth = {
         if (response.data.items) {
           // console.log(response.data.items);
 
-          // eventsStore.setEvents([
-          //   { eventName: 'Camp 1', id: 'camp_1' },
-          //   { eventName: 'Camp 2', id: 'camp_2' },
-          //   { eventName: 'Camp 3', id: 'camp_3' },
-          //   { eventName: 'Camp 4', id: 'camp_4' },
-          //   { eventName: 'Camp 5', id: 'camp_5' },
-          // ]);
           eventsStore.setEvents(response.data.items);
         }
       })
@@ -77,7 +70,6 @@ export const auth = {
     instance
       .get(`/event/${id}/milestones`, {})
       .then((response) => {
-        console.log(response.data);
         if (response.data.items) {
           eventsStore.setMilestones({ eventId: id, data: response.data.items });
         }
@@ -85,10 +77,15 @@ export const auth = {
       .catch((error) => {
         if (error.response?.status === 500) {
           console.error('❌ Server error (500):', error.response.data);
-          toast('Server error. Please contact backend team.', { type: 'error' });
+          toast('Server error. Please reload the page and try to perform this action again.', {
+            type: 'error',
+          });
         } else {
           console.error('❌ Error loading milestones:', error);
           toast('Failed to load milestones', { type: 'error' });
+        }
+        if (eventsStore.isSetMilestones(id)) {
+          toast('Data update failed. Showing initial data.', { type: 'error' });
         }
         currentEvent.steps = [];
         router.push({ name: ROUTES.HOME.NAME });
