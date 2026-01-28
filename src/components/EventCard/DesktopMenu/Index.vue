@@ -31,6 +31,7 @@ const isCurrentPage = (slug: string) => {
           'js--active': isCurrentPage(option.slug),
           'card__trigger--disabled': !option.enable,
         }"
+        @click="!option.enable && $event.preventDefault()"
       >
         <div class="card__trigger-content">
           <div class="card__trigger-content-text">

@@ -19,10 +19,12 @@ const modifiedMenu = props.options.menu.filter((item) => {
         <div class="menu__item" v-for="option in modifiedMenu" :key="option.id">
           <a
             v-if="!option.slug.startsWith('/')"
-            :href="option.enable ? option.slug : '#'"
+            :href="option.enable ? option.slug : undefined"
+            target="_blank"
+            rel="noopener noreferrer"
             class="menu__trigger"
             :class="{ 'menu__trigger--disabled': !option.enable }"
-            @click.prevent="!option.enable ? null : null"
+            @click="!option.enable && $event.preventDefault()"
           >
             <div class="menu__trigger-content">
               <div class="menu__trigger-content-text">{{ option.title }}</div>
@@ -36,7 +38,7 @@ const modifiedMenu = props.options.menu.filter((item) => {
             :to="option.enable ? option.slug : '#'"
             class="menu__trigger"
             :class="{ 'menu__trigger--disabled': !option.enable }"
-            @click.prevent="!option.enable ? null : null"
+            @click="!option.enable && $event.preventDefault()"
           >
             <div class="menu__trigger-content">
               <div class="menu__trigger-content-text">{{ option.title }}</div>
