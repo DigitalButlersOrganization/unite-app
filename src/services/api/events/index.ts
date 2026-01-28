@@ -1,9 +1,6 @@
 import { instance } from '@/services/api';
 import { toast } from 'vue3-toastify';
-import { ROUTES } from '@/router/routes';
 import type { IStore } from '@/stores';
-import router from '@/router';
-// import type { IStore } from '@/stores';
 
 export const events = {
   getAllEvents: async (payload: { store: IStore }) => {
@@ -61,7 +58,7 @@ export const events = {
           toast('Data update failed. Showing initial data.', { type: 'error' });
         }
         currentEvent.steps = [];
-        router.push({ name: ROUTES.HOME.NAME });
+        // router.push({ name: ROUTES.HOME.NAME });
       })
       .finally(() => {
         currentEvent.isCurrentMilestoneLoading = false;

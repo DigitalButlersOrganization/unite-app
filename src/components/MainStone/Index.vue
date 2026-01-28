@@ -97,6 +97,17 @@ watch(activeTab, async (newValue) => {
 </script>
 
 <template>
+  <div
+    v-if="
+      (!props.eventData.steps || props.eventData.steps.length === 0) &&
+      !props.eventData.isCurrentMilestoneLoading
+    "
+    class="event-inner-page__coming-soon"
+  >
+    <UIContainer type="main-box">
+      <div class="heading heading--l">Coming soon...</div>
+    </UIContainer>
+  </div>
   <div v-if="props.eventData.isCurrentMilestoneLoading" class="tabs__loading">
     <UIContainer type="main-box">
       <p class="heading heading--l">Loading...</p>

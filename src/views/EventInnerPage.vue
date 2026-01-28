@@ -80,7 +80,9 @@ watch(
 <template>
   <div class="event-inner-page">
     <div v-if="isLoading" class="event-inner-page__loading">
-      <UIContainer type="main-box">Loading...</UIContainer>
+      <UIContainer type="main-box">
+        <div class="heading heading--l">Loading...</div>
+      </UIContainer>
     </div>
 
     <div v-else-if="currentPage && event" class="event-inner-page__content">

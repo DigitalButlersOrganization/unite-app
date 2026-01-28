@@ -220,6 +220,7 @@ const { isDesktop } = useBreakpoints();
     justify-content: space-between;
     align-items: center;
     text-align: left;
+    gap: 1rem;
     @media screen and (max-width: 767px) {
       padding-top: 1.75rem;
       padding-inline: 1.5rem;
