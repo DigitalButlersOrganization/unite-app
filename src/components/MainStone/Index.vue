@@ -20,7 +20,7 @@ const route = useRoute();
 const activeTab = ref<string | null>(null);
 const tabsButtonsWrapper = ref<HTMLElement | null>(null);
 
-api.events.getCurrentEvent({ store, id: props.eventData.slug });
+api.events.getCurrentEventMilestones({ store, id: props.eventData.slug });
 
 // Отслеживаем загрузку steps и инициализируем активный таб из URL
 watch(

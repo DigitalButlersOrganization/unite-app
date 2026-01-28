@@ -29,7 +29,7 @@ export const events = {
         eventsStore.IsEventsLoading = false;
       });
   },
-  getCurrentEvent: async (payload: { store: IStore; id: string }) => {
+  getCurrentEventMilestones: async (payload: { store: IStore; id: string }) => {
     const { store, id } = payload;
     const eventsStore = store.useEventsStore();
     const currentEvent = eventsStore.data.find((event) => event.slug === id);

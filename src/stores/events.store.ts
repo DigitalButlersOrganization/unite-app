@@ -81,8 +81,6 @@ export const useEventsStore = defineStore('eventsStore', {
           setCookie(`menu_item_${id}_enable`, currentValue, { path: '/', maxAge: 8640000 });
         });
       });
-
-      console.log('this.data', this.data);
     },
   },
   getters: {
