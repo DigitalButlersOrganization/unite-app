@@ -23,7 +23,7 @@ const handleFilloutMessage = (event: MessageEvent) => {
 
   if (event.data?.type === 'form_submit') {
     console.log('Нужно здесь запросить обновление данного евента');
-    api.auth.getCurrentEvent({ store, id: props.eventData.slug });
+    api.events.getCurrentEvent({ store, id: props.eventData.slug });
   }
 };
 

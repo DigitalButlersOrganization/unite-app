@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { auth } from './auth';
+import { events } from './events';
 
 export const instance = axios.create({
   baseURL: '/api/',
@@ -23,4 +24,5 @@ export const instance = axios.create({
 
 export const api = {
   auth,
+  events,
 };
