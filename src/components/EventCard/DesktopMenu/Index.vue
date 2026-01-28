@@ -9,6 +9,7 @@ defineOptions({
 });
 
 const props = defineProps<{ options: IEvent }>();
+
 const isCurrentPage = (slug: string) => {
   const currentSlug = router.currentRoute.value;
   return currentSlug.path === slug;
@@ -18,15 +19,44 @@ const isCurrentPage = (slug: string) => {
 <template>
   <div class="card__list-of-triggers">
     <div class="card__trigger-wrapper" v-for="option in props.options.menu" :key="option.id">
-      <router-link
-        :to="option.enable ? option.slug : ''"
+      <!-- External link -->
+      <a
+        v-if="!option.slug.startsWith('/')"
+        :href="option.enable ? option.slug : undefined"
+        target="_blank"
+        rel="noopener noreferrer"
         class="card__trigger"
-        :event="option.enable ? 'click' : ''"
         :title="!option.enable ? 'Link unlocks after next steps' : ''"
         :class="{
           'js--active': isCurrentPage(option.slug),
           'card__trigger--disabled': !option.enable,
         }"
+      >
+        <div class="card__trigger-content">
+          <div class="card__trigger-content-text">
+            <p class="paragraph paragraph--l">{{ option.title }}</p>
+          </div>
+          <div v-if="!option.enable" class="card__trigger-content-icon">
+            <IconQuestionMark1 />
+          </div>
+          <div v-if="option.enableTagNew" class="card__trigger-content-label">New!</div>
+        </div>
+        <div class="card__trigger-arrow">
+          <IconArrowRight1 />
+        </div>
+      </a>
+
+      <!-- Internal link -->
+      <router-link
+        v-else
+        :to="option.slug"
+        class="card__trigger"
+        :title="!option.enable ? 'Link unlocks after next steps' : ''"
+        :class="{
+          'js--active': isCurrentPage(option.slug),
+          'card__trigger--disabled': !option.enable,
+        }"
+        @click="!option.enable && $event.preventDefault()"
       >
         <div class="card__trigger-content">
           <div class="card__trigger-content-text">

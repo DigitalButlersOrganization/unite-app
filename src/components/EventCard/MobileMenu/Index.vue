@@ -17,7 +17,22 @@ const modifiedMenu = props.options.menu.filter((item) => {
     <div class="menu__inner">
       <div class="menu__list">
         <div class="menu__item" v-for="option in modifiedMenu" :key="option.id">
+          <a
+            v-if="!option.slug.startsWith('/')"
+            :href="option.enable ? option.slug : '#'"
+            class="menu__trigger"
+            :class="{ 'menu__trigger--disabled': !option.enable }"
+            @click.prevent="!option.enable ? null : null"
+          >
+            <div class="menu__trigger-content">
+              <div class="menu__trigger-content-text">{{ option.title }}</div>
+              <div class="menu__trigger-content-arrow">
+                <IconArrowDown1 />
+              </div>
+            </div>
+          </a>
           <router-link
+            v-else
             :to="option.enable ? option.slug : '#'"
             class="menu__trigger"
             :class="{ 'menu__trigger--disabled': !option.enable }"
