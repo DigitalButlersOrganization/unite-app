@@ -12,7 +12,7 @@ const eventsStore = useEventsStore();
 const event = ref<IEvent | null>(null);
 const isLoading = ref(true);
 
-const loadEvent = (slug: string) => {
+const loadEvent = async (slug: string) => {
   isLoading.value = true;
 
   event.value = eventsStore.data.find((e) => e.slug === slug) || null;
@@ -23,6 +23,11 @@ const loadEvent = (slug: string) => {
     router.push({
       name: ROUTES.NOT_FOUND.NAME,
     });
+  } else {
+    const firstMenuItem = event.value.menu.find((item) => item.enable && item.slug.startsWith('/'));
+    if (firstMenuItem) {
+      await router.replace(firstMenuItem.slug);
+    }
   }
   isLoading.value = false;
 };
@@ -56,7 +61,8 @@ watch(
 </script>
 
 <template>
-  <div class="event-detail">
+  <div class="div"></div>
+  <!-- <div class="event-detail">
     <div v-if="isLoading" class="event-detail__loading">
       <UIContainer type="main-box"> Loading ... </UIContainer>
     </div>
@@ -66,7 +72,7 @@ watch(
     </div>
 
     <div v-else class="event-detail__not-found">The event not found</div>
-  </div>
+  </div> -->
 </template>
 
 <style scoped lang="scss">
