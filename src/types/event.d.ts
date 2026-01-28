@@ -16,7 +16,19 @@ export interface IEvent {
   createdAt: string;
   timeRemaining: number;
   steps: IEventStep[];
+  visaAssistance: IVisaAssistance | null;
   isCurrentMilestoneLoading: boolean;
+  isCurrentVisaAssistanceLoading: boolean;
+  menu: IEventMenu[];
+}
+
+export interface IEventMenu {
+  enable: boolean;
+  id: string;
+  title: string;
+  order: number;
+  slug: string;
+  enableTagNew: boolean;
 }
 
 export interface IEventStep {
@@ -39,6 +51,29 @@ export interface IMilestone {
   link: string;
   notes: string;
   order: number;
+  rewards: string;
+  files: IMilestoneSecondaryFile[];
+}
+export interface IVisaAssistance {
+  milestone: IVisaAssistanceInner;
+  status: string;
+  startedAt: string;
+  completedAt: string;
+  expiredAt: string;
+  files: IMilestoneMainFile[];
+  payment: IMilestonePayment;
+}
+export interface IVisaAssistanceInner {
+  step: string;
+  title: string;
+  slug: string;
+  description: string;
+  type: string;
+  isBlocked: boolean;
+  link: string;
+  notes: string;
+  order: number;
+  rewards: string;
   files: IMilestoneSecondaryFile[];
 }
 

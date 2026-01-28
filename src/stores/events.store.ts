@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
-import type { IEvent, IEvents, IEventStep } from '@/types/event';
+import type { IEvent, IEventMenu, IEvents, IEventStep, IVisaAssistance } from '@/types/event';
 import { BUTTON_STATUSES } from '@/enums';
+import { getCookie, setCookie } from '@/utils';
 
 export const useEventsStore = defineStore('eventsStore', {
   state: (): IEvents => {
@@ -15,10 +16,12 @@ export const useEventsStore = defineStore('eventsStore', {
     setEvents(data: IEvent[]) {
       const changedData = data.map((item) => {
         item.isCurrentMilestoneLoading = false;
+        item.isCurrentVisaAssistanceLoading = false;
         return item;
       });
 
       this.data = changedData;
+      this.checkTagNewStatus();
     },
     setMilestones({ eventId, data }: { eventId: string; data: IEventStep[] }) {
       const currentEvent = this.data.find((event) => event.slug === eventId);
@@ -48,6 +51,65 @@ export const useEventsStore = defineStore('eventsStore', {
       });
 
       currentEvent.steps = modifiedData;
+    },
+    setVisaAssistance({ eventId, data }: { eventId: string; data: IVisaAssistance }) {
+      const currentEvent = this.data.find((event) => event.slug === eventId);
+
+      if (!currentEvent) {
+        console.error(`Event with id ${eventId} not found`);
+        return;
+      }
+
+      currentEvent.visaAssistance = data;
+    },
+    checkTagNewStatus() {
+      // Reset all enableTagNew flags
+      // this.data.forEach((event) => {
+      //   event.menu.forEach((menuItem) => {
+      //     menuItem.enableTagNew = false;
+      //   });
+      // });
+      this.data.forEach((event) => {
+        event.menu.forEach((menuItem, index) => {
+          if (index === 1) {
+            menuItem.enable = true;
+          }
+          if (index === 2) {
+            menuItem.enable = true;
+            menuItem.slug = '/events/camp-2030-may-2026/circle';
+          }
+        });
+      });
+
+      this.data.forEach((event) => {
+        event.menu.forEach((menuItem: IEventMenu) => {
+          const { id } = menuItem;
+          const cookieValue = getCookie(`menu_item_${id}_enable`);
+          const currentValue = menuItem.enable.toString();
+
+          if (cookieValue && cookieValue === 'false' && currentValue === 'true') {
+            menuItem.enableTagNew = true;
+          } else {
+            menuItem.enableTagNew = false;
+          }
+
+          setCookie(`menu_item_${id}_enable`, currentValue, { path: '/', maxAge: 8640000 });
+        });
+      });
+    },
+  },
+  getters: {
+    isSetMilestones(): (id: string) => boolean {
+      return (id: string) => {
+        const event = this.data.find((event) => event.slug === id);
+        return !!event?.steps && event.steps.length > 0;
+      };
+    },
+    isSetVisaAssistance(): (id: string) => boolean {
+      return (id: string) => {
+        const event = this.data.find((event) => event.slug === id);
+        return !!event?.visaAssistance;
+      };
     },
   },
 });

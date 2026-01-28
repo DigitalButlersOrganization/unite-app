@@ -11,6 +11,9 @@ const eventsStore = useEventsStore();
 const toggleIsTimeRemainingStatus = () => {
   eventsStore.isTimeRemainingOpen = !eventsStore.isTimeRemainingOpen;
 };
+const currentStep = props.eventData.steps.find(
+  (step) => step.milestone.slug === props.milestoneSlug,
+);
 
 window.addEventListener('resize', () => {
   if (window.innerWidth > 767) {
@@ -60,13 +63,8 @@ window.addEventListener('resize', () => {
               <p class="paragraph">Reward:</p>
             </div>
             <div class="card__details-content">
-              <!-- <p class="paragraph">Some text</p> -->
               <p class="paragraph">
-                We’ll notify you by email as soon as it’s available for download. Access to the
-                Resources section with helpful information for event preparation. Your certificate
-                of completion is currently being prepared. Please note that it will be ready in the
-                next few days (or possibly a week or so). We’ll notify you by email as soon as it’s
-                available for download.
+                {{ currentStep?.milestone.rewards }}
               </p>
             </div>
           </div>
@@ -104,9 +102,9 @@ window.addEventListener('resize', () => {
     width: 100%;
     align-items: center;
     overflow: hidden;
-    padding-top: 2rem;
-    padding-inline: 2rem;
-    padding-bottom: 1.25rem;
+    padding-top: 1.5rem;
+    padding-inline: 1.5rem;
+    padding-bottom: 0.625rem;
     background: var(--palette--5);
     color: var(--color-text--2);
     border: none;
@@ -155,7 +153,7 @@ window.addEventListener('resize', () => {
     color: var(--color-text--2);
     border: none;
     text-align: left;
-    padding-inline: 2rem;
+    padding-inline: 1.5rem;
 
     display: grid;
     grid-template-rows: 0fr;

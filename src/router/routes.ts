@@ -15,6 +15,10 @@ export const ROUTES = {
     PATH: '/events/:id',
     NAME: 'EventDetail',
   },
+  EVENT_INNER_PAGE: {
+    PATH: '/events/:id/:innerId',
+    NAME: 'EventInnerPage',
+  },
   NOT_FOUND: {
     PATH: '/:pathMatch(.*)*',
     NAME: 'NotFound',

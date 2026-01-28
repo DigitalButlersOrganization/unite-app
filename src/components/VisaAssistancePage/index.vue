@@ -1,80 +1,53 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue';
 import { useBreakpoints } from '@/composables';
-import { MILESTONE_TYPES } from '@/enums';
+import { api } from '@/services/api';
 import type { IEvent } from '@/types/event';
-// import { api } from '@/services/api';
-// import * as store from '@/stores';
+import * as store from '@/stores';
+import { MILESTONE_TYPES } from '@/enums';
 
-const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
-
-const currentMilestone = props.eventData.steps.find(
-  (step) => step.milestone.slug === props.milestoneSlug,
-);
-
-const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
-
+const props = defineProps<{ eventData: IEvent }>();
+const eventsStore = store.useEventsStore();
+const currentEvent = eventsStore.data.find((event) => event.slug === props.eventData.slug);
 const { isDesktop } = useBreakpoints();
 
-const handleFilloutMessage = (event: MessageEvent) => {
-  if (event.origin !== 'https://applications.unite2030.com') {
-    return;
-  }
-
-  if (event.data?.type === 'form_submit') {
-    console.log('Нужно здесь запросить обновление данного евента');
-    // api.events.getCurrentEventMilestones({ store, id: props.eventData.slug });
-  }
-};
-
-onMounted(() => {
-  window.addEventListener('message', handleFilloutMessage);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('message', handleFilloutMessage);
-});
+api.events.getCurrentEventVisaAssistance({ store, id: props.eventData.slug });
 </script>
-
 <template>
-  <MainStoneMainDataBoxMobile
-    v-if="currentMilestone && !isDesktop"
-    :event-data="props.eventData"
-    :milestone-slug="props.milestoneSlug"
-  />
-  <UIContainer type="main-box">
+  <UIContainer v-if="props.eventData.isCurrentVisaAssistanceLoading" type="main-box">
+    <p class="heading heading--l">Loading...</p>
+  </UIContainer>
+  <UIContainer v-else-if="currentEvent" type="main-box">
     <div class="grid">
       <div class="grid__cell">
-        <div v-if="numberOfCurrentStep !== -1" class="step-number">
-          <p class="heading heading--l">Step {{ numberOfCurrentStep + 1 }}:</p>
+        <div class="title">
+          <p class="heading heading--xl">Visa assistance</p>
         </div>
-        <div v-if="currentMilestone?.milestone.title" class="title">
-          <p class="heading heading--xl">{{ currentMilestone?.milestone.title }}</p>
-        </div>
-        <div v-if="currentMilestone?.milestone.description" class="description">
+
+        <div v-if="currentEvent.visaAssistance?.milestone.description" class="description">
           <div
-            v-html="currentMilestone?.milestone.description"
+            v-html="currentEvent.visaAssistance?.milestone.description"
             class="paragraph paragraph--l"
           ></div>
         </div>
+
         <div
           v-if="
-            currentMilestone?.milestone.notes ||
-            (currentMilestone?.milestone?.files?.length ?? 0) > 0
+            currentEvent.visaAssistance?.milestone.notes ||
+            (currentEvent.visaAssistance?.milestone?.files?.length ?? 0) > 0
           "
           class="notes"
         >
           <MainStoneAccentBox>
             <div class="notes__inner">
-              <div class="notes__inner-content" v-if="currentMilestone?.milestone.notes">
+              <div class="notes__inner-content" v-if="currentEvent.visaAssistance?.milestone.notes">
                 <div
                   class="paragraph paragraph--l"
-                  v-html="currentMilestone?.milestone.notes"
+                  v-html="currentEvent.visaAssistance?.milestone.notes"
                 ></div>
               </div>
-              <template v-if="currentMilestone?.milestone.files">
+              <template v-if="currentEvent.visaAssistance?.milestone.files">
                 <a
-                  v-for="(value, index) in currentMilestone.milestone.files"
+                  v-for="(value, index) in currentEvent.visaAssistance.milestone.files"
                   :key="index"
                   :href="value.url"
                   class="notes__link"
@@ -88,23 +61,18 @@ onUnmounted(() => {
           </MainStoneAccentBox>
         </div>
       </div>
-      <div class="grid__cell" v-if="isDesktop">
-        <MainStoneMainDataBox
-          v-if="currentMilestone"
-          :event-data="props.eventData"
-          :milestone-slug="props.milestoneSlug"
-        />
-      </div>
+      <div class="grid__cell" v-if="isDesktop"></div>
+
       <div
         v-if="
-          currentMilestone?.milestone.type === MILESTONE_TYPES.FORM &&
-          currentMilestone?.milestone.link
+          currentEvent.visaAssistance?.milestone.type === MILESTONE_TYPES.VISA &&
+          currentEvent.visaAssistance?.milestone.link
         "
         class="grid__cell"
       >
         <div class="form-wrapper">
           <iframe
-            :src="currentMilestone.milestone.link"
+            :src="currentEvent.visaAssistance?.milestone.link"
             width="100%"
             height="600px"
             frameborder="0"
@@ -182,9 +150,6 @@ onUnmounted(() => {
   }
 }
 
-.step-number {
-  margin-bottom: 0.5rem;
-}
 .title {
   margin-bottom: 1.25rem;
 }

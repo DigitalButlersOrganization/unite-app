@@ -19,6 +19,10 @@ declare module 'vue' {
     CustomMainListOfPages: typeof import('./components/CustomMain/ListOfPages/Index.vue')['default']
     CustomMainListOfTabs: typeof import('./components/CustomMain/ListOfTabs/Index.vue')['default']
     EventCard: typeof import('./components/EventCard/Index.vue')['default']
+    EventCardDesktopMenu: typeof import('./components/EventCard/DesktopMenu/Index.vue')['default']
+    EventCardEventMobileMenu: typeof import('./components/EventCard/EventMobileMenu/Index.vue')['default']
+    EventCardMobileMenu: typeof import('./components/EventCard/MobileMenu/Index.vue')['default']
+    EventSecondaryPage: typeof import('./components/EventSecondaryPage/index.vue')['default']
     Header: typeof import('./components/Header/Index.vue')['default']
     LayoutAside: typeof import('./components/Layout/Aside/Index.vue')['default']
     LayoutEventCard: typeof import('./components/Layout/EventCard/Index.vue')['default']
@@ -38,6 +42,7 @@ declare module 'vue' {
     MainStoneTabs: typeof import('./components/MainStone/Tabs/Index.vue')['default']
     MainStoneTabsListOfTabs: typeof import('./components/MainStone/Tabs/ListOfTabs/Index.vue')['default']
     Milestone: typeof import('./components/Milestone/index.vue')['default']
+    MilestoneInnerPage: typeof import('./components/MilestoneInnerPage/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SmallSectionLayout: typeof import('./components/SmallSectionLayout/Index.vue')['default']
@@ -45,5 +50,6 @@ declare module 'vue' {
     UIContainer: typeof import('./components/UI/Container.vue')['default']
     UIProgressCircular: typeof import('./components/UI/ProgressCircular.vue')['default']
     UITextInputField: typeof import('./components/UI/TextInputField.vue')['default']
+    VisaAssistancePage: typeof import('./components/VisaAssistancePage/index.vue')['default']
   }
 }

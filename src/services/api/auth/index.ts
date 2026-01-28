@@ -5,8 +5,6 @@ import type { ILoadingStore } from '@/stores/loading.store';
 import type { Router } from 'vue-router';
 import { ROUTES } from '@/router/routes';
 import type { IStore } from '@/stores';
-import router from '@/router';
-// import type { IStore } from '@/stores';
 
 export const auth = {
   getCurrentUser: async (payload: { store: IStore }) => {
@@ -21,7 +19,7 @@ export const auth = {
             email: response.data.email,
             isAuthenticated: true,
           });
-          api.auth.getAllEvents({ store });
+          api.events.getAllEvents({ store });
         }
         return true;
       })
@@ -31,70 +29,6 @@ export const auth = {
       })
       .finally(() => {
         userStore.setFetchingUser(false);
-      });
-  },
-  getAllEvents: async (payload: { store: IStore }) => {
-    const { store } = payload;
-    const eventsStore = store.useEventsStore();
-    eventsStore.IsEventsLoading = true;
-    instance
-      .get('/event/all', {})
-      .then((response) => {
-        if (response.data.items) {
-          // console.log(response.data.items);
-
-          // eventsStore.setEvents([
-          //   { eventName: 'Camp 1', id: 'camp_1' },
-          //   { eventName: 'Camp 2', id: 'camp_2' },
-          //   { eventName: 'Camp 3', id: 'camp_3' },
-          //   { eventName: 'Camp 4', id: 'camp_4' },
-          //   { eventName: 'Camp 5', id: 'camp_5' },
-          // ]);
-          eventsStore.setEvents(response.data.items);
-        }
-      })
-      .catch((error) => {
-        if (error.response?.status === 500) {
-          console.error('❌ Server error (500):', error.response.data);
-          toast('Server error. Please contact backend team.', { type: 'error' });
-        } else {
-          console.error('❌ Error loading events:', error);
-          toast('Failed to load events', { type: 'error' });
-        }
-      })
-      .finally(() => {
-        eventsStore.IsEventsLoading = false;
-      });
-  },
-  getCurrentEvent: async (payload: { store: IStore; id: string }) => {
-    const { store, id } = payload;
-    const eventsStore = store.useEventsStore();
-    const currentEvent = eventsStore.data.find((event) => event.slug === id);
-    if (!currentEvent) {
-      return;
-    }
-    currentEvent.isCurrentMilestoneLoading = true;
-    instance
-      .get(`/event/${id}/milestones`, {})
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.items) {
-          eventsStore.setMilestones({ eventId: id, data: response.data.items });
-        }
-      })
-      .catch((error) => {
-        if (error.response?.status === 500) {
-          console.error('❌ Server error (500):', error.response.data);
-          toast('Server error. Please contact backend team.', { type: 'error' });
-        } else {
-          console.error('❌ Error loading milestones:', error);
-          toast('Failed to load milestones', { type: 'error' });
-        }
-        currentEvent.steps = [];
-        router.push({ name: ROUTES.HOME.NAME });
-      })
-      .finally(() => {
-        currentEvent.isCurrentMilestoneLoading = false;
       });
   },
   getOTPCode: async (payload: {

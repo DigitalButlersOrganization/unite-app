@@ -7,10 +7,10 @@ const eventsStore = useEventsStore();
 
 <template>
   <UIContainer type="main-box">
-    <h1 v-if="eventsStore.data?.length" class="heading heading--m">
+    <h1 v-if="eventsStore.data?.length" class="heading heading--l">
       Please select an event, and we will show you all the information about it.
     </h1>
-    <h1 v-if="!eventsStore.data?.length && !eventsStore.IsEventsLoading" class="heading heading--m">
+    <h1 v-if="!eventsStore.data?.length && !eventsStore.IsEventsLoading" class="heading heading--l">
       You don't have access to any events. First, register for an event, and then check your access
       to it again on this page. If events are still not displayed, please contact us by
 
