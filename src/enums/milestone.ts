@@ -3,6 +3,7 @@ export enum MILESTONE_TYPES {
   PAYMENT = 'payment',
   REVIEW = 'review',
   EVENT = 'event',
+  VISA = 'visa',
 }
 
 export enum MILESTONE_STATUSES {

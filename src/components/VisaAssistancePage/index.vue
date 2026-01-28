@@ -16,39 +16,36 @@ api.events.getCurrentEventVisaAssistance({ store, id: props.eventData.slug });
   <UIContainer v-if="props.eventData.isCurrentVisaAssistanceLoading" type="main-box">
     <p class="heading heading--l">Loading...</p>
   </UIContainer>
-  <UIContainer v-else type="main-box">
+  <UIContainer v-else-if="currentEvent" type="main-box">
     <div class="grid">
       <div class="grid__cell">
         <div class="title">
           <p class="heading heading--xl">Visa assistance</p>
         </div>
 
-        <div v-if="currentEvent?.visaAssistance?.milestone.description" class="description">
+        <div v-if="currentEvent.visaAssistance?.milestone.description" class="description">
           <div
-            v-html="currentEvent?.visaAssistance?.milestone.description"
+            v-html="currentEvent.visaAssistance?.milestone.description"
             class="paragraph paragraph--l"
           ></div>
         </div>
 
         <div
           v-if="
-            currentEvent?.visaAssistance?.milestone.notes ||
-            (currentEvent?.visaAssistance?.milestone?.files?.length ?? 0) > 0
+            currentEvent.visaAssistance?.milestone.notes ||
+            (currentEvent.visaAssistance?.milestone?.files?.length ?? 0) > 0
           "
           class="notes"
         >
           <MainStoneAccentBox>
             <div class="notes__inner">
-              <div
-                class="notes__inner-content"
-                v-if="currentEvent?.visaAssistance?.milestone.notes"
-              >
+              <div class="notes__inner-content" v-if="currentEvent.visaAssistance?.milestone.notes">
                 <div
                   class="paragraph paragraph--l"
-                  v-html="currentEvent?.visaAssistance?.milestone.notes"
+                  v-html="currentEvent.visaAssistance?.milestone.notes"
                 ></div>
               </div>
-              <template v-if="currentEvent?.visaAssistance?.milestone.files">
+              <template v-if="currentEvent.visaAssistance?.milestone.files">
                 <a
                   v-for="(value, index) in currentEvent.visaAssistance.milestone.files"
                   :key="index"
@@ -68,14 +65,14 @@ api.events.getCurrentEventVisaAssistance({ store, id: props.eventData.slug });
 
       <div
         v-if="
-          currentEvent?.visaAssistance?.milestone.type === MILESTONE_TYPES.FORM &&
-          currentEvent?.visaAssistance?.milestone.link
+          currentEvent.visaAssistance?.milestone.type === MILESTONE_TYPES.VISA &&
+          currentEvent.visaAssistance?.milestone.link
         "
         class="grid__cell"
       >
         <div class="form-wrapper">
           <iframe
-            :src="currentEvent?.visaAssistance?.milestone.link"
+            :src="currentEvent.visaAssistance?.milestone.link"
             width="100%"
             height="600px"
             frameborder="0"
