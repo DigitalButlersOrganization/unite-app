@@ -35,7 +35,7 @@ const loadEventAndPage = (eventId: string, innerId: string) => {
   currentPage.value =
     event.value.menu.find((page) => {
       const pageSlug = page.slug.split('/').pop();
-      return pageSlug === innerId && page.enable;
+      return pageSlug === innerId && page.enable && page.slug.startsWith('/');
     }) || null;
 
   if (!currentPage.value) {
