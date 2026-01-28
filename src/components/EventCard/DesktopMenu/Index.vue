@@ -15,12 +15,10 @@ const isCurrentPage = (slug: string) => {
   return currentSlug.path === slug;
 };
 
-const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number], navigate: () => void) => {
+const handleInternalClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
   if (!option.enable || isCurrentPage(option.slug)) {
     e.preventDefault();
-    return;
   }
-  navigate();
 };
 </script>
 
@@ -56,30 +54,29 @@ const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number], navigate
       </a>
 
       <!-- Internal link -->
-      <router-link v-else :to="option.slug" custom v-slot="{ href, navigate }">
-        <a
-          :href="href"
-          class="card__trigger"
-          :title="!option.enable ? 'Link unlocks after next steps' : ''"
-          :class="{
-            'js--active': isCurrentPage(option.slug),
-            'card__trigger--disabled': !option.enable,
-          }"
-          @click="(e) => handleLinkClick(e, option, navigate)"
-        >
-          <div class="card__trigger-content">
-            <div class="card__trigger-content-text">
-              <p class="paragraph paragraph--l">{{ option.title }}</p>
-            </div>
-            <div v-if="!option.enable" class="card__trigger-content-icon">
-              <IconQuestionMark1 />
-            </div>
-            <div v-if="option.enableTagNew" class="card__trigger-content-label">New!</div>
+      <router-link
+        v-else
+        :to="option.slug"
+        class="card__trigger"
+        :title="!option.enable ? 'Link unlocks after next steps' : ''"
+        :class="{
+          'js--active': isCurrentPage(option.slug),
+          'card__trigger--disabled': !option.enable,
+        }"
+        @click.capture="(e) => handleInternalClick(e, option)"
+      >
+        <div class="card__trigger-content">
+          <div class="card__trigger-content-text">
+            <p class="paragraph paragraph--l">{{ option.title }}</p>
           </div>
-          <div class="card__trigger-arrow">
-            <IconArrowRight1 />
+          <div v-if="!option.enable" class="card__trigger-content-icon">
+            <IconQuestionMark1 />
           </div>
-        </a>
+          <div v-if="option.enableTagNew" class="card__trigger-content-label">New!</div>
+        </div>
+        <div class="card__trigger-arrow">
+          <IconArrowRight1 />
+        </div>
       </router-link>
     </div>
   </div>
