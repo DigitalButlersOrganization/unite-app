@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useEventsStore } from '@/stores';
 import { ROUTES } from '@/router/routes';
 import type { IEvent, IEventMenu } from '@/types/event';
+import { MENU_ITEM_SLUGS } from '@/enums';
 
 const route = useRoute();
 const router = useRouter();
@@ -84,11 +85,18 @@ watch(
         <div class="heading heading--l">Loading...</div>
       </UIContainer>
     </div>
-
     <div v-else-if="currentPage && event" class="event-inner-page__content">
-      <MainStone v-if="innerPageSlug === 'milestones'" :eventData="event" />
+      <MainStone v-if="innerPageSlug === MENU_ITEM_SLUGS.MILESTONES" :eventData="event" />
+      <div
+        class="a"
+        v-else-if="innerPageSlug === MENU_ITEM_SLUGS.VISA_ASSISTANCE"
+        :eventData="event"
+      >
+        <VisaAssistancePage :eventData="event" />
+      </div>
+
       <div v-else>
-        <MilestoneInnerPage :eventData="event" :currentSlug="currentPage.slug" />
+        <EventSecondaryPage :eventData="event" :currentSlug="currentPage.slug" />
       </div>
     </div>
   </div>

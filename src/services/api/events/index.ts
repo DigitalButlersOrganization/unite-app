@@ -33,15 +33,17 @@ export const events = {
     const { store, id } = payload;
     const eventsStore = store.useEventsStore();
     const currentEvent = eventsStore.data.find((event) => event.slug === id);
-    if (!currentEvent) {
+    if (!currentEvent || currentEvent.isCurrentMilestoneLoading) {
       return;
     }
     currentEvent.isCurrentMilestoneLoading = true;
+
     instance
       .get(`/event/${id}/milestones`, {})
       .then((response) => {
         if (response.data.items) {
           eventsStore.setMilestones({ eventId: id, data: response.data.items });
+          currentEvent.isCurrentMilestoneLoading = false;
         }
       })
       .catch((error) => {
@@ -52,16 +54,61 @@ export const events = {
           });
         } else {
           console.error('❌ Error loading milestones:', error);
-          toast('Failed to load milestones', { type: 'error' });
+          toast(`Failed to load milestones for the "${currentEvent.eventName}" event`, {
+            type: 'error',
+          });
         }
         if (eventsStore.isSetMilestones(id)) {
-          toast('Data update failed. Showing initial data.', { type: 'error' });
+          toast(
+            `Data for the "${currentEvent.eventName}" event update failed. Showing initial data.`,
+            { type: 'error' },
+          );
         }
         currentEvent.steps = [];
         // router.push({ name: ROUTES.HOME.NAME });
-      })
-      .finally(() => {
         currentEvent.isCurrentMilestoneLoading = false;
-      });
+      })
+      .finally(() => {});
+  },
+  getCurrentEventVisaAssistance: async (payload: { store: IStore; id: string }) => {
+    const { store, id } = payload;
+    const eventsStore = store.useEventsStore();
+    const currentEvent = eventsStore.data.find((event) => event.slug === id);
+    if (!currentEvent || currentEvent.isCurrentVisaAssistanceLoading) {
+      return;
+    }
+    currentEvent.isCurrentVisaAssistanceLoading = true;
+
+    instance
+      .get(`/event/${id}/visa`, {})
+      .then((response) => {
+        if (response.data) {
+          eventsStore.setVisaAssistance({ eventId: id, data: response.data });
+          currentEvent.isCurrentVisaAssistanceLoading = false;
+        }
+      })
+      .catch((error) => {
+        if (error.response?.status === 500) {
+          console.error('❌ Server error (500):', error.response.data);
+          toast('Server error. Please reload the page and try to perform this action again.', {
+            type: 'error',
+          });
+        } else {
+          console.error('❌ Error loading visa assistance:', error);
+          toast(`Failed to load visa assistance for the "${currentEvent.eventName}" event`, {
+            type: 'error',
+          });
+        }
+        if (eventsStore.isSetVisaAssistance(id)) {
+          toast(
+            `Data for the "${currentEvent.eventName}" event update failed. Showing initial data.`,
+            { type: 'error' },
+          );
+        }
+        currentEvent.visaAssistance = null;
+        // router.push({ name: ROUTES.HOME.NAME });
+        currentEvent.isCurrentVisaAssistanceLoading = false;
+      })
+      .finally(() => {});
   },
 };

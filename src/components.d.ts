@@ -22,6 +22,7 @@ declare module 'vue' {
     EventCardDesktopMenu: typeof import('./components/EventCard/DesktopMenu/Index.vue')['default']
     EventCardEventMobileMenu: typeof import('./components/EventCard/EventMobileMenu/Index.vue')['default']
     EventCardMobileMenu: typeof import('./components/EventCard/MobileMenu/Index.vue')['default']
+    EventSecondaryPage: typeof import('./components/EventSecondaryPage/index.vue')['default']
     Header: typeof import('./components/Header/Index.vue')['default']
     LayoutAside: typeof import('./components/Layout/Aside/Index.vue')['default']
     LayoutEventCard: typeof import('./components/Layout/EventCard/Index.vue')['default']
@@ -49,5 +50,6 @@ declare module 'vue' {
     UIContainer: typeof import('./components/UI/Container.vue')['default']
     UIProgressCircular: typeof import('./components/UI/ProgressCircular.vue')['default']
     UITextInputField: typeof import('./components/UI/TextInputField.vue')['default']
+    VisaAssistancePage: typeof import('./components/VisaAssistancePage/index.vue')['default']
   }
 }
