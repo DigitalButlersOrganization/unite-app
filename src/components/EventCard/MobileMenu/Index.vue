@@ -1,14 +1,20 @@
 <script setup lang="ts">
 import IconArrowDown1 from '@/assets/icons/arrow-down-1.svg';
+import router from '@/router';
 
 import type { IEvent } from '@/types/event';
+import { computed } from 'vue';
 
-const props = defineProps<{ options: IEvent; currentPageName: string }>();
-console.log(props.options.eventName);
+const props = defineProps<{ options: IEvent }>();
+const modifiedMenu = computed(() => {
+  const currentPath = router.currentRoute.value.path;
+  return props.options.menu.filter((item) => {
+    if (!item.enable) return false;
 
-const modifiedMenu = props.options.menu.filter((item) => {
-  if (!item.enable || props.currentPageName === item.title) return;
-  return item;
+    if (item.slug === currentPath) return false;
+
+    return true;
+  });
 });
 </script>
 

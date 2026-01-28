@@ -49,6 +49,7 @@ export interface IMilestone {
   link: string;
   notes: string;
   order: number;
+  rewards: string;
   files: IMilestoneSecondaryFile[];
 }
 

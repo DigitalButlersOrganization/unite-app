@@ -4,6 +4,7 @@ import type { IEvent } from '@/types/event';
 import { formatDate, formatTimeRemaining } from '@/utils';
 import { useEventsStore } from '@/stores';
 import { useBreakpoints } from '@/composables';
+import { computed } from 'vue';
 
 defineOptions({
   inheritAttrs: false,
@@ -13,17 +14,30 @@ const props = defineProps<{ options: IEvent }>();
 
 const eventsStore = useEventsStore();
 const { isDesktop } = useBreakpoints();
+
+const isShowCard = computed(() => {
+  if (isDesktop.value || !eventsStore.currentEventId) {
+    return true;
+  } else if (eventsStore.currentEventId) {
+    if (eventsStore.currentEventId === props.options.slug) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  return eventsStore.currentEventId === props.options.slug;
+});
 </script>
 
 <template>
   <EventCardMobileMenu
     v-if="!isDesktop && eventsStore.currentEventId === props.options.slug"
     :options="props.options"
-    :current-page-name="'Milestones'"
   />
   <div
     class="card"
     v-bind="$attrs"
+    v-if="isShowCard"
     :style="
       eventsStore.currentEventId && !isDesktop && eventsStore.currentEventId === props.options.slug
         ? 'border-bottom-left-radius: 0; border-bottom-right-radius: 0;'

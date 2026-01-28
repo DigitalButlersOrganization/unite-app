@@ -3,6 +3,10 @@ import type { IEvent } from '@/types/event';
 import { formatTimeRemaining, getCurrentProgressForTimeRemaining } from '@/utils';
 
 const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
+
+const currentStep = props.eventData.steps.find(
+  (step) => step.milestone.slug === props.milestoneSlug,
+);
 </script>
 
 <template>
@@ -29,7 +33,9 @@ const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
           <p class="paragraph paragraph--l">Reward:</p>
         </div>
         <div class="card__chapter-content">
-          <p class="paragraph paragraph--m">Some text</p>
+          <p class="paragraph paragraph--m">
+            {{ currentStep?.milestone.rewards }}
+          </p>
         </div>
       </div>
     </div>

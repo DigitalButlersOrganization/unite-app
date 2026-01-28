@@ -62,7 +62,6 @@ export const useEventsStore = defineStore('eventsStore', {
         event.menu.forEach((menuItem, index) => {
           if (index === 1) {
             menuItem.enable = true;
-            menuItem.slug = `/events/${event.slug}/visa`;
           }
         });
       });
