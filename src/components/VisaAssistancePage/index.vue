@@ -24,10 +24,7 @@ api.events.getCurrentEventVisaAssistance({ store, id: props.eventData.slug });
         </div>
 
         <div v-if="currentEvent.visaAssistance?.milestone.description" class="description">
-          <div
-            v-html="currentEvent.visaAssistance?.milestone.description"
-            class="paragraph paragraph--l"
-          ></div>
+          <div v-html="currentEvent.visaAssistance?.milestone.description" class="paragraph"></div>
         </div>
 
         <div
@@ -40,10 +37,7 @@ api.events.getCurrentEventVisaAssistance({ store, id: props.eventData.slug });
           <MainStoneAccentBox>
             <div class="notes__inner">
               <div class="notes__inner-content" v-if="currentEvent.visaAssistance?.milestone.notes">
-                <div
-                  class="paragraph paragraph--l"
-                  v-html="currentEvent.visaAssistance?.milestone.notes"
-                ></div>
+                <div class="paragraph" v-html="currentEvent.visaAssistance?.milestone.notes"></div>
               </div>
               <template v-if="currentEvent.visaAssistance?.milestone.files">
                 <a
