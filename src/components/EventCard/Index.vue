@@ -101,8 +101,20 @@ const isShowCard = computed(() => {
           </div>
         </div>
       </div>
-      <div class="card__information-wrapper">
-        <div class="card__information-wrapper-inner">
+      <div
+        class="card__information-wrapper"
+        :style="{
+          paddingBottom:
+            !isDesktop && eventsStore.currentEventId === props.options.slug ? '1.25rem' : undefined,
+        }"
+      >
+        <div
+          class="card__information-wrapper-inner"
+          :style="{
+            paddingBottom:
+              !isDesktop && eventsStore.currentEventId === props.options.slug ? '0' : undefined,
+          }"
+        >
           <div class="card__information">
             <div class="card__information-row">
               <div class="card__information-key">
