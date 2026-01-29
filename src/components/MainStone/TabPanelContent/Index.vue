@@ -59,10 +59,7 @@ onUnmounted(() => {
           <p class="heading heading--xl">{{ currentMilestone?.milestone.title }}</p>
         </div>
         <div v-if="currentMilestone?.milestone.description" class="description">
-          <div
-            v-html="currentMilestone?.milestone.description"
-            class="paragraph paragraph--l"
-          ></div>
+          <div v-html="currentMilestone?.milestone.description" class="paragraph"></div>
         </div>
         <div
           v-if="
@@ -74,10 +71,7 @@ onUnmounted(() => {
           <MainStoneAccentBox>
             <div class="notes__inner">
               <div class="notes__inner-content" v-if="currentMilestone?.milestone.notes">
-                <div
-                  class="paragraph paragraph--l"
-                  v-html="currentMilestone?.milestone.notes"
-                ></div>
+                <div class="paragraph" v-html="currentMilestone?.milestone.notes"></div>
               </div>
               <template v-if="currentMilestone?.milestone.files">
                 <a

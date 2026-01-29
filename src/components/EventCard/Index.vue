@@ -268,6 +268,8 @@ const isShowCard = computed(() => {
     flex-direction: column;
     gap: 0.5rem;
     margin-top: 1rem;
+    width: 100%;
+
     @media screen and (max-width: 767px) {
       padding-inline: 1.5rem;
       margin-top: 1.25rem;
