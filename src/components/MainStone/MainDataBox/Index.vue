@@ -85,7 +85,7 @@ const currentStep = props.eventData.steps.find(
   }
   &__progress-line {
     height: 100%;
-    background: var(--palette--23);
+    background: var(--palette--24);
     border-radius: var(--border-radius--2);
   }
 }
