@@ -101,6 +101,7 @@ const modifiedMenu = computed(() => {
         font-size: 1rem;
         line-height: 1em;
         writing-mode: vertical-rl;
+        white-space: nowrap;
       }
 
       &-arrow {
