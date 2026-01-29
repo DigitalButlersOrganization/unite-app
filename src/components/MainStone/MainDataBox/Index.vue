@@ -28,7 +28,7 @@ const currentStep = props.eventData.steps.find(
           </div>
         </div>
       </div>
-      <div class="card__chapter">
+      <div v-if="currentStep?.milestone.rewards" class="card__chapter">
         <div class="card__chapter-title">
           <p class="paragraph paragraph--l">Reward:</p>
         </div>

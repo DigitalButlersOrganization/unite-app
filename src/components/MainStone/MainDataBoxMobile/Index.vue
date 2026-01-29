@@ -25,7 +25,15 @@ window.addEventListener('resize', () => {
 <template>
   <div class="card">
     <div class="card__content">
-      <button class="card__summary" @click="toggleIsTimeRemainingStatus">
+      <button
+        class="card__summary"
+        @click="
+          () => {
+            if (!currentStep?.milestone.rewards) return;
+            toggleIsTimeRemainingStatus();
+          }
+        "
+      >
         <div class="card__summary-outer">
           <div class="card__summary-inner">
             <div class="card__summary-title">Time Remaining:</div>
@@ -35,6 +43,7 @@ window.addEventListener('resize', () => {
               </div>
             </div>
             <div
+              v-if="currentStep?.milestone.rewards"
               class="card__arrow-box"
               :class="eventsStore.isTimeRemainingOpen ? 'card__arrow-box--open' : ''"
             >
@@ -54,6 +63,7 @@ window.addEventListener('resize', () => {
         </div>
       </button>
       <div
+        v-if="currentStep?.milestone.rewards"
         class="card__details"
         :class="eventsStore.isTimeRemainingOpen ? 'card__details--open' : ''"
       >
