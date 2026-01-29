@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 import type { IUserState } from '@/types/user';
+import * as store from '@/stores';
+import { api } from '@/services/api';
 
 export const useUserStore = defineStore('UserStore', {
   state: (): IUserState => {
@@ -23,6 +25,16 @@ export const useUserStore = defineStore('UserStore', {
     },
     setUserData(data: Partial<IUserState>) {
       this.$patch(data);
+    },
+    async requestUserData() {
+      this.setFetchingUser(true);
+
+      const statusOfUserFetching = await api.auth.getCurrentUser({ store });
+
+      if (!statusOfUserFetching) {
+        this.setFetchingUser(true);
+        api.auth.refreshToken({ store });
+      }
     },
     logout() {
       this.$patch({

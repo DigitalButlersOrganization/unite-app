@@ -3,8 +3,6 @@ import { onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useUserStore, useEventsStore } from './stores';
 import { useBreakpoints } from './composables';
-import { api } from './services/api';
-import * as store from '@/stores';
 import MainGrid from '@/components/MainGrid/Index.vue';
 import CustomHeader from '@/components/CustomHeader/Index.vue';
 import CustomAside from '@/components/CustomAside/Index.vue';
@@ -20,14 +18,7 @@ const layoutPages = ['Home', 'EventDetail', 'EventInnerPage', 'UIGuide'];
 const useLayout = computed(() => layoutPages.includes(route.name as string));
 
 onMounted(async () => {
-  userStore.setFetchingUser(true);
-
-  const statusOfUserFetching = await api.auth.getCurrentUser({ store });
-
-  if (!statusOfUserFetching) {
-    userStore.setFetchingUser(true);
-    api.auth.refreshToken({ store });
-  }
+  userStore.requestUserData();
 });
 </script>
 

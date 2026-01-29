@@ -70,9 +70,12 @@ export const auth = {
     const { email, OTPCode, userStore, loadingStore, router } = payload;
     instance
       .post('/auth/sign-in', { email, requestOtp: false, password: OTPCode })
-      .then(() => {
-        router.push({ path: ROUTES.HOME.PATH });
-        userStore.setUserData({ isAuthenticated: true, email });
+      .then((response) => {
+        console.log(response.status === 200);
+        if (response) {
+          userStore.requestUserData();
+          router.push({ path: ROUTES.HOME.PATH });
+        }
       })
       .catch(({ response }) => {
         if (response && response.data && response.data.error) {
