@@ -78,7 +78,6 @@ const modifiedMenu = computed(() => {
 
   &__item {
     width: 100%;
-    writing-mode: vertical-rl;
     border-top-right-radius: var(--border-radius--2);
     border-bottom-right-radius: var(--border-radius--2);
     overflow: hidden;
@@ -93,6 +92,7 @@ const modifiedMenu = computed(() => {
 
     &-content {
       display: flex;
+      flex-direction: column;
       align-items: center;
       gap: 4px;
       padding: 1.5rem 0.5rem;
@@ -100,6 +100,7 @@ const modifiedMenu = computed(() => {
       &-text {
         font-size: 1rem;
         line-height: 1em;
+        writing-mode: vertical-rl;
       }
 
       &-arrow {
@@ -109,7 +110,7 @@ const modifiedMenu = computed(() => {
         width: 1rem;
         height: 1rem;
         position: relative;
-        left: -1px;
+        left: -2px;
       }
     }
     &:hover {
