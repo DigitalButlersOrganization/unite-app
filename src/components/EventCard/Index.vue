@@ -165,6 +165,7 @@ const isShowCard = computed(() => {
 
   &.js--active {
     grid-template-rows: max-content 1fr;
+    order: -1;
 
     .card__arrow-box {
       rotate: 180deg;
