@@ -74,10 +74,10 @@ export const useEventsStore = defineStore('eventsStore', {
           if (index === 1) {
             menuItem.enable = true;
           }
-          if (index === 2) {
-            menuItem.enable = true;
-            menuItem.slug = '/events/camp-2030-may-2026/circle';
-          }
+          // if (index === 2) {
+          //   menuItem.enable = true;
+          //   menuItem.slug = '/events/camp-2030-may-2026/circle';
+          // }
         });
       });
 
