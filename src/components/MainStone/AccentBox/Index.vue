@@ -30,6 +30,7 @@
     background-size: contain;
     background-position: center;
     filter: blur(50px);
+    will-change: filter;
     z-index: 1;
     aspect-ratio: 480 /182;
     translate: 30% 45%;
