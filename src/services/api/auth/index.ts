@@ -46,8 +46,10 @@ export const auth = {
         userStore.setUserData({ isOTPCodeSended: true });
       })
       .catch(({ response }) => {
-        if (response && response.data && response.data.message) {
+        if (response?.data?.message) {
           toast(response.data.message, { type: 'error' });
+        } else if (response?.data?.error) {
+          toast(response.data.error, { type: 'error' });
         } else {
           toast('An unexpected error occurred while attempting to request the OTP code', {
             type: 'error',
