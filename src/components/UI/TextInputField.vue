@@ -193,6 +193,7 @@ const onBlockArrow = (event: KeyboardEvent) => {
 
     &--error {
       border: 1px solid var(--color-text-error);
+      color: var(--color-text-error);
     }
 
     &-icon-box {
