@@ -126,8 +126,8 @@ watch(activeTab, async (newValue) => {
               ? `tabs__button--${BUTTON_STATUSES.DISABLED.toLowerCase()}`
               : ''
           "
-          :disabled="value.status === BUTTON_STATUSES.DISABLED"
         >
+          <!-- :disabled="value.status === BUTTON_STATUSES.DISABLED" -->
           <!-- !!!!!!!!!!!!!! -->
           <UIButton
             :border="BUTTON_BORDERS.MEDIUM"

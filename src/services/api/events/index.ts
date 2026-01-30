@@ -119,8 +119,6 @@ export const events = {
   }) => {
     const { slug, milestoneSlug, eventsStore } = payload;
 
-    // eventsStore.toggleMilestoneLoadingStatus(slug, true);
-
     instance
       .patch(`/event/${slug}/milestone/${milestoneSlug}`, {
         status: 'active',
@@ -141,8 +139,6 @@ export const events = {
           toast('An unexpected error occurred', { type: 'error' });
         }
       })
-      .finally(() => {
-        // eventsStore.toggleMilestoneLoadingStatus(slug, false);
-      });
+      .finally(() => {});
   },
 };

@@ -20,14 +20,6 @@ const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
 
 const { isDesktop } = useBreakpoints();
 
-setTimeout(() => {
-  api.events.updateMilestoneStatus({
-    slug: props.eventData.slug,
-    milestoneSlug: props.milestoneSlug,
-    eventsStore,
-  });
-}, 5000);
-
 const handleFilloutMessage = (event: MessageEvent) => {
   if (event.origin !== 'https://applications.unite2030.com') {
     return;
