@@ -15,3 +15,8 @@ export enum MILESTONE_STATUSES {
   BASE = 'base',
   DISABLED = 'disabled',
 }
+
+export enum MILESTONE_PHASES {
+  MAIN = 'main',
+  EVENT = 'event',
+}
