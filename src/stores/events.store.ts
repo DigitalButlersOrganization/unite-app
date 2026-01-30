@@ -12,11 +12,25 @@ export const useEventsStore = defineStore('eventsStore', {
       data: [],
     };
   },
+  getters: {
+    isSetMilestones(): (id: string) => boolean {
+      return (id: string) => {
+        const event = this.data.find((event) => event.slug === id);
+        return !!event?.steps && event.steps.length > 0;
+      };
+    },
+    isSetVisaAssistance(): (id: string) => boolean {
+      return (id: string) => {
+        const event = this.data.find((event) => event.slug === id);
+        return !!event?.visaAssistance;
+      };
+    },
+  },
   actions: {
     setEvents(data: IEvent[]) {
       const changedData = data.map((item) => {
-        item.isCurrentMilestoneLoading = false;
-        item.isCurrentVisaAssistanceLoading = false;
+        this.toggleMilestoneLoadingStatus(item.slug, false);
+        this.toggleVisaAssistanceLoadingStatus(item.slug, false);
         return item;
       });
 
@@ -69,17 +83,15 @@ export const useEventsStore = defineStore('eventsStore', {
       //     menuItem.enableTagNew = false;
       //   });
       // });
-      this.data.forEach((event) => {
-        event.menu.forEach((menuItem, index) => {
-          if (index === 1) {
-            menuItem.enable = true;
-          }
-          // if (index === 2) {
-          //   menuItem.enable = true;
-          //   menuItem.slug = '/events/camp-2030-may-2026/circle';
-          // }
-        });
-      });
+
+      // Activate the second menu item for all events
+      // this.data.forEach((event) => {
+      //   event.menu.forEach((menuItem, index) => {
+      //     if (index === 1) {
+      //       menuItem.enable = true;
+      //     }
+      //   });
+      // });
 
       this.data.forEach((event) => {
         event.menu.forEach((menuItem: IEventMenu) => {
@@ -97,19 +109,17 @@ export const useEventsStore = defineStore('eventsStore', {
         });
       });
     },
-  },
-  getters: {
-    isSetMilestones(): (id: string) => boolean {
-      return (id: string) => {
-        const event = this.data.find((event) => event.slug === id);
-        return !!event?.steps && event.steps.length > 0;
-      };
+    toggleMilestoneLoadingStatus(id: string, status: boolean) {
+      const currentEvent = this.data.find((event) => event.slug === id);
+      if (!currentEvent) return;
+
+      currentEvent.isCurrentMilestoneLoading = status;
     },
-    isSetVisaAssistance(): (id: string) => boolean {
-      return (id: string) => {
-        const event = this.data.find((event) => event.slug === id);
-        return !!event?.visaAssistance;
-      };
+    toggleVisaAssistanceLoadingStatus(id: string, status: boolean) {
+      const currentEvent = this.data.find((event) => event.slug === id);
+      if (!currentEvent) return;
+
+      currentEvent.isCurrentVisaAssistanceLoading = status;
     },
   },
 });

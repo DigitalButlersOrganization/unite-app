@@ -71,8 +71,7 @@ export const auth = {
     instance
       .post('/auth/sign-in', { email, requestOtp: false, password: OTPCode })
       .then((response) => {
-        console.log(response.status === 200);
-        if (response) {
+        if (response.status === 200) {
           userStore.requestUserData();
           router.push({ path: ROUTES.HOME.PATH });
         }

@@ -3,10 +3,14 @@ import { onMounted, onUnmounted } from 'vue';
 import { useBreakpoints } from '@/composables';
 import { MILESTONE_TYPES } from '@/enums';
 import type { IEvent } from '@/types/event';
+import { api } from '@/services/api';
+import { useEventsStore } from '@/stores';
 // import { api } from '@/services/api';
 // import * as store from '@/stores';
 
 const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
+
+const eventsStore = useEventsStore();
 
 const currentMilestone = props.eventData.steps.find(
   (step) => step.milestone.slug === props.milestoneSlug,
@@ -22,8 +26,11 @@ const handleFilloutMessage = (event: MessageEvent) => {
   }
 
   if (event.data?.type === 'form_submit') {
-    console.log('Нужно здесь запросить обновление данного евента');
-    // api.events.getCurrentEventMilestones({ store, id: props.eventData.slug });
+    api.events.updateMilestoneStatus({
+      slug: props.eventData.slug,
+      milestoneSlug: props.milestoneSlug,
+      eventsStore,
+    });
   }
 };
 

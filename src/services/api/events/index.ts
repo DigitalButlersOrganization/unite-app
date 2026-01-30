@@ -1,6 +1,7 @@
 import { instance } from '@/services/api';
 import { toast } from 'vue3-toastify';
 import type { IStore } from '@/stores';
+import type { IEventsStore } from '@/stores/events.store';
 
 export const events = {
   getAllEvents: async (payload: { store: IStore }) => {
@@ -36,14 +37,14 @@ export const events = {
     if (!currentEvent || currentEvent.isCurrentMilestoneLoading) {
       return;
     }
-    currentEvent.isCurrentMilestoneLoading = true;
+
+    eventsStore.toggleMilestoneLoadingStatus(id, true);
 
     instance
       .get(`/event/${id}/milestones`, {})
       .then((response) => {
         if (response.data.items) {
           eventsStore.setMilestones({ eventId: id, data: response.data.items });
-          currentEvent.isCurrentMilestoneLoading = false;
         }
       })
       .catch((error) => {
@@ -65,10 +66,10 @@ export const events = {
           );
         }
         currentEvent.steps = [];
-        // router.push({ name: ROUTES.HOME.NAME });
-        currentEvent.isCurrentMilestoneLoading = false;
       })
-      .finally(() => {});
+      .finally(() => {
+        eventsStore.toggleMilestoneLoadingStatus(id, false);
+      });
   },
   getCurrentEventVisaAssistance: async (payload: { store: IStore; id: string }) => {
     const { store, id } = payload;
@@ -77,14 +78,13 @@ export const events = {
     if (!currentEvent || currentEvent.isCurrentVisaAssistanceLoading) {
       return;
     }
-    currentEvent.isCurrentVisaAssistanceLoading = true;
+    eventsStore.toggleVisaAssistanceLoadingStatus(id, true);
 
     instance
       .get(`/event/${id}/visa`, {})
       .then((response) => {
         if (response.data) {
           eventsStore.setVisaAssistance({ eventId: id, data: response.data });
-          currentEvent.isCurrentVisaAssistanceLoading = false;
         }
       })
       .catch((error) => {
@@ -106,8 +106,38 @@ export const events = {
           );
         }
         currentEvent.visaAssistance = null;
-        // router.push({ name: ROUTES.HOME.NAME });
-        currentEvent.isCurrentVisaAssistanceLoading = false;
+      })
+      .finally(() => {
+        eventsStore.toggleVisaAssistanceLoadingStatus(id, false);
+      });
+  },
+
+  updateMilestoneStatus: async (payload: {
+    slug: string;
+    milestoneSlug: string;
+    eventsStore: IEventsStore;
+  }) => {
+    const { slug, milestoneSlug, eventsStore } = payload;
+
+    instance
+      .patch(`/event/${slug}/milestone/${milestoneSlug}`, {
+        status: 'active',
+      })
+      .then((response) => {
+        if (response.status === 200 && response.data) {
+          eventsStore.setMilestones({ eventId: slug, data: response.data.items });
+        }
+      })
+      .catch(({ response }) => {
+        console.log(response);
+
+        if (response?.data?.error) {
+          toast(response.data.error, { type: 'error' });
+        } else if (response?.data?.message) {
+          toast(response.data.message, { type: 'error' });
+        } else {
+          toast('An unexpected error occurred', { type: 'error' });
+        }
       })
       .finally(() => {});
   },

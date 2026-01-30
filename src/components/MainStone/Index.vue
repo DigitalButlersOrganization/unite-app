@@ -128,7 +128,6 @@ watch(activeTab, async (newValue) => {
           "
         >
           <!-- :disabled="value.status === BUTTON_STATUSES.DISABLED" -->
-
           <!-- !!!!!!!!!!!!!! -->
           <UIButton
             :border="BUTTON_BORDERS.MEDIUM"
