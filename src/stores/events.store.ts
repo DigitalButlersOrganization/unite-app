@@ -69,17 +69,15 @@ export const useEventsStore = defineStore('eventsStore', {
       //     menuItem.enableTagNew = false;
       //   });
       // });
-      this.data.forEach((event) => {
-        event.menu.forEach((menuItem, index) => {
-          if (index === 1) {
-            menuItem.enable = true;
-          }
-          // if (index === 2) {
-          //   menuItem.enable = true;
-          //   menuItem.slug = '/events/camp-2030-may-2026/circle';
-          // }
-        });
-      });
+
+      // Activate the second menu item for all events
+      // this.data.forEach((event) => {
+      //   event.menu.forEach((menuItem, index) => {
+      //     if (index === 1) {
+      //       menuItem.enable = true;
+      //     }
+      //   });
+      // });
 
       this.data.forEach((event) => {
         event.menu.forEach((menuItem: IEventMenu) => {
