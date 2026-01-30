@@ -124,7 +124,7 @@ export const events = {
 
     instance
       .patch(`/event/${slug}/milestone/${milestoneSlug}`, {
-        status: 'pending',
+        status: 'base',
       })
       .then((response) => {
         if (response.status === 200 && response.data) {
