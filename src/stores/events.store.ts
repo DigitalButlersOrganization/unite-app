@@ -13,6 +13,9 @@ export const useEventsStore = defineStore('eventsStore', {
     };
   },
   getters: {
+    isSetEvents(): boolean {
+      return this.data.length > 0;
+    },
     isSetMilestones(): (id: string) => boolean {
       return (id: string) => {
         const event = this.data.find((event) => event.slug === id);
@@ -34,6 +37,17 @@ export const useEventsStore = defineStore('eventsStore', {
         return item;
       });
 
+      this.data = changedData;
+      this.checkTagNewStatus();
+    },
+    updateMenu(data: IEvent[]) {
+      const changedData = this.data.map((event) => {
+        const updatedEvent = data.find((e) => e.slug === event.slug);
+        if (updatedEvent) {
+          event.menu = updatedEvent.menu;
+        }
+        return event;
+      });
       this.data = changedData;
       this.checkTagNewStatus();
     },

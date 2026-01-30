@@ -4,13 +4,9 @@ import { useBreakpoints } from '@/composables';
 import { MILESTONE_TYPES } from '@/enums';
 import type { IEvent } from '@/types/event';
 import { api } from '@/services/api';
-import { useEventsStore } from '@/stores';
-// import { api } from '@/services/api';
-// import * as store from '@/stores';
+import * as store from '@/stores';
 
 const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
-
-const eventsStore = useEventsStore();
 
 const currentMilestone = props.eventData.steps.find(
   (step) => step.milestone.slug === props.milestoneSlug,
@@ -19,6 +15,14 @@ const currentMilestone = props.eventData.steps.find(
 const numberOfCurrentStep = props.eventData.steps.indexOf(currentMilestone!);
 
 const { isDesktop } = useBreakpoints();
+
+setTimeout(() => {
+  api.events.updateMilestoneStatus({
+    slug: props.eventData.slug,
+    milestoneSlug: props.milestoneSlug,
+    store,
+  });
+}, 5000);
 
 const handleFilloutMessage = (event: MessageEvent) => {
   if (event.origin !== 'https://applications.unite2030.com') {
@@ -29,7 +33,7 @@ const handleFilloutMessage = (event: MessageEvent) => {
     api.events.updateMilestoneStatus({
       slug: props.eventData.slug,
       milestoneSlug: props.milestoneSlug,
-      eventsStore,
+      store,
     });
   }
 };

@@ -1,7 +1,6 @@
-import { instance } from '@/services/api';
+import { api, instance } from '@/services/api';
 import { toast } from 'vue3-toastify';
 import type { IStore } from '@/stores';
-import type { IEventsStore } from '@/stores/events.store';
 
 export const events = {
   getAllEvents: async (payload: { store: IStore }) => {
@@ -12,9 +11,11 @@ export const events = {
       .get('/event/all', {})
       .then((response) => {
         if (response.data.items) {
-          // console.log(response.data.items);
-
-          eventsStore.setEvents(response.data.items);
+          if (eventsStore.isSetEvents) {
+            eventsStore.updateMenu(response.data.items);
+          } else {
+            eventsStore.setEvents(response.data.items);
+          }
         }
       })
       .catch((error) => {
@@ -115,17 +116,20 @@ export const events = {
   updateMilestoneStatus: async (payload: {
     slug: string;
     milestoneSlug: string;
-    eventsStore: IEventsStore;
+    store: IStore;
   }) => {
-    const { slug, milestoneSlug, eventsStore } = payload;
+    const { slug, milestoneSlug, store } = payload;
+
+    const eventsStore = store.useEventsStore();
 
     instance
       .patch(`/event/${slug}/milestone/${milestoneSlug}`, {
-        status: 'active',
+        status: 'pending',
       })
       .then((response) => {
         if (response.status === 200 && response.data) {
           eventsStore.setMilestones({ eventId: slug, data: response.data.items });
+          api.events.getAllEvents({ store });
         }
       })
       .catch(({ response }) => {
