@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
 import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
+import { useBreakpoints } from '@/composables';
 import router from '@/router';
+import { useEventsStore } from '@/stores';
 import type { IEvent } from '@/types/event';
 
 defineOptions({
@@ -10,21 +12,39 @@ defineOptions({
 
 const props = defineProps<{ options: IEvent }>();
 
+const eventsStore = useEventsStore();
+const { isDesktop } = useBreakpoints();
+
 const isCurrentPage = (slug: string) => {
   const currentSlug = router.currentRoute.value;
   return currentSlug.path === slug;
 };
 
-const handleInternalClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
+const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
   if (!option.enable || isCurrentPage(option.slug)) {
     e.preventDefault();
+  } else {
+    if (eventsStore.shouldShowAccent(option)) {
+      const currentMenuItem = eventsStore.data
+        .find((item) => eventsStore.currentEventId === item.slug)
+        ?.menu.find((menuItem) => menuItem.slug === option.slug);
+      if (!currentMenuItem) return;
+      currentMenuItem.showTagNewOverlay = false;
+    }
   }
 };
 </script>
 
 <template>
   <div class="card__list-of-triggers">
-    <div class="card__trigger-wrapper" v-for="option in props.options.menu" :key="option.id">
+    <div
+      class="card__trigger-wrapper"
+      :class="
+        isDesktop && eventsStore.shouldShowAccent(option) ? 'card__trigger-wrapper--accent' : ''
+      "
+      v-for="option in props.options.menu"
+      :key="option.id"
+    >
       <!-- External link -->
       <a
         v-if="!option.slug.startsWith('/')"
@@ -37,7 +57,7 @@ const handleInternalClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
           'js--active': isCurrentPage(option.slug),
           'card__trigger--disabled': !option.enable,
         }"
-        @click="!option.enable && $event.preventDefault()"
+        @click="(e) => handleLinkClick(e, option)"
       >
         <div class="card__trigger-content">
           <div class="card__trigger-content-text">
@@ -63,7 +83,7 @@ const handleInternalClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
           'js--active': isCurrentPage(option.slug),
           'card__trigger--disabled': !option.enable,
         }"
-        @click.capture="(e) => handleInternalClick(e, option)"
+        @click.capture="(e) => handleLinkClick(e, option)"
       >
         <div class="card__trigger-content">
           <div class="card__trigger-content-text">
@@ -99,6 +119,14 @@ const handleInternalClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
       .card__trigger {
         border-bottom-left-radius: var(--border-radius--2);
         border-bottom-right-radius: var(--border-radius--2);
+      }
+    }
+
+    &--accent {
+      @media screen and (min-width: 768px) {
+        z-index: 99;
+        border-radius: var(--border-radius--2);
+        overflow: hidden;
       }
     }
   }

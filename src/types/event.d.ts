@@ -29,6 +29,7 @@ export interface IEventMenu {
   order: number;
   slug: string;
   enableTagNew: boolean;
+  showTagNewOverlay: boolean;
 }
 
 export interface IEventStep {

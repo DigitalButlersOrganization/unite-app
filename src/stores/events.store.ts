@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import type { IEvent, IEventMenu, IEvents, IEventStep, IVisaAssistance } from '@/types/event';
-import { BUTTON_STATUSES } from '@/enums';
+import { BUTTON_STATUSES, MENU_ITEM_SLUGS } from '@/enums';
 import { getCookie, setCookie } from '@/utils';
 
 export const useEventsStore = defineStore('eventsStore', {
@@ -26,6 +26,12 @@ export const useEventsStore = defineStore('eventsStore', {
       return (id: string) => {
         const event = this.data.find((event) => event.slug === id);
         return !!event?.visaAssistance;
+      };
+    },
+    shouldShowAccent(): (menuItem: IEventMenu) => boolean {
+      return (menuItem: IEventMenu) => {
+        if (!menuItem.slug.includes(MENU_ITEM_SLUGS.VISA_ASSISTANCE)) return false;
+        return (menuItem.showTagNewOverlay && menuItem.enableTagNew) || false;
       };
     },
   },
@@ -70,23 +76,6 @@ export const useEventsStore = defineStore('eventsStore', {
           return step;
         }
       });
-      // const modifiedData = data.map((step, index) => {
-      //   if (index === 0) {
-      //     isBlocked = step.milestone?.isBlocked || false;
-      //     return step;
-      //   }
-
-      //   if (isBlocked) {
-      //     if (data[index - 1]?.status === BUTTON_STATUSES.COMPLETED) {
-      //       return step;
-      //     } else {
-      //       step.status = BUTTON_STATUSES.DISABLED;
-      //       return step;
-      //     }
-      //   } else {
-      //     return step;
-      //   }
-      // });
 
       currentEvent.steps = modifiedData;
     },
@@ -102,26 +91,27 @@ export const useEventsStore = defineStore('eventsStore', {
     },
     checkTagNewStatus() {
       // Reset all enableTagNew flags
-      // this.data.forEach((event) => {
-      //   event.menu.forEach((menuItem) => {
-      //     menuItem.enableTagNew = false;
-      //   });
-      // });
+      this.data.forEach((event) => {
+        event.menu.forEach((menuItem) => {
+          menuItem.enableTagNew = false;
+        });
+      });
 
       // Activate the second menu item for all events
-      // this.data.forEach((event) => {
-      //   event.menu.forEach((menuItem, index) => {
-      //     if (index === 1) {
-      //       menuItem.enable = true;
-      //     }
-      //   });
-      // });
+      this.data.forEach((event) => {
+        event.menu.forEach((menuItem, index) => {
+          if (index === 1) {
+            menuItem.enable = true;
+          }
+        });
+      });
 
       this.data.forEach((event) => {
         event.menu.forEach((menuItem: IEventMenu) => {
           const { id } = menuItem;
           const cookieValue = getCookie(`menu_item_${id}_enable`);
           const currentValue = menuItem.enable.toString();
+          menuItem.showTagNewOverlay = true;
 
           if (cookieValue && cookieValue === 'false' && currentValue === 'true') {
             menuItem.enableTagNew = true;

@@ -1,14 +1,28 @@
 <script setup lang="ts">
-// import { useBreakpoints } from '@/composables';
+import { useBreakpoints } from '@/composables';
+import { MENU_ITEM_SLUGS } from '@/enums';
 import { useEventsStore } from '@/stores';
+import { computed } from 'vue';
 
-// const { isDesktop } = useBreakpoints();
+const { isDesktop } = useBreakpoints();
 
 const eventsStore = useEventsStore();
 
 const turnOffTimeRemainingStatus = () => {
   eventsStore.isTimeRemainingOpen = false;
 };
+
+const currentEventHasApproval = computed(() => {
+  const currentEvent = eventsStore.data.find((event) => eventsStore.currentEventId === event.slug);
+  if (!currentEvent) return false;
+
+  const menuVisaPage = currentEvent.menu.find((menuItem) =>
+    menuItem.slug.includes(MENU_ITEM_SLUGS.VISA_ASSISTANCE),
+  );
+  if (!menuVisaPage) return false;
+
+  return eventsStore.shouldShowAccent(menuVisaPage);
+});
 </script>
 
 <template>
@@ -17,6 +31,11 @@ const turnOffTimeRemainingStatus = () => {
       class="overlay"
       :class="eventsStore.isTimeRemainingOpen ? 'overlay--active' : ''"
       @click="turnOffTimeRemainingStatus"
+    ></div>
+    <div
+      v-if="isDesktop"
+      class="overlay overlay--new"
+      :class="currentEventHasApproval ? 'overlay--active' : ''"
     ></div>
     <UIContainer :type="null" class="main-grid-container">
       <div class="main-grid" :class="eventsStore.data.length ? '' : 'main-grid--without-aside'">
