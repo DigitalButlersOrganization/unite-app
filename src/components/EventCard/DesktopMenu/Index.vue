@@ -47,8 +47,10 @@ const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
       v-for="option in props.options.menu"
       :key="option.id"
     >
-      <!-- v-if="isDesktop && eventsStore.shouldShowAccent(option, props.options.slug)" -->
-      <div class="greeting-tooltip">
+      <div
+        v-if="isDesktop && eventsStore.shouldShowAccent(option, props.options.slug)"
+        class="greeting-tooltip"
+      >
         <p class="paragraph">
           You’ll receive an invitation letter to show at the embassy to confirm your registration.
           This could help with your visa process. For more details, check the FAQ.
