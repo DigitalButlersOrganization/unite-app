@@ -4,6 +4,7 @@ import { useBreakpoints } from '@/composables';
 import type { IEvent } from '@/types/event';
 import { api } from '@/services/api';
 import * as store from '@/stores';
+import { MILESTONE_STATUSES } from '@/enums';
 
 const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
 
@@ -40,7 +41,9 @@ onUnmounted(() => {
 
 <template>
   <MainStoneMainDataBoxMobile
-    v-if="currentMilestone && !isDesktop"
+    v-if="
+      currentMilestone && !isDesktop && currentMilestone?.status !== MILESTONE_STATUSES.REJECTED
+    "
     :event-data="props.eventData"
     :milestone-slug="props.milestoneSlug"
   />
@@ -53,7 +56,23 @@ onUnmounted(() => {
     "
   >
     <div class="grid">
-      <div class="grid__cell">
+      <div v-if="currentMilestone?.status === MILESTONE_STATUSES.REJECTED" class="grid__cell">
+        <div class="title">
+          <p class="heading heading--xl">Your application status</p>
+        </div>
+        <div class="description">
+          <div class="paragraph">
+            <div>
+              Thank you for your interest in the event "{{ props.eventData.eventName }}". We have
+              carefully reviewed your application, but unfortunately, we cannot approve it in its
+              current form. The information provided was insufficient or did not meet our selection
+              criteria. We recommend paying closer attention to detail when completing your profile
+              in the future.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-else class="grid__cell">
         <div v-if="numberOfCurrentStep !== -1" class="step-number">
           <p class="heading heading--l">Step {{ numberOfCurrentStep + 1 }}:</p>
         </div>
@@ -91,14 +110,23 @@ onUnmounted(() => {
           </MainStoneAccentBox>
         </div>
       </div>
-      <div class="grid__cell" v-if="isDesktop">
+      <div
+        class="grid__cell"
+        v-if="isDesktop && currentMilestone?.status !== MILESTONE_STATUSES.REJECTED"
+      >
         <MainStoneMainDataBox
           v-if="currentMilestone"
           :event-data="props.eventData"
           :milestone-slug="props.milestoneSlug"
         />
       </div>
-      <div v-if="currentMilestone?.milestone.link" class="grid__cell">
+      <div
+        v-if="
+          currentMilestone?.milestone.link &&
+          currentMilestone?.status !== MILESTONE_STATUSES.REJECTED
+        "
+        class="grid__cell"
+      >
         <div class="form-wrapper">
           <iframe
             :src="currentMilestone.milestone.link"
