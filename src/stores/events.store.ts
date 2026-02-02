@@ -91,20 +91,20 @@ export const useEventsStore = defineStore('eventsStore', {
     },
     checkTagNewStatus() {
       // Reset all enableTagNew flags
-      this.data.forEach((event) => {
-        event.menu.forEach((menuItem) => {
-          menuItem.enableTagNew = false;
-        });
-      });
+      // this.data.forEach((event) => {
+      //   event.menu.forEach((menuItem) => {
+      //     menuItem.enableTagNew = false;
+      //   });
+      // });
 
       // Activate the second menu item for all events
-      this.data.forEach((event) => {
-        event.menu.forEach((menuItem, index) => {
-          if (index === 1) {
-            menuItem.enable = true;
-          }
-        });
-      });
+      // this.data.forEach((event) => {
+      //   event.menu.forEach((menuItem, index) => {
+      //     if (index === 1) {
+      //       menuItem.enable = true;
+      //     }
+      //   });
+      // });
 
       this.data.forEach((event) => {
         event.menu.forEach((menuItem: IEventMenu) => {
