@@ -3,7 +3,6 @@ import { useBreakpoints } from '@/composables';
 import { api } from '@/services/api';
 import type { IEvent } from '@/types/event';
 import * as store from '@/stores';
-import { MILESTONE_TYPES } from '@/enums';
 
 const props = defineProps<{ eventData: IEvent }>();
 const eventsStore = store.useEventsStore();
@@ -57,13 +56,7 @@ api.events.getCurrentEventVisaAssistance({ store, id: props.eventData.slug });
       </div>
       <div class="grid__cell" v-if="isDesktop"></div>
 
-      <div
-        v-if="
-          currentEvent.visaAssistance?.milestone.type === MILESTONE_TYPES.VISA &&
-          currentEvent.visaAssistance?.milestone.link
-        "
-        class="grid__cell"
-      >
+      <div v-if="currentEvent.visaAssistance?.milestone.link" class="grid__cell">
         <div class="form-wrapper">
           <iframe
             :src="currentEvent.visaAssistance?.milestone.link"

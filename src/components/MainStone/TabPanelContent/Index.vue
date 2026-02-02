@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue';
 import { useBreakpoints } from '@/composables';
-import { MILESTONE_TYPES } from '@/enums';
 import type { IEvent } from '@/types/event';
 import { api } from '@/services/api';
 import * as store from '@/stores';
@@ -99,13 +98,7 @@ onUnmounted(() => {
           :milestone-slug="props.milestoneSlug"
         />
       </div>
-      <div
-        v-if="
-          currentMilestone?.milestone.type === MILESTONE_TYPES.FORM &&
-          currentMilestone?.milestone.link
-        "
-        class="grid__cell"
-      >
+      <div v-if="currentMilestone?.milestone.link" class="grid__cell">
         <div class="form-wrapper">
           <iframe
             :src="currentMilestone.milestone.link"
