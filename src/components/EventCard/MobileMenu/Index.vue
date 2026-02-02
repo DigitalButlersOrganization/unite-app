@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import IconArrowDown1 from '@/assets/icons/arrow-down-1.svg';
 import router from '@/router';
+import { useEventsStore } from '@/stores';
 
 import type { IEvent } from '@/types/event';
 import { computed } from 'vue';
@@ -16,6 +17,27 @@ const modifiedMenu = computed(() => {
     return true;
   });
 });
+
+const eventsStore = useEventsStore();
+
+const isCurrentPage = (slug: string) => {
+  const currentSlug = router.currentRoute.value;
+  return currentSlug.path === slug;
+};
+
+const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
+  if (!option.enable || isCurrentPage(option.slug)) {
+    e.preventDefault();
+  } else {
+    if (eventsStore.shouldShowAccent(option, props.options.slug)) {
+      const currentMenuItem = eventsStore.data
+        .find((item) => eventsStore.currentEventId === item.slug)
+        ?.menu.find((menuItem) => menuItem.slug === option.slug);
+      if (!currentMenuItem) return;
+      currentMenuItem.showTagNewOverlay = false;
+    }
+  }
+};
 </script>
 
 <template>
@@ -30,7 +52,7 @@ const modifiedMenu = computed(() => {
             rel="noopener noreferrer"
             class="menu__trigger"
             :class="{ 'menu__trigger--disabled': !option.enable }"
-            @click="!option.enable && $event.preventDefault()"
+            @click="handleLinkClick($event, option)"
           >
             <div class="menu__trigger-content">
               <div class="menu__trigger-content-text">{{ option.title }}</div>
@@ -44,7 +66,7 @@ const modifiedMenu = computed(() => {
             :to="option.enable ? option.slug : '#'"
             class="menu__trigger"
             :class="{ 'menu__trigger--disabled': !option.enable }"
-            @click="!option.enable && $event.preventDefault()"
+            @click="handleLinkClick($event, option)"
           >
             <div class="menu__trigger-content">
               <div class="menu__trigger-content-text">{{ option.title }}</div>

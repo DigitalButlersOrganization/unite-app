@@ -21,7 +21,7 @@ const currentEventHasApproval = computed(() => {
   );
   if (!menuVisaPage) return false;
 
-  return eventsStore.shouldShowAccent(menuVisaPage);
+  return eventsStore.shouldShowAccent(menuVisaPage, currentEvent.slug);
 });
 </script>
 
