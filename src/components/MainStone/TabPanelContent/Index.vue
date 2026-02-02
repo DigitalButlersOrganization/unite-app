@@ -5,6 +5,7 @@ import type { IEvent } from '@/types/event';
 import { api } from '@/services/api';
 import * as store from '@/stores';
 import { MILESTONE_STATUSES } from '@/enums';
+import Download1 from '@/assets/icons/download-1.svg';
 
 const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
 
@@ -94,18 +95,20 @@ onUnmounted(() => {
               <div class="notes__inner-content" v-if="currentMilestone?.milestone.notes">
                 <div class="paragraph" v-html="currentMilestone?.milestone.notes"></div>
               </div>
-              <template v-if="currentMilestone?.milestone.files">
+              <div class="notes__links-list" v-if="currentMilestone?.milestone.files">
                 <a
                   v-for="(value, index) in currentMilestone.milestone.files"
                   :key="index"
                   :href="value.url"
+                  target="_blank"
                   class="notes__link"
                 >
+                  <Download1 class="notes__link-icon" />
                   <p class="paragraph paragraph--l">
                     {{ value.title }}
                   </p>
                 </a>
-              </template>
+              </div>
             </div>
           </MainStoneAccentBox>
         </div>
@@ -210,17 +213,40 @@ onUnmounted(() => {
 .step-number {
   margin-bottom: 0.5rem;
 }
+
 .title {
   margin-bottom: 1.25rem;
 }
+
 .description {
   margin-bottom: 2rem;
 }
+
 .notes {
+  &__links-list {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.1);
+  }
+
   &__link {
     padding: 1rem 0;
-    display: inline-block;
+    display: flex;
+    gap: 12px;
+    border-top: 1px solid hsla(0, 0%, 100%, 0.1);
+    transition: var(--transition-default);
+
+    &-icon {
+      position: relative;
+      top: 2px;
+      min-width: 1rem;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
+
   &__inner {
     display: flex;
     flex-direction: column;
