@@ -4,7 +4,7 @@ import { useBreakpoints } from '@/composables';
 import type { IEvent } from '@/types/event';
 import { api } from '@/services/api';
 import * as store from '@/stores';
-import { MILESTONE_STATUSES } from '@/enums';
+import { MILESTONE_PHASES, MILESTONE_STATUSES } from '@/enums';
 import Download1 from '@/assets/icons/download-1.svg';
 
 const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
@@ -74,7 +74,13 @@ onUnmounted(() => {
         </div>
       </div>
       <div v-else class="grid__cell">
-        <div v-if="numberOfCurrentStep !== -1" class="step-number">
+        <div
+          v-if="
+            numberOfCurrentStep !== -1 &&
+            currentMilestone?.milestone.phase === MILESTONE_PHASES.MAIN
+          "
+          class="step-number"
+        >
           <p class="heading heading--l">Step {{ numberOfCurrentStep + 1 }}:</p>
         </div>
         <div v-if="currentMilestone?.milestone.title" class="title">

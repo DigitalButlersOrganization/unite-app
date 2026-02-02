@@ -48,6 +48,8 @@ export interface IMilestone {
   description: string;
   type: string;
   isBlocked: boolean;
+  phase: string;
+
   link: string;
   notes: string;
   order: number;
@@ -69,6 +71,7 @@ export interface IVisaAssistanceInner {
   description: string;
   type: string;
   isBlocked: boolean;
+  phase: string;
   link: string;
   notes: string;
   order: number;

@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { BUTTON_BORDERS, BUTTON_SIZES, BUTTON_STATUSES, BUTTON_TAGS } from '@/enums';
+import {
+  BUTTON_BORDERS,
+  BUTTON_SIZES,
+  BUTTON_STATUSES,
+  BUTTON_TAGS,
+  MILESTONE_PHASES,
+} from '@/enums';
 import { api } from '@/services/api';
 import type { IEvent } from '@/types/event';
 import * as store from '@/stores';
@@ -141,7 +147,13 @@ watch(activeTab, async (newValue) => {
             :tag="BUTTON_TAGS.DIV"
             class=""
           >
-            <p class="paragraph paragraph--l">Step {{ index + 1 }}: {{ value.milestone.step }}</p>
+            <p class="paragraph paragraph--l">
+              <template v-if="value.milestone.phase === MILESTONE_PHASES.MAIN">
+                Step {{ index + 1 }}:
+              </template>
+
+              {{ value.milestone.step }}
+            </p>
           </UIButton></Tab
         >
       </TabList>
