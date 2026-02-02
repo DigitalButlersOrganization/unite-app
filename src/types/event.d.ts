@@ -47,7 +47,7 @@ export interface IMilestone {
   slug: string;
   description: string;
   type: string;
-  isBlocked: boolean;
+  // isBlocked: boolean;
   phase: string;
 
   link: string;
@@ -70,7 +70,7 @@ export interface IVisaAssistanceInner {
   slug: string;
   description: string;
   type: string;
-  isBlocked: boolean;
+  // isBlocked: boolean;
   phase: string;
   link: string;
   notes: string;

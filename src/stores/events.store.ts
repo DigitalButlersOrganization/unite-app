@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import type { IEvent, IEventMenu, IEvents, IEventStep, IVisaAssistance } from '@/types/event';
-import { BUTTON_STATUSES, MENU_ITEM_SLUGS } from '@/enums';
+// import { BUTTON_STATUSES, MENU_ITEM_SLUGS } from '@/enums';
+import { MENU_ITEM_SLUGS } from '@/enums';
 import { getCookie, setCookie } from '@/utils';
 
 export const useEventsStore = defineStore('eventsStore', {
@@ -64,20 +65,19 @@ export const useEventsStore = defineStore('eventsStore', {
         console.error(`Event with id ${eventId} not found`);
         return;
       }
-      let isUnblocked = true;
-      // let isBlocked = false;
+      // let isUnblocked = true;
 
-      const modifiedData = data.map((step) => {
-        if (isUnblocked) {
-          isUnblocked = !step.milestone?.isBlocked || step.status === BUTTON_STATUSES.COMPLETED;
-          return step;
-        } else {
-          step.status = BUTTON_STATUSES.DISABLED;
-          return step;
-        }
-      });
+      // const modifiedData = data.map((step) => {
+      //   if (isUnblocked) {
+      //     isUnblocked = !step.milestone?.isBlocked || step.status === BUTTON_STATUSES.COMPLETED;
+      //     return step;
+      //   } else {
+      //     step.status = BUTTON_STATUSES.DISABLED;
+      //     return step;
+      //   }
+      // });
 
-      currentEvent.steps = modifiedData;
+      currentEvent.steps = data;
     },
     setVisaAssistance({ eventId, data }: { eventId: string; data: IVisaAssistance }) {
       const currentEvent = this.data.find((event) => event.slug === eventId);
