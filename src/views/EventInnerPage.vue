@@ -107,9 +107,15 @@ watch(
   width: 100%;
   height: max-content;
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 
   &__loading {
     padding: 2rem;
+  }
+
+  &__content {
+    flex-grow: 1;
   }
 }
 </style>

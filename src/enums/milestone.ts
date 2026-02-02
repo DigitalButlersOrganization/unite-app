@@ -1,10 +1,11 @@
-export enum MILESTONE_TYPES {
-  FORM = 'form',
-  PAYMENT = 'payment',
-  REVIEW = 'review',
-  EVENT = 'event',
-  VISA = 'visa',
-}
+// don't use this enum for now
+// export enum MILESTONE_TYPES {
+//   FORM = 'form',
+//   PAYMENT = 'payment',
+//   REVIEW = 'review',
+//   EVENT = 'event',
+//   VISA = 'visa',
+// }
 
 export enum MILESTONE_STATUSES {
   DEFAULT = 'default',

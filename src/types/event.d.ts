@@ -29,6 +29,7 @@ export interface IEventMenu {
   order: number;
   slug: string;
   enableTagNew: boolean;
+  showTagNewOverlay: boolean;
 }
 
 export interface IEventStep {
@@ -37,7 +38,6 @@ export interface IEventStep {
   startedAt: string;
   completedAt: string;
   expiredAt: string;
-  files: IMilestoneMainFile[];
   payment: IMilestonePayment;
 }
 
@@ -47,12 +47,14 @@ export interface IMilestone {
   slug: string;
   description: string;
   type: string;
-  isBlocked: boolean;
+  // isBlocked: boolean;
+  phase: string;
+
   link: string;
   notes: string;
   order: number;
   rewards: string;
-  files: IMilestoneSecondaryFile[];
+  files: IMilestoneMainFile[];
 }
 export interface IVisaAssistance {
   milestone: IVisaAssistanceInner;
@@ -60,7 +62,6 @@ export interface IVisaAssistance {
   startedAt: string;
   completedAt: string;
   expiredAt: string;
-  files: IMilestoneMainFile[];
   payment: IMilestonePayment;
 }
 export interface IVisaAssistanceInner {
@@ -69,12 +70,13 @@ export interface IVisaAssistanceInner {
   slug: string;
   description: string;
   type: string;
-  isBlocked: boolean;
+  // isBlocked: boolean;
+  phase: string;
   link: string;
   notes: string;
   order: number;
   rewards: string;
-  files: IMilestoneSecondaryFile[];
+  files: IMilestoneMainFile[];
 }
 
 export interface IMilestonePayment {
@@ -86,10 +88,6 @@ export interface IMilestonePayment {
 }
 
 export interface IMilestoneMainFile {
-  title: string;
-  url: string;
-}
-export interface IMilestoneSecondaryFile {
   title: string;
   url: string;
 }

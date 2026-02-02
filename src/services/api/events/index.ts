@@ -123,8 +123,8 @@ export const events = {
     const eventsStore = store.useEventsStore();
 
     instance
-      .patch(`/event/${slug}/milestone/${milestoneSlug}`, {
-        status: 'base',
+      .patch(`/event/${slug}/milestone/${milestoneSlug}/submit`, {
+        isFormSubmitted: true,
       })
       .then((response) => {
         if (response.status === 200 && response.data) {

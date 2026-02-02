@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue';
 import { useBreakpoints } from '@/composables';
-import { MILESTONE_TYPES } from '@/enums';
 import type { IEvent } from '@/types/event';
 import { api } from '@/services/api';
 import * as store from '@/stores';
+import { MILESTONE_PHASES, MILESTONE_STATUSES } from '@/enums';
+import Download1 from '@/assets/icons/download-1.svg';
 
 const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
 
@@ -41,7 +42,9 @@ onUnmounted(() => {
 
 <template>
   <MainStoneMainDataBoxMobile
-    v-if="currentMilestone && !isDesktop"
+    v-if="
+      currentMilestone && !isDesktop && currentMilestone?.status !== MILESTONE_STATUSES.REJECTED
+    "
     :event-data="props.eventData"
     :milestone-slug="props.milestoneSlug"
   />
@@ -54,8 +57,30 @@ onUnmounted(() => {
     "
   >
     <div class="grid">
-      <div class="grid__cell">
-        <div v-if="numberOfCurrentStep !== -1" class="step-number">
+      <div v-if="currentMilestone?.status === MILESTONE_STATUSES.REJECTED" class="grid__cell">
+        <div class="title">
+          <p class="heading heading--xl">Your application status</p>
+        </div>
+        <div class="description">
+          <div class="paragraph">
+            <div>
+              Thank you for your interest in the event "{{ props.eventData.eventName }}". We have
+              carefully reviewed your application, but unfortunately, we cannot approve it in its
+              current form. The information provided was insufficient or did not meet our selection
+              criteria. We recommend paying closer attention to detail when completing your profile
+              in the future.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-else class="grid__cell">
+        <div
+          v-if="
+            numberOfCurrentStep !== -1 &&
+            currentMilestone?.milestone.phase === MILESTONE_PHASES.MAIN
+          "
+          class="step-number"
+        >
           <p class="heading heading--l">Step {{ numberOfCurrentStep + 1 }}:</p>
         </div>
         <div v-if="currentMilestone?.milestone.title" class="title">
@@ -76,23 +101,28 @@ onUnmounted(() => {
               <div class="notes__inner-content" v-if="currentMilestone?.milestone.notes">
                 <div class="paragraph" v-html="currentMilestone?.milestone.notes"></div>
               </div>
-              <template v-if="currentMilestone?.milestone.files">
+              <div class="notes__links-list" v-if="currentMilestone?.milestone.files">
                 <a
                   v-for="(value, index) in currentMilestone.milestone.files"
                   :key="index"
                   :href="value.url"
+                  target="_blank"
                   class="notes__link"
                 >
+                  <Download1 class="notes__link-icon" />
                   <p class="paragraph paragraph--l">
                     {{ value.title }}
                   </p>
                 </a>
-              </template>
+              </div>
             </div>
           </MainStoneAccentBox>
         </div>
       </div>
-      <div class="grid__cell" v-if="isDesktop">
+      <div
+        class="grid__cell"
+        v-if="isDesktop && currentMilestone?.status !== MILESTONE_STATUSES.REJECTED"
+      >
         <MainStoneMainDataBox
           v-if="currentMilestone"
           :event-data="props.eventData"
@@ -101,8 +131,8 @@ onUnmounted(() => {
       </div>
       <div
         v-if="
-          currentMilestone?.milestone.type === MILESTONE_TYPES.FORM &&
-          currentMilestone?.milestone.link
+          currentMilestone?.milestone.link &&
+          currentMilestone?.status !== MILESTONE_STATUSES.REJECTED
         "
         class="grid__cell"
       >
@@ -189,17 +219,40 @@ onUnmounted(() => {
 .step-number {
   margin-bottom: 0.5rem;
 }
+
 .title {
   margin-bottom: 1.25rem;
 }
+
 .description {
   margin-bottom: 2rem;
 }
+
 .notes {
+  &__links-list {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.1);
+  }
+
   &__link {
     padding: 1rem 0;
-    display: inline-block;
+    display: flex;
+    gap: 12px;
+    border-top: 1px solid hsla(0, 0%, 100%, 0.1);
+    transition: var(--transition-default);
+
+    &-icon {
+      position: relative;
+      top: 2px;
+      min-width: 1rem;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
+
   &__inner {
     display: flex;
     flex-direction: column;

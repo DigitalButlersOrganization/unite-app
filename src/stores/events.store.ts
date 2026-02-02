@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import type { IEvent, IEventMenu, IEvents, IEventStep, IVisaAssistance } from '@/types/event';
-import { BUTTON_STATUSES } from '@/enums';
+// import { BUTTON_STATUSES, MENU_ITEM_SLUGS } from '@/enums';
+import { MENU_ITEM_SLUGS } from '@/enums';
 import { getCookie, setCookie } from '@/utils';
 
 export const useEventsStore = defineStore('eventsStore', {
@@ -26,6 +27,12 @@ export const useEventsStore = defineStore('eventsStore', {
       return (id: string) => {
         const event = this.data.find((event) => event.slug === id);
         return !!event?.visaAssistance;
+      };
+    },
+    shouldShowAccent(): (menuItem: IEventMenu) => boolean {
+      return (menuItem: IEventMenu) => {
+        if (!menuItem.slug.includes(MENU_ITEM_SLUGS.VISA_ASSISTANCE)) return false;
+        return (menuItem.showTagNewOverlay && menuItem.enableTagNew) || false;
       };
     },
   },
@@ -58,37 +65,19 @@ export const useEventsStore = defineStore('eventsStore', {
         console.error(`Event with id ${eventId} not found`);
         return;
       }
-      let isUnblocked = true;
-      // let isBlocked = false;
+      // let isUnblocked = true;
 
-      const modifiedData = data.map((step) => {
-        if (isUnblocked) {
-          isUnblocked = !step.milestone?.isBlocked || step.status === BUTTON_STATUSES.COMPLETED;
-          return step;
-        } else {
-          step.status = BUTTON_STATUSES.DISABLED;
-          return step;
-        }
-      });
-      // const modifiedData = data.map((step, index) => {
-      //   if (index === 0) {
-      //     isBlocked = step.milestone?.isBlocked || false;
+      // const modifiedData = data.map((step) => {
+      //   if (isUnblocked) {
+      //     isUnblocked = !step.milestone?.isBlocked || step.status === BUTTON_STATUSES.COMPLETED;
       //     return step;
-      //   }
-
-      //   if (isBlocked) {
-      //     if (data[index - 1]?.status === BUTTON_STATUSES.COMPLETED) {
-      //       return step;
-      //     } else {
-      //       step.status = BUTTON_STATUSES.DISABLED;
-      //       return step;
-      //     }
       //   } else {
+      //     step.status = BUTTON_STATUSES.DISABLED;
       //     return step;
       //   }
       // });
 
-      currentEvent.steps = modifiedData;
+      currentEvent.steps = data;
     },
     setVisaAssistance({ eventId, data }: { eventId: string; data: IVisaAssistance }) {
       const currentEvent = this.data.find((event) => event.slug === eventId);
@@ -122,6 +111,7 @@ export const useEventsStore = defineStore('eventsStore', {
           const { id } = menuItem;
           const cookieValue = getCookie(`menu_item_${id}_enable`);
           const currentValue = menuItem.enable.toString();
+          menuItem.showTagNewOverlay = true;
 
           if (cookieValue && cookieValue === 'false' && currentValue === 'true') {
             menuItem.enableTagNew = true;
