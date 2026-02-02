@@ -38,7 +38,6 @@ export interface IEventStep {
   startedAt: string;
   completedAt: string;
   expiredAt: string;
-  files: IMilestoneMainFile[];
   payment: IMilestonePayment;
 }
 
@@ -53,7 +52,7 @@ export interface IMilestone {
   notes: string;
   order: number;
   rewards: string;
-  files: IMilestoneSecondaryFile[];
+  files: IMilestoneMainFile[];
 }
 export interface IVisaAssistance {
   milestone: IVisaAssistanceInner;
@@ -61,7 +60,6 @@ export interface IVisaAssistance {
   startedAt: string;
   completedAt: string;
   expiredAt: string;
-  files: IMilestoneMainFile[];
   payment: IMilestonePayment;
 }
 export interface IVisaAssistanceInner {
@@ -75,7 +73,7 @@ export interface IVisaAssistanceInner {
   notes: string;
   order: number;
   rewards: string;
-  files: IMilestoneSecondaryFile[];
+  files: IMilestoneMainFile[];
 }
 
 export interface IMilestonePayment {
@@ -87,10 +85,6 @@ export interface IMilestonePayment {
 }
 
 export interface IMilestoneMainFile {
-  title: string;
-  url: string;
-}
-export interface IMilestoneSecondaryFile {
   title: string;
   url: string;
 }
