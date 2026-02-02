@@ -24,7 +24,7 @@ const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
   if (!option.enable || isCurrentPage(option.slug)) {
     e.preventDefault();
   } else {
-    if (eventsStore.shouldShowAccent(option)) {
+    if (eventsStore.shouldShowAccent(option, props.options.slug)) {
       const currentMenuItem = eventsStore.data
         .find((item) => eventsStore.currentEventId === item.slug)
         ?.menu.find((menuItem) => menuItem.slug === option.slug);
@@ -40,11 +40,30 @@ const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
     <div
       class="card__trigger-wrapper"
       :class="
-        isDesktop && eventsStore.shouldShowAccent(option) ? 'card__trigger-wrapper--accent' : ''
+        isDesktop && eventsStore.shouldShowAccent(option, props.options.slug)
+          ? 'card__trigger-wrapper--accent'
+          : ''
       "
       v-for="option in props.options.menu"
       :key="option.id"
     >
+      <div
+        v-if="isDesktop && eventsStore.shouldShowAccent(option, props.options.slug)"
+        class="greeting-tooltip"
+      >
+        <p class="paragraph">
+          You’ll receive an invitation letter to show at the embassy to confirm your registration.
+          This could help with your visa process. For more details, check the FAQ.
+        </p>
+        <div
+          tabindex="0"
+          @click="handleLinkClick($event, option)"
+          class="greeting-tooltip__close-button"
+        >
+          <div class="greeting-tooltip__close-button-line"></div>
+          <div class="greeting-tooltip__close-button-line"></div>
+        </div>
+      </div>
       <!-- External link -->
       <a
         v-if="!option.slug.startsWith('/')"
@@ -103,6 +122,55 @@ const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
 </template>
 
 <style lang="scss" scoped>
+.greeting-tooltip {
+  display: flex;
+  background-color: var(--palette--5);
+  color: var(--color-text--2);
+  position: absolute;
+  padding: 2rem 1.75rem;
+  width: 100%;
+  max-width: 390px;
+  border-radius: var(--border-radius--2);
+  left: 232px;
+  bottom: auto;
+  translate: 0 -80%;
+  z-index: 100;
+
+  &__close-button {
+    position: absolute;
+    top: 0.875rem;
+    right: 0.875rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    rotate: 45deg;
+    transition: var(--transition-default);
+
+    &-line {
+      position: absolute;
+      pointer-events: none;
+      width: 100%;
+      height: 2px;
+      background-color: var(--color-text--2);
+      border-radius: var(--border-radius--1);
+
+      &:first-of-type {
+        rotate: 90deg;
+      }
+    }
+
+    &:hover,
+    &:focus {
+      rotate: -45deg;
+    }
+  }
+}
 .card {
   &__list-of-triggers {
     display: flex;

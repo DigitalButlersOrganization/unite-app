@@ -29,9 +29,10 @@ export const useEventsStore = defineStore('eventsStore', {
         return !!event?.visaAssistance;
       };
     },
-    shouldShowAccent(): (menuItem: IEventMenu) => boolean {
-      return (menuItem: IEventMenu) => {
+    shouldShowAccent(): (menuItem: IEventMenu, eventId: string) => boolean {
+      return (menuItem: IEventMenu, eventId: string) => {
         if (!menuItem.slug.includes(MENU_ITEM_SLUGS.VISA_ASSISTANCE)) return false;
+        if (this.currentEventId !== eventId) return false;
         return (menuItem.showTagNewOverlay && menuItem.enableTagNew) || false;
       };
     },
