@@ -35,9 +35,8 @@ export interface IEventMenu {
 export interface IEventStep {
   milestone: IMilestone;
   status: string;
-  startedAt: string;
-  completedAt: string;
-  expiredAt: string;
+  timeRemaining: number;
+  lifeBar: number;
   payment: IMilestonePayment;
 }
 
