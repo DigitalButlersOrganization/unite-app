@@ -13,7 +13,7 @@ export enum MILESTONE_STATUSES {
   COMPLETED = 'completed',
   PENDING = 'pending',
   REJECTED = 'rejected',
-  BASE = 'base',
+  IN_PROGRESS = 'in progress',
   DISABLED = 'disabled',
 }
 
