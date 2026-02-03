@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IEvent } from '@/types/event';
-import { formatTimeRemaining, getCurrentProgressForTimeRemaining } from '@/utils';
+import { formatTimeRemaining, isDisplayedMainDataBox } from '@/utils';
 import IconArrowDown1 from '@/assets/icons/arrow-down-1.svg';
 import { useEventsStore } from '@/stores';
 
@@ -23,7 +23,7 @@ window.addEventListener('resize', () => {
 </script>
 
 <template>
-  <div class="card">
+  <div v-if="isDisplayedMainDataBox(currentStep)" class="card">
     <div class="card__content">
       <button
         class="card__summary"
@@ -39,7 +39,7 @@ window.addEventListener('resize', () => {
             <div class="card__summary-title">Time Remaining:</div>
             <div class="card__summary-content">
               <div class="card__summary-time-remaining">
-                {{ formatTimeRemaining(props.eventData.timeRemaining) }}
+                {{ formatTimeRemaining(currentStep?.timeRemaining || 0) }}
               </div>
             </div>
             <div
@@ -54,10 +54,7 @@ window.addEventListener('resize', () => {
           </div>
           <div class="card__progress-box-wrapper">
             <div class="card__progress-box">
-              <div
-                class="card__progress-line"
-                :style="`width: ${getCurrentProgressForTimeRemaining(props.eventData)}%`"
-              ></div>
+              <div class="card__progress-line" :style="`width: ${currentStep?.lifeBar}%`"></div>
             </div>
           </div>
         </div>

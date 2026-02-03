@@ -6,6 +6,7 @@ import { api } from '@/services/api';
 import * as store from '@/stores';
 import { MILESTONE_PHASES, MILESTONE_STATUSES } from '@/enums';
 import Download1 from '@/assets/icons/download-1.svg';
+import { isDisplayedMainDataBox } from '@/utils';
 
 const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
 
@@ -50,11 +51,7 @@ onUnmounted(() => {
   />
   <UIContainer
     type="main-box"
-    :style="
-      !isDesktop && currentMilestone && currentMilestone.milestone.rewards
-        ? 'padding-bottom: 152px'
-        : ''
-    "
+    :style="!isDesktop && isDisplayedMainDataBox(currentMilestone) ? 'padding-bottom: 152px' : ''"
   >
     <div class="grid">
       <div v-if="currentMilestone?.status === MILESTONE_STATUSES.REJECTED" class="grid__cell">
@@ -101,7 +98,7 @@ onUnmounted(() => {
               <div class="notes__inner-content" v-if="currentMilestone?.milestone.notes">
                 <div class="paragraph" v-html="currentMilestone?.milestone.notes"></div>
               </div>
-              <div class="notes__links-list" v-if="currentMilestone?.milestone.files">
+              <div class="notes__links-list" v-if="currentMilestone?.milestone.files.length">
                 <a
                   v-for="(value, index) in currentMilestone.milestone.files"
                   :key="index"

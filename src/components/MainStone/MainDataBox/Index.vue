@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IEvent } from '@/types/event';
-import { formatTimeRemaining, getCurrentProgressForTimeRemaining } from '@/utils';
+import { formatTimeRemaining, isDisplayedMainDataBox } from '@/utils';
 
 const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
 
@@ -10,21 +10,20 @@ const currentStep = props.eventData.steps.find(
 </script>
 
 <template>
-  <div class="card">
+  <div v-if="isDisplayedMainDataBox(currentStep)" class="card">
     <div class="card__content">
       <div class="card__chapter">
         <div class="card__chapter-title">
           <p class="paragraph paragraph--l">Time Remaining:</p>
         </div>
         <div class="card__chapter-content">
-          <p class="heading heading--l">{{ formatTimeRemaining(props.eventData.timeRemaining) }}</p>
+          <p class="heading heading--l">
+            {{ formatTimeRemaining(currentStep?.timeRemaining || 0) }}
+          </p>
         </div>
         <div class="card__progress-box-wrapper">
           <div class="card__progress-box">
-            <div
-              class="card__progress-line"
-              :style="`width: ${getCurrentProgressForTimeRemaining(props.eventData)}%`"
-            ></div>
+            <div class="card__progress-line" :style="`width: ${currentStep?.lifeBar}%`"></div>
           </div>
         </div>
       </div>
