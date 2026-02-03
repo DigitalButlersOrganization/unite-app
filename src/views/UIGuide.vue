@@ -86,11 +86,11 @@ import { ROUTES } from '@/router/routes';
     <UIButton
       :border="BUTTON_BORDERS.MEDIUM"
       :size="BUTTON_SIZES.MEDIUM"
-      :status="BUTTON_STATUSES.BASE"
+      :status="BUTTON_STATUSES.IN_PROGRESS"
       :to="ROUTES.HOME.PATH"
       class=""
     >
-      <p class="paragraph paragraph--l">BASE</p>
+      <p class="paragraph paragraph--l">IN_PROGRESS</p>
     </UIButton>
     <UIButton
       :border="BUTTON_BORDERS.MEDIUM"

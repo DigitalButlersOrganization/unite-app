@@ -51,7 +51,7 @@ const isDisabled = computed(() => props.isDisabled || props.isLoading);
       props.style ? `button--${props.style}` : null,
       props.size ? `button--${props.size}` : null,
       props.border ? `button--border-${props.border}` : null,
-      props.status ? `button--status-${props.status}` : null,
+      props.status ? `button--status-${props.status.split(' ').join('-')}` : null,
       props.isLoading ? `${MAIN_CLASS}--loading` : null,
     ]"
     :to="props.to || undefined"
@@ -202,7 +202,7 @@ const isDisabled = computed(() => props.isDisabled || props.isLoading);
     opacity: 0.7;
     pointer-events: none;
   }
-  &--status-base {
+  &--status-in-progress {
     @include button-status(5, 20, 4);
   }
   &--status-cta-1 {
