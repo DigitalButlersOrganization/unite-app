@@ -98,7 +98,7 @@ onUnmounted(() => {
               <div class="notes__inner-content" v-if="currentMilestone?.milestone.notes">
                 <div class="paragraph" v-html="currentMilestone?.milestone.notes"></div>
               </div>
-              <div class="notes__links-list" v-if="currentMilestone?.milestone.files">
+              <div class="notes__links-list" v-if="currentMilestone?.milestone.files.length">
                 <a
                   v-for="(value, index) in currentMilestone.milestone.files"
                   :key="index"
