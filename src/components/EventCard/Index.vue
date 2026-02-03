@@ -61,7 +61,7 @@ const isShowCard = computed(() => {
                 <p class="paragraph paragraph--l">Status:</p>
               </div>
               <div class="card__first-information-value">
-                <p class="paragraph paragraph--l">{{ props.options.eventStatus }}</p>
+                <p class="paragraph paragraph--l">{{ props.options.currentStatus }}</p>
               </div>
             </div>
           </div>
@@ -91,13 +91,13 @@ const isShowCard = computed(() => {
           </div>
           <div class="card__progress-information-row">
             <div class="card__progress-information-key">
-              <p class="paragraph paragraph--l">Time Remaining:</p>
+              <p class="paragraph paragraph--l">{{ props.options.currentStatus }}</p>
             </div>
-            <div class="card__progress-information-value">
+            <!-- <div class="card__progress-information-value">
               <p class="paragraph paragraph--l">
                 {{ formatTimeRemaining(props.options.timeRemaining) }}
               </p>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -129,7 +129,7 @@ const isShowCard = computed(() => {
                 <p class="paragraph paragraph--l">Status:</p>
               </div>
               <div class="card__information-value">
-                <p class="paragraph paragraph--l">{{ props.options.eventStatus }}</p>
+                <p class="paragraph paragraph--l">{{ props.options.currentStatus }}</p>
               </div>
             </div>
             <div class="card__information-row">
