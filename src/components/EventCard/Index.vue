@@ -50,7 +50,7 @@ const isShowCard = computed(() => {
           <div class="card__first-information">
             <div class="card__first-information-row">
               <div class="card__first-information-key">
-                <p class="paragraph paragraph--l">Start Date:</p>
+                <p class="paragraph paragraph--l">Start:</p>
               </div>
               <div class="card__first-information-value">
                 <p class="paragraph paragraph--l">{{ formatDate(props.options.startDate) }}</p>
@@ -58,10 +58,12 @@ const isShowCard = computed(() => {
             </div>
             <div class="card__first-information-row">
               <div class="card__first-information-key">
-                <p class="paragraph paragraph--l">Status:</p>
+                <p class="paragraph paragraph--l">Remaining:</p>
               </div>
               <div class="card__first-information-value">
-                <p class="paragraph paragraph--l">{{ props.options.currentStatus }}</p>
+                <p class="paragraph paragraph--l">
+                  {{ formatTimeRemaining(props.options.timeRemaining) }}
+                </p>
               </div>
             </div>
           </div>
@@ -91,7 +93,9 @@ const isShowCard = computed(() => {
           </div>
           <div class="card__progress-information-row">
             <div class="card__progress-information-key">
-              <p class="paragraph paragraph--l">{{ props.options.currentStatus }}</p>
+              <p class="paragraph paragraph--l">
+                {{ props.options.currentStatus }}
+              </p>
             </div>
             <!-- <div class="card__progress-information-value">
               <p class="paragraph paragraph--l">
@@ -306,6 +310,7 @@ const isShowCard = computed(() => {
   }
   &__progress-value-box-wrapper {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     gap: 0.25rem;
@@ -313,7 +318,7 @@ const isShowCard = computed(() => {
 
   &__progress-value-box {
     display: flex;
-    width: 100%;
+    width: auto;
     align-items: center;
     gap: 0.25rem;
   }
@@ -327,7 +332,7 @@ const isShowCard = computed(() => {
 
   &__progress-information-key {
     color: var(--palette--5);
-    white-space: nowrap;
+    // white-space: nowrap;
   }
   &__progress-information-value {
     white-space: nowrap;
