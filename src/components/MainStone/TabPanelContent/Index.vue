@@ -4,7 +4,13 @@ import { useBreakpoints } from '@/composables';
 import type { IEvent } from '@/types/event';
 import { api } from '@/services/api';
 import * as store from '@/stores';
-import { MILESTONE_PHASES, MILESTONE_STATUSES } from '@/enums';
+import {
+  BUTTON_BORDERS,
+  BUTTON_SIZES,
+  BUTTON_STATUSES,
+  MILESTONE_PHASES,
+  MILESTONE_STATUSES,
+} from '@/enums';
 import Download1 from '@/assets/icons/download-1.svg';
 import { isDisplayedMainDataBox } from '@/utils';
 
@@ -115,6 +121,24 @@ onUnmounted(() => {
             </div>
           </MainStoneAccentBox>
         </div>
+        <div v-if="currentMilestone && currentMilestone.payment" class="payment-links">
+          <UIButton
+            :border="BUTTON_BORDERS.LARGE"
+            :size="BUTTON_SIZES.LARGE"
+            :status="BUTTON_STATUSES.CTA_2"
+            v-if="currentMilestone.payment.depositAmount"
+          >
+            !!!</UIButton
+          >
+          <UIButton
+            :border="BUTTON_BORDERS.LARGE"
+            :size="BUTTON_SIZES.LARGE"
+            :status="BUTTON_STATUSES.CTA_3"
+            v-if="currentMilestone.payment.depositAmount"
+          >
+            !!!</UIButton
+          >
+        </div>
       </div>
       <div
         class="grid__cell"
@@ -185,8 +209,7 @@ onUnmounted(() => {
   }
 
   &__cell {
-    display: flex;
-    flex-direction: column;
+    display: block;
     z-index: 0;
 
     & > *:last-child {
@@ -223,6 +246,13 @@ onUnmounted(() => {
 
 .description {
   margin-bottom: 2rem;
+}
+
+.payment-links {
+  width: 100%;
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 2rem;
 }
 
 .notes {
