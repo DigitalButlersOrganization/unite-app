@@ -37,7 +37,7 @@ export interface IEventStep {
   status: string;
   timeRemaining: number;
   lifeBar: number;
-  payment: IMilestonePayment;
+  payment: IMilestonePayment | null;
 }
 
 export interface IMilestone {
@@ -79,9 +79,9 @@ export interface IVisaAssistanceInner {
 }
 
 export interface IMilestonePayment {
-  depositAmount: number;
-  totalAmount: number;
-  paidAmount: number;
+  depositAmount: number | null;
+  totalAmount: number | null;
+  paidAmount: number | null;
   depositEndDate: string;
   totalEndDate: string;
 }
