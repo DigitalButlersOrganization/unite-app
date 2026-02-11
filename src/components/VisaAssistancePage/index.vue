@@ -109,8 +109,7 @@ api.events.getCurrentEventVisaAssistance({ store, id: props.eventData.slug });
   }
 
   &__cell {
-    display: flex;
-    flex-direction: column;
+    display: block;
     z-index: 0;
 
     & > *:last-child {
