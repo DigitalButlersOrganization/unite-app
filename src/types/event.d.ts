@@ -82,10 +82,9 @@ export interface IMilestonePayment {
   depositAmount: number | null;
   totalAmount: number | null;
   paidAmount: number | null;
-  depositEndDate: string;
-  totalEndDate: string;
+  depositPaymentLink: string;
+  fullPaymentLink: string;
 }
-
 export interface IMilestoneMainFile {
   title: string;
   url: string;
