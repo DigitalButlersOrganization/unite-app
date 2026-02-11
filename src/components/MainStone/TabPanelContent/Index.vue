@@ -45,6 +45,10 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('message', handleFilloutMessage);
 });
+
+const modifyCentToDollar = (amountInCent: number) => {
+  return parseFloat((amountInCent / 100).toFixed(2));
+};
 </script>
 
 <template>
@@ -121,23 +125,41 @@ onUnmounted(() => {
             </div>
           </MainStoneAccentBox>
         </div>
-        <div v-if="currentMilestone && currentMilestone.payment" class="payment-links">
+        <div
+          v-if="
+            currentMilestone &&
+            currentMilestone.payment &&
+            (currentMilestone.payment.fullPaymentLink ||
+              currentMilestone.payment.depositPaymentLink)
+          "
+          class="payment-links"
+        >
           <UIButton
             :border="BUTTON_BORDERS.LARGE"
             :size="BUTTON_SIZES.LARGE"
             :status="BUTTON_STATUSES.CTA_2"
-            v-if="currentMilestone.payment.depositAmount"
+            :to="currentMilestone.payment.fullPaymentLink"
+            :is-blank="true"
+            v-if="currentMilestone.payment.totalAmount && currentMilestone.payment.fullPaymentLink"
           >
-            !!!</UIButton
-          >
+            <div class="paragraph paragraph--l">
+              Full payment (${{ modifyCentToDollar(currentMilestone.payment.totalAmount) }})
+            </div>
+          </UIButton>
           <UIButton
             :border="BUTTON_BORDERS.LARGE"
             :size="BUTTON_SIZES.LARGE"
             :status="BUTTON_STATUSES.CTA_3"
-            v-if="currentMilestone.payment.depositAmount"
+            :to="currentMilestone.payment.depositPaymentLink"
+            :is-blank="true"
+            v-if="
+              currentMilestone.payment.depositAmount && currentMilestone.payment.depositPaymentLink
+            "
           >
-            !!!</UIButton
-          >
+            <div class="paragraph paragraph--l">
+              Deposit payment (${{ modifyCentToDollar(currentMilestone.payment.depositAmount) }})
+            </div>
+          </UIButton>
         </div>
       </div>
       <div
@@ -251,6 +273,7 @@ onUnmounted(() => {
 .payment-links {
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 2rem;
 }
