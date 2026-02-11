@@ -23,6 +23,7 @@ interface Props {
   isDisabled?: boolean;
   isFullWidth?: boolean;
   isLoading?: boolean;
+  isBlank?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -31,6 +32,7 @@ const props = withDefaults(defineProps<Props>(), {
   size: BUTTON_SIZES.MEDIUM,
   isFullWidth: false,
   isLoading: false,
+  isBlank: false,
 });
 
 const tag = computed(() => {
@@ -48,6 +50,7 @@ const isDisabled = computed(() => props.isDisabled || props.isLoading);
 <template>
   <component
     :is="tag"
+    :target="props.isBlank ? '_blank' : null"
     :class="[
       MAIN_CLASS,
       props.isDisabled ? `${MAIN_CLASS}--disabled` : null,
@@ -58,8 +61,8 @@ const isDisabled = computed(() => props.isDisabled || props.isLoading);
       props.status ? `button--status-${props.status.split(' ').join('-')}` : null,
       props.isLoading ? `${MAIN_CLASS}--loading` : null,
     ]"
-    :to="props.to || undefined"
-    :href="props.to || undefined"
+    :to="props.to && props.to.startsWith('/') ? props.to : null"
+    :href="props.to && !props.to.startsWith('/') ? props.to : null"
     :disabled="props.tag === BUTTON_TAGS.BUTTON && isDisabled ? '' : null"
     :type="props.tag !== BUTTON_TAGS.BUTTON ? null : props.type || props.tag"
     :tabindex="isDisabled ? -1 : undefined"
