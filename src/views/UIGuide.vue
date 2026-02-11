@@ -9,11 +9,11 @@ import { ROUTES } from '@/router/routes';
       :border="BUTTON_BORDERS.LARGE"
       :size="BUTTON_SIZES.LARGE"
       :status="BUTTON_STATUSES.CTA_1"
-      :to="ROUTES.HOME.PATH"
+      :to="ROUTES.THANK_YOU.PATH"
       class=""
     >
       <p class="paragraph paragraph--l">
-        {{ ROUTES.HOME.NAME }}
+        {{ ROUTES.THANK_YOU.NAME }}
       </p>
     </UIButton>
     <UIButton
