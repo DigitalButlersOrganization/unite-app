@@ -34,7 +34,11 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const tag = computed(() => {
-  if (props.to || props.tag === 'a') return RouterLink;
+  if (props.to) {
+    if (props.to.startsWith('/')) return RouterLink;
+    return 'a';
+  }
+  if (props.tag === 'a') return 'a';
   return props.tag;
 });
 
@@ -55,6 +59,7 @@ const isDisabled = computed(() => props.isDisabled || props.isLoading);
       props.isLoading ? `${MAIN_CLASS}--loading` : null,
     ]"
     :to="props.to || undefined"
+    :href="props.to || undefined"
     :disabled="props.tag === BUTTON_TAGS.BUTTON && isDisabled ? '' : null"
     :type="props.tag !== BUTTON_TAGS.BUTTON ? null : props.type || props.tag"
     :tabindex="isDisabled ? -1 : undefined"
