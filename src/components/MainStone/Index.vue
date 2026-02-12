@@ -34,7 +34,13 @@ watch(
   async (steps) => {
     if (steps && steps.length > 0 && activeTab.value === null) {
       const milestoneSlug = route.query.milestone as string;
-      let targetIndex = 0;
+      const firstUnlockedStepIndex = steps.findIndex(
+        (step) =>
+          step.status !== BUTTON_STATUSES.DISABLED && step.status !== BUTTON_STATUSES.COMPLETED,
+      );
+      console.log(firstUnlockedStepIndex);
+
+      let targetIndex = firstUnlockedStepIndex;
 
       if (milestoneSlug) {
         const index = steps.findIndex((step) => step.milestone.slug === milestoneSlug);
@@ -43,9 +49,9 @@ watch(
         }
       }
 
-      // Если найденный таб заблокирован, используем первый таб !!!!!
+      // Если найденный таб заблокирован, используем первый активный таб !!!!!
       if (steps[targetIndex]?.status === BUTTON_STATUSES.DISABLED) {
-        targetIndex = 0;
+        targetIndex = firstUnlockedStepIndex;
       }
 
       // Устанавливаем активный таб
@@ -148,7 +154,12 @@ watch(activeTab, async (newValue) => {
             class=""
           >
             <p class="paragraph paragraph--l">
-              <template v-if="value.milestone.phase === MILESTONE_PHASES.MAIN">
+              <template
+                v-if="
+                  value.milestone.phase === MILESTONE_PHASES.MAIN ||
+                  (value.milestone.type === 'event' && index !== 0)
+                "
+              >
                 Step {{ index + 1 }}:
               </template>
 
