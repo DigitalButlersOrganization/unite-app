@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import { COMPANY_INFO } from '@/constants';
-import { useEventsStore } from '@/stores';
+import { useEventsStore, useUserStore } from '@/stores';
 
 const eventsStore = useEventsStore();
+const userStore = useUserStore();
 </script>
 
 <template>
   <UIContainer type="main-box">
+    <div class="paragraph paragraph--l">
+      Hello, {{ userStore.userFirstName }} {{ userStore.userLastName }}
+    </div>
+    <br />
     <h1 v-if="eventsStore.data?.length" class="heading heading--l">
       Please select an event, and we will show you all the information about it.
     </h1>
