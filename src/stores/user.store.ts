@@ -7,7 +7,8 @@ export const useUserStore = defineStore('UserStore', {
   state: (): IUserState => {
     return {
       email: '',
-
+      userFirstName: null,
+      userLastName: null,
       isFetchingUser: false,
       isAuthenticated: false,
 
