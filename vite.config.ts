@@ -35,6 +35,7 @@ export default defineConfig({
     },
   },
   server: {
+    allowedHosts: ['unite2030.digitalbutlers.team'],
     proxy: {
       '/api': {
         target: 'https://api.unite2030.digitalbutlers.team',
