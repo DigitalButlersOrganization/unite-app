@@ -1,24 +1,21 @@
 <script setup lang="ts">
-import { api } from '@/services/api';
-import * as store from '@/stores';
+// const updateOfPaymentStatus = () => {
+//   const getParameters = new URLSearchParams(window.location.search);
+//   const sessionId = getParameters.get('session_id');
+//   const paymentId = getParameters.get('payment_id');
+//   const userEventId = getParameters.get('user_event_id');
 
-const updateOfPaymentStatus = () => {
-  const getParameters = new URLSearchParams(window.location.search);
-  const sessionId = getParameters.get('session_id');
-  const paymentId = getParameters.get('payment_id');
-  const userEventId = getParameters.get('user_event_id');
+//   if (sessionId && paymentId && userEventId) {
+//     api.events.updatePaymentStatus({
+//       sessionId,
+//       paymentId,
+//       userEventId,
+//       store,
+//     });
+//   }
+// };
 
-  if (sessionId && paymentId && userEventId) {
-    api.events.updatePaymentStatus({
-      sessionId,
-      paymentId,
-      userEventId,
-      store,
-    });
-  }
-};
-
-updateOfPaymentStatus();
+// updateOfPaymentStatus();
 </script>
 
 <template>
