@@ -34,13 +34,13 @@ watch(
   async (steps) => {
     if (steps && steps.length > 0 && activeTab.value === null) {
       const milestoneSlug = route.query.milestone as string;
-      const firstUnlockedStepIndex = steps.findIndex(
+      const firstDefaultStepIndex = steps.findIndex(
         (step) =>
           step.status !== BUTTON_STATUSES.DISABLED && step.status !== BUTTON_STATUSES.COMPLETED,
       );
-      console.log(firstUnlockedStepIndex);
+      const modifiedFirstDefaultStepIndex = firstDefaultStepIndex >= 0 ? firstDefaultStepIndex : 0;
 
-      let targetIndex = firstUnlockedStepIndex;
+      let targetIndex = modifiedFirstDefaultStepIndex;
 
       if (milestoneSlug) {
         const index = steps.findIndex((step) => step.milestone.slug === milestoneSlug);
@@ -51,7 +51,7 @@ watch(
 
       // Если найденный таб заблокирован, используем первый активный таб !!!!!
       if (steps[targetIndex]?.status === BUTTON_STATUSES.DISABLED) {
-        targetIndex = firstUnlockedStepIndex;
+        targetIndex = modifiedFirstDefaultStepIndex;
       }
 
       // Устанавливаем активный таб
