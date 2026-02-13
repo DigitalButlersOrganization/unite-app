@@ -15,6 +15,10 @@ const OTPCode = ref<string>('');
 const emailTextError = ref<string>('');
 const OTPCodeTextError = ref<string>('');
 
+const emailFromURL = router.currentRoute.value.query.email as string;
+
+email.value = emailFromURL || '';
+
 const handleSubmit = async () => {
   let hasError = false;
 
