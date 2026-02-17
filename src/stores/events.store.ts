@@ -53,6 +53,10 @@ export const useEventsStore = defineStore('eventsStore', {
         const updatedEvent = data.find((e) => e.slug === event.slug);
         if (updatedEvent) {
           event.menu = updatedEvent.menu;
+          event.currentStatus = updatedEvent.currentStatus;
+          event.eventStatus = updatedEvent.eventStatus;
+          event.progress = updatedEvent.progress;
+          event.timeRemaining = updatedEvent.timeRemaining;
         }
         return event;
       });
