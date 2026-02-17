@@ -56,7 +56,7 @@ const isShowCard = computed(() => {
                 <p class="paragraph paragraph--l">{{ formatDate(props.options.startDate) }}</p>
               </div>
             </div>
-            <div class="card__first-information-row">
+            <div v-if="props.options.timeRemaining > 0" class="card__first-information-row">
               <div class="card__first-information-key">
                 <p class="paragraph paragraph--l">Remaining:</p>
               </div>
@@ -136,7 +136,7 @@ const isShowCard = computed(() => {
                 <p class="paragraph paragraph--l">{{ props.options.currentStatus }}</p>
               </div>
             </div>
-            <div class="card__information-row">
+            <div v-if="props.options.timeRemaining > 0" class="card__information-row">
               <div class="card__information-key">
                 <p class="paragraph paragraph--l">Time Remaining:</p>
               </div>
