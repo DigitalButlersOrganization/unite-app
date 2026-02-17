@@ -40,6 +40,7 @@ export const events = {
     }
 
     eventsStore.toggleMilestoneLoadingStatus(id, true);
+    eventsStore.setMilestones({ eventId: id, data: [] });
 
     instance
       .get(`/event/${id}/milestones`, {})
