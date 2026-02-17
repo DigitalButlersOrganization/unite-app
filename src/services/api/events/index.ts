@@ -146,37 +146,4 @@ export const events = {
       })
       .finally(() => {});
   },
-  // updatePaymentStatus: async (payload: {
-  //   sessionId: string;
-  //   paymentId: string;
-  //   userEventId: string;
-  //   store: IStore;
-  // }) => {
-  //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //   const { sessionId, paymentId, userEventId, store } = payload;
-
-  //   instance
-  //     .post(`/stripe/success`, {
-  //       sessionId,
-  //       paymentId,
-  //       userEventId,
-  //     })
-  //     .then((response) => {
-  //       if (response.status === 200 && response.data) {
-  //         // api.events.getAllEvents({ store });
-  //       }
-  //     })
-  //     .catch(({ response }) => {
-  //       console.log(response);
-
-  //       if (response?.data?.error) {
-  //         toast(response.data.error, { type: 'error' });
-  //       } else if (response?.data?.message) {
-  //         toast(response.data.message, { type: 'error' });
-  //       } else {
-  //         toast('An unexpected error occurred', { type: 'error' });
-  //       }
-  //     })
-  //     .finally(() => {});
-  // },
 };
