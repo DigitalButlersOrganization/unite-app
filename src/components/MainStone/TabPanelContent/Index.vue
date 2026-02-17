@@ -84,7 +84,8 @@ const modifyCentToDollar = (amountInCent: number) => {
         <div
           v-if="
             numberOfCurrentStep !== -1 &&
-            currentMilestone?.milestone.phase === MILESTONE_PHASES.MAIN
+            currentMilestone?.milestone.phase === MILESTONE_PHASES.MAIN &&
+            !(currentMilestone?.milestone.type === 'event' && numberOfCurrentStep === 0)
           "
           class="step-number"
         >
