@@ -28,18 +28,20 @@ const tabsButtonsWrapper = ref<HTMLElement | null>(null);
 
 api.events.getCurrentEventMilestones({ store, id: props.eventData.slug });
 
-// Отслеживаем загрузку steps и инициализируем активный таб из URL
 watch(
   () => props.eventData.steps,
   async (steps) => {
-    if (steps && steps.length > 0 && activeTab.value === null) {
-      const milestoneSlug = route.query.milestone as string;
-      const firstDefaultStepIndex = steps.findIndex(
-        (step) =>
-          step.status !== BUTTON_STATUSES.DISABLED && step.status !== BUTTON_STATUSES.COMPLETED,
-      );
-      const modifiedFirstDefaultStepIndex = firstDefaultStepIndex >= 0 ? firstDefaultStepIndex : 0;
+    if (!steps || steps.length === 0) return;
 
+    const firstDefaultStepIndex = steps.findIndex(
+      (step) =>
+        step.status !== BUTTON_STATUSES.DISABLED && step.status !== BUTTON_STATUSES.COMPLETED,
+    );
+    const modifiedFirstDefaultStepIndex = firstDefaultStepIndex >= 0 ? firstDefaultStepIndex : 0;
+
+    // Первичная инициализация
+    if (activeTab.value === null) {
+      const milestoneSlug = route.query.milestone as string;
       let targetIndex = modifiedFirstDefaultStepIndex;
 
       if (milestoneSlug) {
@@ -49,25 +51,70 @@ watch(
         }
       }
 
-      // Если найденный таб заблокирован, используем первый активный таб !!!!!
+      // Если найденный таб заблокирован, используем первый активный таб
       if (steps[targetIndex]?.status === BUTTON_STATUSES.DISABLED) {
         targetIndex = modifiedFirstDefaultStepIndex;
       }
 
-      // Устанавливаем активный таб
       activeTab.value = targetIndex.toString();
 
-      // Сразу обновляем URL с правильным slug
       const slug = steps[targetIndex]?.milestone.slug;
       if (slug && route.query.milestone !== slug) {
         await router.replace({
           query: { ...route.query, milestone: slug },
         });
       }
+    } else {
+      // Обновление данных на уже открытой странице:
+      // если текущий таб стал COMPLETED или DISABLED — переключаемся на первый активный шаг
+      const currentIndex = parseInt(activeTab.value);
+      const currentStep = steps[currentIndex];
+
+      if (
+        currentStep &&
+        (currentStep.status === BUTTON_STATUSES.COMPLETED ||
+          currentStep.status === BUTTON_STATUSES.DISABLED)
+      ) {
+        activeTab.value = modifiedFirstDefaultStepIndex.toString();
+      }
     }
   },
-  { immediate: true },
+  { immediate: true, deep: true },
 );
+
+function scrollToActiveTab() {
+  if (!tabsButtonsWrapper.value) return;
+
+  const activeButton = tabsButtonsWrapper.value.querySelector(
+    '.tabs__button[data-p-active="true"]',
+  ) as HTMLElement;
+  if (!activeButton) return;
+
+  const wrapperRect = tabsButtonsWrapper.value.getBoundingClientRect();
+  const buttonRect = activeButton.getBoundingClientRect();
+  const scrollLeft = tabsButtonsWrapper.value.scrollLeft;
+
+  // Вычисляем позицию кнопки относительно контейнера
+  const buttonLeft = buttonRect.left - wrapperRect.left + scrollLeft;
+  const buttonWidth = buttonRect.width;
+  const wrapperWidth = wrapperRect.width;
+
+  // Скроллим так, чтобы кнопка была в центре (если возможно)
+  const targetScroll = buttonLeft - wrapperWidth / 2 + buttonWidth / 2;
+
+  tabsButtonsWrapper.value.scrollTo({
+    left: targetScroll,
+    behavior: 'smooth',
+  });
+}
+
+// Скролл при первом появлении контейнера табов (первичный рендер)
+watch(tabsButtonsWrapper, async (wrapper) => {
+  if (wrapper && activeTab.value !== null) {
+    await nextTick();
+    scrollToActiveTab();
+  }
+});
 
 watch(activeTab, async (newValue) => {
   if (newValue === null) return;
@@ -82,29 +129,7 @@ watch(activeTab, async (newValue) => {
   }
 
   await nextTick();
-  if (tabsButtonsWrapper.value) {
-    const activeButton = tabsButtonsWrapper.value.querySelector(
-      '.tabs__button[data-p-active="true"]',
-    ) as HTMLElement;
-    if (activeButton) {
-      const wrapperRect = tabsButtonsWrapper.value.getBoundingClientRect();
-      const buttonRect = activeButton.getBoundingClientRect();
-      const scrollLeft = tabsButtonsWrapper.value.scrollLeft;
-
-      // Вычисляем позицию кнопки относительно контейнера
-      const buttonLeft = buttonRect.left - wrapperRect.left + scrollLeft;
-      const buttonWidth = buttonRect.width;
-      const wrapperWidth = wrapperRect.width;
-
-      // Скроллим так, чтобы кнопка была в центре (если возможно)
-      const targetScroll = buttonLeft - wrapperWidth / 2 + buttonWidth / 2;
-
-      tabsButtonsWrapper.value.scrollTo({
-        left: targetScroll,
-        behavior: 'smooth',
-      });
-    }
-  }
+  scrollToActiveTab();
 });
 </script>
 
@@ -156,8 +181,8 @@ watch(activeTab, async (newValue) => {
             <p class="paragraph paragraph--l">
               <template
                 v-if="
-                  value.milestone.phase === MILESTONE_PHASES.MAIN ||
-                  (value.milestone.type === 'event' && index !== 0)
+                  value.milestone.phase === MILESTONE_PHASES.MAIN &&
+                  !(value.milestone.type === 'event' && index === 0)
                 "
               >
                 Step {{ index + 1 }}:

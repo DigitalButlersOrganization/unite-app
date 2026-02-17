@@ -95,7 +95,7 @@ const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
       <!-- Internal link -->
       <router-link
         v-else
-        :to="option.slug"
+        :to="option.enable ? option.slug : '?'"
         class="card__trigger"
         :title="!option.enable ? 'Link unlocks after next steps' : ''"
         :class="{
