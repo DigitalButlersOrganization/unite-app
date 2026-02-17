@@ -175,7 +175,8 @@ const modifyCentToDollar = (amountInCent: number) => {
       <div
         v-if="
           currentMilestone?.milestone.link &&
-          currentMilestone?.status !== MILESTONE_STATUSES.REJECTED
+          currentMilestone?.status !== MILESTONE_STATUSES.REJECTED &&
+          currentMilestone?.status !== MILESTONE_STATUSES.COMPLETED
         "
         class="grid__cell"
       >
