@@ -74,19 +74,7 @@ api.events.getCurrentEventVisaAssistance({ store, id: props.eventData.slug });
     </div>
   </UIContainer>
 </template>
-<style lang="scss">
-.notes__inner-content {
-  a {
-    text-decoration: underline;
-    font-weight: 700;
-    transition: var(--transition-default);
 
-    &:hover {
-      opacity: 0.7;
-    }
-  }
-}
-</style>
 <style lang="scss" scoped>
 .grid {
   position: relative;
