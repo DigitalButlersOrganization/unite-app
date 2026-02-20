@@ -10,6 +10,7 @@ export const useEventsStore = defineStore('eventsStore', {
       IsEventsLoading: false,
       currentEventId: null,
       isTimeRemainingOpen: false,
+      numberOfMilestoneOpenings: 0,
       data: [],
     };
   },
@@ -103,13 +104,13 @@ export const useEventsStore = defineStore('eventsStore', {
       // });
 
       // Activate the second menu item for all events
-      // this.data.forEach((event) => {
-      //   event.menu.forEach((menuItem, index) => {
-      //     if (index === 1) {
-      //       menuItem.enable = true;
-      //     }
-      //   });
-      // });
+      this.data.forEach((event) => {
+        event.menu.forEach((menuItem, index) => {
+          if (index === 2) {
+            menuItem.enable = true;
+          }
+        });
+      });
 
       this.data.forEach((event) => {
         event.menu.forEach((menuItem: IEventMenu) => {

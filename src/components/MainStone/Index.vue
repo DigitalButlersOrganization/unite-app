@@ -27,7 +27,17 @@ const activeTab = ref<string | null>(null);
 const tabsButtonsWrapper = ref<HTMLElement | null>(null);
 
 api.events.getCurrentEventMilestones({ store, id: props.eventData.slug });
-api.events.getAllEvents({ store });
+
+const eventsStore = store.useEventsStore();
+
+const updateNumberOfMilestoneOpenings = () => {
+  if (eventsStore.numberOfMilestoneOpenings > 0) {
+    api.events.getAllEvents({ store });
+  }
+  eventsStore.numberOfMilestoneOpenings += 1;
+};
+
+updateNumberOfMilestoneOpenings();
 
 watch(
   () => props.eventData.steps,
