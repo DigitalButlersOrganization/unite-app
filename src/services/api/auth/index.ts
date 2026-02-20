@@ -17,6 +17,7 @@ export const auth = {
         if (response.status === 200 && response.data) {
           userStore.setUserData({
             email: response.data.email,
+            contactId: response.data.contactId,
             userFirstName: response.data.firstName,
             userLastName: response.data.lastName,
             isAuthenticated: true,
