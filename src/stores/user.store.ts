@@ -7,6 +7,7 @@ export const useUserStore = defineStore('UserStore', {
   state: (): IUserState => {
     return {
       email: '',
+      contactId: null,
       userFirstName: null,
       userLastName: null,
       isFetchingUser: false,
