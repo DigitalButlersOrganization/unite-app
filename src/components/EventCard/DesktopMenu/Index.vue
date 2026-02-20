@@ -2,9 +2,13 @@
 import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
 import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
 import { useBreakpoints } from '@/composables';
+import { MENU_ITEM_TITLES } from '@/enums';
 import router from '@/router';
+import { api } from '@/services/api';
 import { useEventsStore } from '@/stores';
 import type { IEvent } from '@/types/event';
+import * as store from '@/stores';
+import { ref } from 'vue';
 
 defineOptions({
   inheritAttrs: false,
@@ -20,8 +24,10 @@ const isCurrentPage = (slug: string) => {
   return currentSlug.path === slug;
 };
 
-const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
-  if (!option.enable || isCurrentPage(option.slug)) {
+const isLoadingCircleButton = ref(false);
+
+const handleLinkClick = async (e: MouseEvent, option: IEvent['menu'][number]) => {
+  if (!option.enable || isCurrentPage(option.slug) || option.title === MENU_ITEM_TITLES.CIRCLE) {
     e.preventDefault();
   } else {
     if (eventsStore.shouldShowAccent(option, props.options.slug)) {
@@ -30,6 +36,16 @@ const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
         ?.menu.find((menuItem) => menuItem.slug === option.slug);
       if (!currentMenuItem) return;
       currentMenuItem.showTagNewOverlay = false;
+    }
+  }
+  if (option.title === MENU_ITEM_TITLES.CIRCLE) {
+    isLoadingCircleButton.value = true;
+    const result = await api.events.getCircleSSOUrl({ store });
+    isLoadingCircleButton.value = false;
+    if (result) {
+      window.open(result, '_blank');
+    } else {
+      window.open(option.slug, '_blank');
     }
   }
 };
@@ -75,17 +91,30 @@ const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
         :class="{
           'js--active': isCurrentPage(option.slug),
           'card__trigger--disabled': !option.enable,
+          'card__trigger--loading':
+            isLoadingCircleButton && option.title === MENU_ITEM_TITLES.CIRCLE,
         }"
         @click="(e) => handleLinkClick(e, option)"
       >
-        <div class="card__trigger-content">
+        <div
+          v-if="isLoadingCircleButton && option.title === MENU_ITEM_TITLES.CIRCLE"
+          class="card__trigger-preloader"
+        >
+          <UIProgressCircular :is-loader="true" class="button__loader-progress" />
+        </div>
+        <div v-else class="card__trigger-content">
           <div class="card__trigger-content-text">
             <p class="paragraph paragraph--l">{{ option.title }}</p>
           </div>
           <div v-if="!option.enable" class="card__trigger-content-icon">
             <IconQuestionMark1 />
           </div>
-          <div v-if="option.enableTagNew" class="card__trigger-content-label">New!</div>
+          <div v-if="option.enableTagNew" class="card__trigger-content-label">
+            <template v-if="option.title === MENU_ITEM_TITLES.CIRCLE">
+              Check Your Email !
+            </template>
+            <template v-else> New ! </template>
+          </div>
         </div>
         <div class="card__trigger-arrow">
           <IconArrowRight1 />
@@ -111,7 +140,7 @@ const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
           <div v-if="!option.enable" class="card__trigger-content-icon">
             <IconQuestionMark1 />
           </div>
-          <div v-if="option.enableTagNew" class="card__trigger-content-label">New!</div>
+          <div v-if="option.enableTagNew" class="card__trigger-content-label">New !</div>
         </div>
         <div class="card__trigger-arrow">
           <IconArrowRight1 />
@@ -122,6 +151,12 @@ const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
 </template>
 
 <style lang="scss" scoped>
+.button__loader-progress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
 .greeting-tooltip {
   display: flex;
   background-color: var(--palette--5);

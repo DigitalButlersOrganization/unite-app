@@ -8,6 +8,7 @@ export const useUserStore = defineStore('UserStore', {
     return {
       email: '',
       contactId: null,
+      engagementId: null,
       userFirstName: null,
       userLastName: null,
       isFetchingUser: false,

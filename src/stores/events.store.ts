@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import type { IEvent, IEventMenu, IEvents, IEventStep, IVisaAssistance } from '@/types/event';
-// import { BUTTON_STATUSES, MENU_ITEM_SLUGS } from '@/enums';
 import { MENU_ITEM_SLUGS } from '@/enums';
 import { getCookie, setCookie } from '@/utils';
 
@@ -10,6 +9,7 @@ export const useEventsStore = defineStore('eventsStore', {
       IsEventsLoading: false,
       currentEventId: null,
       isTimeRemainingOpen: false,
+      numberOfMilestoneOpenings: 0,
       data: [],
     };
   },
@@ -94,6 +94,7 @@ export const useEventsStore = defineStore('eventsStore', {
 
       currentEvent.visaAssistance = data;
     },
+
     checkTagNewStatus() {
       // Reset all enableTagNew flags
       // this.data.forEach((event) => {
@@ -103,13 +104,13 @@ export const useEventsStore = defineStore('eventsStore', {
       // });
 
       // Activate the second menu item for all events
-      // this.data.forEach((event) => {
-      //   event.menu.forEach((menuItem, index) => {
-      //     if (index === 1) {
-      //       menuItem.enable = true;
-      //     }
-      //   });
-      // });
+      this.data.forEach((event) => {
+        event.menu.forEach((menuItem, index) => {
+          if (index === 2) {
+            menuItem.enable = true;
+          }
+        });
+      });
 
       this.data.forEach((event) => {
         event.menu.forEach((menuItem: IEventMenu) => {

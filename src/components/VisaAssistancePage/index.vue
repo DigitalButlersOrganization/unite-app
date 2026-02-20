@@ -3,14 +3,23 @@ import { useBreakpoints } from '@/composables';
 import { api } from '@/services/api';
 import type { IEvent } from '@/types/event';
 import * as store from '@/stores';
+import { MILESTONE_STATUSES } from '@/enums';
 
 const props = defineProps<{ eventData: IEvent }>();
 const eventsStore = store.useEventsStore();
+const userStore = store.useUserStore();
 const currentEvent = eventsStore.data.find((event) => event.slug === props.eventData.slug);
 const { isDesktop } = useBreakpoints();
 
 api.events.getCurrentEventVisaAssistance({ store, id: props.eventData.slug });
+
+const modifiedSrc = (link: string) => {
+  const url = new URL(link);
+  url.searchParams.set('engagement_id', userStore.engagementId || '');
+  return url.toString();
+};
 </script>
+
 <template>
   <UIContainer v-if="props.eventData.isCurrentVisaAssistanceLoading" type="main-box">
     <p class="heading heading--l">Loading...</p>
@@ -39,16 +48,10 @@ api.events.getCurrentEventVisaAssistance({ store, id: props.eventData.slug });
                 <div class="paragraph" v-html="currentEvent.visaAssistance?.milestone.notes"></div>
               </div>
               <template v-if="currentEvent.visaAssistance?.milestone.files">
-                <a
-                  v-for="(value, index) in currentEvent.visaAssistance.milestone.files"
-                  :key="index"
-                  :href="value.url"
-                  class="notes__link"
-                >
-                  <p class="paragraph paragraph--l">
-                    {{ value.title }}
-                  </p>
-                </a>
+                <MainStoneAccentBoxListOfFiles
+                  v-if="currentEvent.visaAssistance?.milestone.files.length"
+                  :files="currentEvent.visaAssistance?.milestone.files || []"
+                />
               </template>
             </div>
           </MainStoneAccentBox>
@@ -56,10 +59,16 @@ api.events.getCurrentEventVisaAssistance({ store, id: props.eventData.slug });
       </div>
       <div class="grid__cell" v-if="isDesktop"></div>
 
-      <div v-if="currentEvent.visaAssistance?.milestone.link" class="grid__cell">
+      <div
+        v-if="
+          currentEvent.visaAssistance?.milestone.link &&
+          currentEvent.visaAssistance.status !== MILESTONE_STATUSES.COMPLETED
+        "
+        class="grid__cell"
+      >
         <div class="form-wrapper">
           <iframe
-            :src="currentEvent.visaAssistance?.milestone.link"
+            :src="modifiedSrc(currentEvent.visaAssistance.milestone.link)"
             width="100%"
             height="600px"
             frameborder="0"
@@ -131,10 +140,6 @@ api.events.getCurrentEventVisaAssistance({ store, id: props.eventData.slug });
   margin-bottom: 2rem;
 }
 .notes {
-  &__link {
-    padding: 1rem 0;
-    display: inline-block;
-  }
   &__inner {
     display: flex;
     flex-direction: column;

@@ -22,6 +22,7 @@ declare module 'vue' {
     MainGrid: typeof import('./components/MainGrid/Index.vue')['default']
     MainStone: typeof import('./components/MainStone/Index.vue')['default']
     MainStoneAccentBox: typeof import('./components/MainStone/AccentBox/Index.vue')['default']
+    MainStoneAccentBoxListOfFiles: typeof import('./components/MainStone/AccentBox/ListOfFiles/Index.vue')['default']
     MainStoneMainDataBox: typeof import('./components/MainStone/MainDataBox/Index.vue')['default']
     MainStoneMainDataBoxMobile: typeof import('./components/MainStone/MainDataBoxMobile/Index.vue')['default']
     MainStoneTabPanelContent: typeof import('./components/MainStone/TabPanelContent/Index.vue')['default']

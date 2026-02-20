@@ -146,4 +146,23 @@ export const events = {
       })
       .finally(() => {});
   },
+  getCircleSSOUrl: async (payload: { store: IStore }) => {
+    const { store } = payload;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const eventsStore = store.useEventsStore();
+
+    return instance
+      .get('/circle/sso-url', {})
+      .then((response) => {
+        if (response.status === 200) {
+          return response.data;
+        }
+
+        return null;
+      })
+      .catch((error) => {
+        console.error('❌ Error loading events:', error);
+        return null;
+      });
+  },
 };

@@ -18,6 +18,7 @@ export const auth = {
           userStore.setUserData({
             email: response.data.email,
             contactId: response.data.contactId,
+            engagementId: response.data.engagementId,
             userFirstName: response.data.firstName,
             userLastName: response.data.lastName,
             isAuthenticated: true,
