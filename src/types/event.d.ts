@@ -8,6 +8,7 @@ export interface IEvents {
 export interface IEvent {
   eventName: string;
   slug: string;
+  programId: string;
   currentStatus: string | null;
   eventStatus: string;
   order: number;
