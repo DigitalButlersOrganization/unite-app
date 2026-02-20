@@ -2,6 +2,7 @@
 import IconArrowRight1 from '@/assets/icons/arrow-right-1.svg';
 import IconQuestionMark1 from '@/assets/icons/question-mark-1.svg';
 import { useBreakpoints } from '@/composables';
+import { MENU_ITEM_TITLES } from '@/enums';
 import router from '@/router';
 import { useEventsStore } from '@/stores';
 import type { IEvent } from '@/types/event';
@@ -86,7 +87,9 @@ const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
             <IconQuestionMark1 />
           </div>
           <div v-if="option.enableTagNew" class="card__trigger-content-label">
-            <template v-if="option.title === 'Circle'"> Check Your Email ! </template>
+            <template v-if="option.title === MENU_ITEM_TITLES.CIRCLE">
+              Check Your Email !
+            </template>
             <template v-else> New ! </template>
           </div>
         </div>
