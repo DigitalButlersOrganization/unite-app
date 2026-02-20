@@ -14,6 +14,7 @@ import {
 import Download1 from '@/assets/icons/download-1.svg';
 import { isDisplayedMainDataBox } from '@/utils';
 
+const userStore = store.useUserStore();
 const props = defineProps<{ eventData: IEvent; milestoneSlug: string }>();
 
 const currentMilestone = props.eventData.steps.find(
@@ -48,6 +49,13 @@ onUnmounted(() => {
 
 const modifyCentToDollar = (amountInCent: number) => {
   return parseFloat((amountInCent / 100).toFixed(2));
+};
+const modifiedSrc = (link: string) => {
+  const url = new URL(link);
+  url.searchParams.set('program_id', props.eventData.programId);
+  url.searchParams.set('email', userStore.email);
+  url.searchParams.set('contact_id', userStore.contactId || '');
+  return url.toString();
 };
 </script>
 
@@ -183,7 +191,7 @@ const modifyCentToDollar = (amountInCent: number) => {
       >
         <div class="form-wrapper">
           <iframe
-            :src="currentMilestone.milestone.link"
+            :src="modifiedSrc(currentMilestone.milestone.link)"
             width="100%"
             height="600px"
             frameborder="0"
