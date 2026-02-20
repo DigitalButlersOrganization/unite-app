@@ -85,7 +85,10 @@ const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
           <div v-if="!option.enable" class="card__trigger-content-icon">
             <IconQuestionMark1 />
           </div>
-          <div v-if="option.enableTagNew" class="card__trigger-content-label">New!</div>
+          <div v-if="option.enableTagNew" class="card__trigger-content-label">
+            <template v-if="option.title === 'Circle'"> Check Your Email ! </template>
+            <template v-else> New ! </template>
+          </div>
         </div>
         <div class="card__trigger-arrow">
           <IconArrowRight1 />
@@ -111,7 +114,7 @@ const handleLinkClick = (e: MouseEvent, option: IEvent['menu'][number]) => {
           <div v-if="!option.enable" class="card__trigger-content-icon">
             <IconQuestionMark1 />
           </div>
-          <div v-if="option.enableTagNew" class="card__trigger-content-label">New!</div>
+          <div v-if="option.enableTagNew" class="card__trigger-content-label">New !</div>
         </div>
         <div class="card__trigger-arrow">
           <IconArrowRight1 />

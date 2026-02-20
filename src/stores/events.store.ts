@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import type { IEvent, IEventMenu, IEvents, IEventStep, IVisaAssistance } from '@/types/event';
-// import { BUTTON_STATUSES, MENU_ITEM_SLUGS } from '@/enums';
 import { MENU_ITEM_SLUGS } from '@/enums';
 import { getCookie, setCookie } from '@/utils';
 
@@ -106,6 +105,9 @@ export const useEventsStore = defineStore('eventsStore', {
       // Activate the second menu item for all events
       this.data.forEach((event) => {
         event.menu.forEach((menuItem, index) => {
+          if (index === 1) {
+            menuItem.enable = true;
+          }
           if (index === 2) {
             menuItem.enable = true;
           }
