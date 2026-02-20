@@ -7,11 +7,19 @@ import { MILESTONE_STATUSES } from '@/enums';
 
 const props = defineProps<{ eventData: IEvent }>();
 const eventsStore = store.useEventsStore();
+const userStore = store.useUserStore();
 const currentEvent = eventsStore.data.find((event) => event.slug === props.eventData.slug);
 const { isDesktop } = useBreakpoints();
 
 api.events.getCurrentEventVisaAssistance({ store, id: props.eventData.slug });
+
+const modifiedSrc = (link: string) => {
+  const url = new URL(link);
+  url.searchParams.set('engagement_id', userStore.engagementId || '');
+  return url.toString();
+};
 </script>
+
 <template>
   <UIContainer v-if="props.eventData.isCurrentVisaAssistanceLoading" type="main-box">
     <p class="heading heading--l">Loading...</p>
@@ -60,7 +68,7 @@ api.events.getCurrentEventVisaAssistance({ store, id: props.eventData.slug });
       >
         <div class="form-wrapper">
           <iframe
-            :src="currentEvent.visaAssistance?.milestone.link"
+            :src="modifiedSrc(currentEvent.visaAssistance.milestone.link)"
             width="100%"
             height="600px"
             frameborder="0"
