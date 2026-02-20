@@ -11,7 +11,6 @@ import {
   MILESTONE_PHASES,
   MILESTONE_STATUSES,
 } from '@/enums';
-import Download1 from '@/assets/icons/download-1.svg';
 import { isDisplayedMainDataBox } from '@/utils';
 
 const userStore = store.useUserStore();
@@ -117,20 +116,10 @@ const modifiedSrc = (link: string) => {
               <div class="notes__inner-content" v-if="currentMilestone?.milestone.notes">
                 <div class="paragraph" v-html="currentMilestone?.milestone.notes"></div>
               </div>
-              <div class="notes__links-list" v-if="currentMilestone?.milestone.files.length">
-                <a
-                  v-for="(value, index) in currentMilestone.milestone.files"
-                  :key="index"
-                  :href="value.url"
-                  target="_blank"
-                  class="notes__link"
-                >
-                  <Download1 class="notes__link-icon" />
-                  <p class="paragraph paragraph--l">
-                    {{ value.title }}
-                  </p>
-                </a>
-              </div>
+              <MainStoneAccentBoxListOfFiles
+                v-if="currentMilestone?.milestone.files.length"
+                :files="currentMilestone?.milestone.files || []"
+              />
             </div>
           </MainStoneAccentBox>
         </div>
@@ -276,37 +265,6 @@ const modifiedSrc = (link: string) => {
   margin-top: 2rem;
 }
 
-.notes {
-  &__links-list {
-    display: flex;
-    flex-direction: column;
-    border-bottom: 1px solid hsla(0, 0%, 100%, 0.1);
-  }
-
-  &__link {
-    padding: 1rem 0;
-    display: flex;
-    gap: 12px;
-    border-top: 1px solid hsla(0, 0%, 100%, 0.1);
-    transition: var(--transition-default);
-
-    &-icon {
-      position: relative;
-      top: 2px;
-      min-width: 1rem;
-    }
-
-    &:hover {
-      opacity: 0.7;
-    }
-  }
-
-  &__inner {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-}
 .form-wrapper {
   width: 100%;
   overflow: hidden;

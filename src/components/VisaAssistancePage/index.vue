@@ -40,16 +40,10 @@ api.events.getCurrentEventVisaAssistance({ store, id: props.eventData.slug });
                 <div class="paragraph" v-html="currentEvent.visaAssistance?.milestone.notes"></div>
               </div>
               <template v-if="currentEvent.visaAssistance?.milestone.files">
-                <a
-                  v-for="(value, index) in currentEvent.visaAssistance.milestone.files"
-                  :key="index"
-                  :href="value.url"
-                  class="notes__link"
-                >
-                  <p class="paragraph paragraph--l">
-                    {{ value.title }}
-                  </p>
-                </a>
+                <MainStoneAccentBoxListOfFiles
+                  v-if="currentEvent.visaAssistance?.milestone.files.length"
+                  :files="currentEvent.visaAssistance?.milestone.files || []"
+                />
               </template>
             </div>
           </MainStoneAccentBox>

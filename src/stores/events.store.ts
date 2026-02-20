@@ -94,6 +94,7 @@ export const useEventsStore = defineStore('eventsStore', {
 
       currentEvent.visaAssistance = data;
     },
+
     checkTagNewStatus() {
       // Reset all enableTagNew flags
       // this.data.forEach((event) => {
@@ -106,9 +107,6 @@ export const useEventsStore = defineStore('eventsStore', {
       this.data.forEach((event) => {
         event.menu.forEach((menuItem, index) => {
           if (index === 1) {
-            menuItem.enable = true;
-          }
-          if (index === 2) {
             menuItem.enable = true;
           }
         });
