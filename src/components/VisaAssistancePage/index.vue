@@ -132,10 +132,6 @@ api.events.getCurrentEventVisaAssistance({ store, id: props.eventData.slug });
   margin-bottom: 2rem;
 }
 .notes {
-  &__link {
-    padding: 1rem 0;
-    display: inline-block;
-  }
   &__inner {
     display: flex;
     flex-direction: column;

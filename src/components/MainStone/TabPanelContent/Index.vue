@@ -244,6 +244,13 @@ const modifiedSrc = (link: string) => {
     }
   }
 }
+.notes {
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
 
 .step-number {
   margin-bottom: 0.5rem;
